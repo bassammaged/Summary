@@ -1,0 +1,23 @@
+# ----- What is sqllite3:
+    SQLite is a C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine. SQLite is the most used 
+    database engine in the world. SQLite is built into all mobile phones and most computers and comes bundled inside countless other applications that people
+    use every day. More Information...
+
+# ----- When to use sqlite3:
+     SQLite is not directly comparable to client/server SQL database engines such as MySQL, Oracle, PostgreSQL, or SQL Server since SQLite is trying to solve a 
+     different problem. Client/server SQL database engines strive to implement a shared repository of enterprise data. They emphasize scalability, 
+     concurrency, centralization, and control. SQLite strives to provide local data storage for individual applications and devices. SQLite emphasizes economy, 
+     efficiency, reliability, independence, and simplicity. 
+
+     # ----- Situations Where SQLite Works Well:
+        - Embedded devices and the internet of things
+        - Application file format
+        - Limit web app. traffic
+        - Internal or temporary databases
+        - etc...
+
+# ----- Disadvatage of sqlite3:
+    - SQLite only supports one writer at a time per database file.
+    - When it comes to data separated from the application by a network, SQLite is built into the application.
+    - Your data is Big data, If your data will grow to a size that you are uncomfortable or unable to fit into a single disk file then you should select a 
+    solution other than SQLite.

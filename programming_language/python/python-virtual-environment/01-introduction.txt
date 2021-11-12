@@ -1,0 +1,30 @@
+# ----- Why it is useful?
+    - It is often useful to have one or more Python environments where you can experiment with different combinations of packages without affecting your 
+    main installation. Python supports this through virtual environments. The virtual environment is a copy of an existing version of Python with the option 
+    to inherit existing packages. A virtual environment is also useful when you need to work on a shared system and do not have permission to install packages 
+    as you will be able to install them in the virtual environment.
+
+# ----- Requirements:
+    - An installation of Python
+    - Setup the pip package manager
+        - Check it by: pip -h
+
+# ----- How it works?
+    1. Install the virtualenv package:
+        pip install virtualenv
+    2. Create the virtual environment
+        virtualenv <python_environment_name>
+        Note: To create a virtual environment, you must specify a path. For example to create one in the local directory called ‘mypython’.
+    3. Activate the virtual environment
+        - Windows:
+            mypthon\Scripts\activate
+        - Mac OS / Linux:
+            source mypython/bin/activate
+        Note: You should see the name of your virtual environment in brackets on your terminal line e.g. (mypython).
+
+        
+    # -- Deactivate the virtualenv:
+        1. To decativate the virtual environment and use your original Python environment, simply type ‘deactivate’.
+            deactivate
+
+

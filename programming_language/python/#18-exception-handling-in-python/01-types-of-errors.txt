@@ -1,0 +1,10 @@
+# -------------  Error, what is mean?
+    - Errors are the problems in a program due to which the program will stop the execution.
+
+# ------------- Types of error in python:
+    - Syntax Error
+        As the name suggest this error is caused by wrong syntax in the code. It leads to the termination of the program.
+    - Exception Error
+         Exceptions are raised when the program is syntactically correct but the code resulted in an error. This error does not stop the execution 
+         of the program, however, it changes the normal flow of the program.
+
