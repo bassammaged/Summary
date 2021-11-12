@@ -1,0 +1,71 @@
+# ----- Java Development Kit (JDK)
+    - As the name suggests this is complete java development kit that includes JRE (Java Runtime Environment), compilers and various tools like JavaDoc, Java debugger etc.
+    In order to create, compile and run Java program you would need JDK installed on your computer.
+    - JDK is a software development environment used for making applets and Java applications. The full form of JDK is Java Development Kit. Java developers can use 
+    it on Windows, macOS, Solaris, and Linux. JDK helps them to code and run Java programs. It is possible to install more than one JDK version on the same computer.
+
+    # ----- Why use JDK?
+        - JDK contains tools required to write Java programs, and JRE to execute them.
+        - It includes a compiler, Java application launcher, Appletviewer, etc.
+        - Compiler converts code written in Java into byte code.
+        - Java application launcher opens a JRE, loads the necessary class, and executes its main method.
+
+    # ----- Features of JDK
+        - It enables you to handle multiple extensions in a single catch block.
+        - JDK includes all features that JRE has.
+        - It contains development tools such as a compiler, debugger, etc.
+        - JDK provides the environment to develop and execute Java source code.
+        - It can be installed on Windows, Unix, and Mac operating systems.
+        - Diamond operator can be used in specifying a generic type interface instead of writing the exact one.
+
+
+# ----- Java Runtime Environment (JRE)
+    - JRE is a piece of a software which is designed to run other software. It contains the class libraries, loader class, and JVM. In simple terms, if you want 
+    to run Java program you need JRE. If you are not a programmer, you don't need to install JDK, but just JRE to run Java programs. Though, all JDK versions comes 
+    bundled with Java Runtime Environment, so you do not need to download and install the JRE separately in your PC. The full form of JRE is Java Runtime Environment.
+
+    # ----- Why use JRE?
+        - JRE contains class libraries, JVM, and other supporting files. It does not contain any tool for Java development like a debugger, compiler, etc.
+        - It uses important package classes like math, swingetc, util, lang, awt, and runtime libraries.
+        - If you have to run Java applets, then JRE must be installed in your system.
+
+    # ----- Features of JRE
+        - Java Runtime Environment is a set of tools using which the JVM actually runs.
+        - JRE contains deployment technology, including Java Web Start and Java Plug-in.
+        - Developers can easily run the source code in JRE, but he/she cannot write and compile the Java program.
+        - It includes integration libraries like Java Database Connectivity (JDBC), Remote Method Invocation (RMI), Java Naming and Directory Interface (JNDI), and more.
+        - JRE has JVM and Java HotSpot virtual machine client.
+
+# ----- Java Virtual Machine (JVM)
+    - JVM is an engine that provides a runtime environment to drive the Java Code or applications. It converts Java bytecode into machine language. JVM is a part 
+    of Java Run Environment (JRE). It cannot be separately downloaded and installed. To install JVM, you need to install JRE. The full form of JVM is Java Virtual Machine.
+
+    # ----- Why JVM?
+        - JVM provides a platform-independent way of executing Java source code.
+        - It has numerous libraries, tools, and frameworks.
+        - Once you run Java program, you can run on any platform and save lots of time.
+        - JVM comes with JIT(Just-in-Time) compiler that converts Java source code into low-level machine language. Hence, it runs more faster as a regular application.
+
+    # ----- Features of JVM
+        - It enables you to run applications in a cloud environment or in your device.
+        - Java Virtual Machine converts byte code to the machine-specific code.
+        - It provides basic java functions like memory management, security, garbage collection, and more.
+        - JVM runs the program by using libraries and files given by Java Runtime Environment.
+        - JDK and JRE both contain Java Virtual Machine.
+        - It can execute the java program line by line hence it is also called as interpreter.
+        - JVM is easily customizable for example, you can allocate minimum and maximum memory to it.
+        - It is independent from hardware and the operating system. So, you can write a java program once and run anywhere.
+
+
+# -----  Bytecode
+    - Bytecode in Java is the reason java is platform-independent, as soon as a  Java program is compiled bytecode is generated. To be more precise a Java bytecode 
+    is the machine code in the form of a .class file. A bytecode in Java is the instruction set for Java Virtual Machine and acts similar to an assembler.
+
+
+
+
+
+
+
+
+
