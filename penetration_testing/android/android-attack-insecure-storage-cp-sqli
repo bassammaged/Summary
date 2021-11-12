@@ -1,0 +1,40 @@
+# ------------------- start sqli content provider ------------------- #
+    # ----- Exisiting tool:
+        - Tools already exist that can be used to test apps for SQL injection vulnerabilities in their content providers, however they usually concentrate on 
+        only two injection vectors, (projection and selection) and may only perform heuristic tests, leading to false positives.
+
+    # ----- Where could you find SQL injection within content provider:
+        - Test injection vectors:
+            1. Projection.
+                - projection is an array of columns that should be included for each row retrieved.
+                - example: col,col,col,...
+            2. Selection.
+                - selection specifies the criteria for selecting rows.
+                - Example: WHERE col = value
+            3. URI.
+                - Uri maps to the table in the provider named table_name.
+                - example: FROM table_name
+            4. Sort order.
+                - sortOrder specifies the order in which rows appear in the returned Cursor.
+                - example: ORDER BY col,col,...
+            5. Content Values key (update)
+            
+        - Directory traversal
+# -------------------   end sqli content provider ------------------- #
+    # ----- exploit through query
+        - Inject in sort order
+            adb shell content query --uri <content_uri> --sort '<injection>'
+            - Example: adb shell content query --uri content://com.elearnsecurity.injectme.provider.CredentialProvider/credentials/ --sort 'username LIMIT (SELECT 1)'
+
+    # ----- Automate the test
+        - using drozer:
+            - check attack surface
+                run app.package.attacksurface <package_name>
+            - find all possible URIs
+                run scanner.provider.finduris <package_name>
+            - check if the content providers are injectable
+                run scanner.provider.injection <package_name>
+# ------------------- start sqli content provider ------------------- #
+
+
+https://github.com/PerspectiveRisk/libcpmap

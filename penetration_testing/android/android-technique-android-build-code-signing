@@ -1,0 +1,36 @@
+# ------------------------ start overview code signing ------------------------ # 
+    - publish your APK or for testing purpose you have to signing your APK, Android devices will not run unsigned apk files,
+    signing APK based on public-key cryptography (asymmetric cryptography).
+
+    - public-key cryptography is a system by which two keys are used. One referred to as private and other opublic, the ywo keys are
+    complementary and basically, one key can decrypt data that encrypted by the other.
+
+    - Its important that the private key remains secrets within an organization internally, but the public key is intended to be shared. 
+
+    # ----- How hash algorithm works?
+        -  A hash algorithm is a function that converts a data string into a numeric string output of fixed length. The output string is generally much smaller 
+        than the original data. Hash algorithms are designed to be collision-resistant, meaning that there is a very low probability that the same string 
+        would be created for different data. Two of the most common hash algorithms are the MD5 (Message-Digest algorithm 5) and the SHA-1 
+        (Secure Hash Algorithm). 
+
+    # ----- Why Android apps are cryptographically signed?
+        - Validating the identity of the author.
+        - Ensuring the code itself has not been modified after compiling.
+
+    --> Note: Public-key cryptography doesn't use CA (Certificate Authority) issued certificates. So self-signed certificates are just fine and no less secure.
+
+    # ----- Tools:
+        - keytool: generate public-key cryptography
+        - jarsigner: sign the APK with the private key.
+# ------------------------   end overview code signing ------------------------ # 
+
+# ------------------------ start code signing ------------------------ # 
+    # ----- Signing APK
+        # ----- Generate public-key cryptography:
+            keytool -genkey -v -keystore kemet.keystore -alias secranix -keyalg RSA -keysize 2048 -validity 10000
+        # ----- sign off the APK:
+            jarsigner -signalg SHA1withRSA -digestalg SHA1 -ketstore kemet.keystore <apk_file> secranix
+
+# ------------------------   end code signing ------------------------ # 
+
+

@@ -1,0 +1,52 @@
+# ----------------- start IPC ----------------- #
+    # ----- Introduction
+        - Multiprocess Android Applications, In android every application that is started runs in its own process (with a unique Process ID or PID.
+        This allows the app to live in an isolated environment, where it cannot be hindered by other applications/processes. Typically, when you want to 
+        start an application, Android creates a process, spawns the main thread and starts running the main Activity.
+
+        - Android also gives us the capability to specify some components of your app to run on a different process than the one that was used to start the app. This 
+        can be achieved by using the process tag.
+            - The process attribute can be applied to activities, services, content providers and broadcast receivers and specifies what process 
+            that particular component should be executed in.
+            - An example of what the manifest would look like when we want to start an activity in a new process:
+                <activity
+                    android:name=”com.abc.application.SomeActivity”
+                    android:configChanges=”keyboardHidden|orientation|keyboard|screenSize”
+                    android:process=”:myProcess”
+                </activity>
+                - Here “SomeActivity” will run in its own process called “myProcess”.
+
+        # -- Security advantage of Isolation?
+            - processes are meant to be isolated by design (as a security feature), which means that every process will have its own instance of Dalvik VM. In turn, 
+            this means that you won’t be able to share data across those instances, at least not in the traditional sense. 
+            - For example, static fields will have their own value for each process, and not a single one common across all processes. And this extends to 
+            every state of the application.
+        
+    # ----- What is IPC?
+        - inter-process communication or interprocess communication (IPC) refers specifically to the mechanisms an operating system provides to allow the 
+        processes to manage shared data. Typically, applications can use IPC, categorized as clients and servers, where the client requests data and the server 
+        responds to client requests. Many applications are both clients and servers, as commonly seen in distributed computing.
+
+        - Some apps attempt to implement IPC using traditional Linux techniques such as network sockets and shared files. However, you should instead use 
+        Android system functionality for IPC such as Intent, Binder or Messenger with a Service, and BroadcastReceiver. The Android IPC mechanisms allow you to 
+        verify the identity of the application connecting to your IPC and set security policy for each IPC mechanism.
+
+        # -- Mechanisms of IPC implementation:
+            1. Intents
+                - are messages which components can send and receive. It is a universal mechanism of passing data between processes. With help of the intents one 
+                can start services or activities, invoke broadcast receivers and so on.
+            2. Bundles
+                - are entities of data that is passed through. It is similar to the serialization of an object, but much faster on android. Bundle can be read 
+                from intent via the getExtras() method.
+            3. Binders
+                - are the entities which allow activities and services to obtain a reference to another service. It allows not simply sending messages to 
+                services but directly invoking methods on them.
+                1. AIDL
+                2. Messenger
+                3. Binder
+                4. Bound service
+# -----------------   end IPC ----------------- #
+
+# ------ Resources:
+    - https://medium.com/@vardaansh1/an-introduction-to-android-interprocess-communication-and-common-pitfalls-ac4dfeddf89b
+    - https://stackoverflow.com/questions/5740324/what-are-the-ipc-mechanisms-available-in-the-android-os

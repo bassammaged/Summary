@@ -1,0 +1,15 @@
+# ---------------- start android app pentest tools ---------------- #
+    # ----- APK analysis:
+        - APK Analyzer: https://developer.android.com/studio/build/apk-analyzer
+    
+    # ----- APK signing:
+        - keytool
+        - jarsigner
+
+    # ----- Reverse APK:
+        - APK Tool
+        - dex2jar
+        - jd-gui
+        - procyon.
+        - fernflower.
+        - baksmali or smali

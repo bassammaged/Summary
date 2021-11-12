@@ -1,0 +1,60 @@
+# ----------------------- Start Deep link attacks ----------------------- #
+    # ------ What is deep link in android:
+        - When a clicked link or programmatic request invokes a web URI intent, the Android system tries each of the following actions, in sequential 
+        order, until the request succeeds:
+            1. Open the user's preferred app that can handle the URI, if one is designated.
+            2. Open the only available app that can handle the URI.
+            3. Allow the user to select an app from a dialog.
+
+    # ------ AndroidManifest.xml for deeplink:
+        - <action>
+            Specify the ACTION_VIEW intent action so that the intent filter can be reached from Google Search.
+        - <category>
+            - Include the BROWSABLE category. It is required in order for the intent filter to be accessible from a web browser. Without it, clicking a link in a browser 
+            cannot resolve to your app. Also include the DEFAULT category. This allows your app to respond to implicit intents. Without this, the 
+            activity can be started only if the intent specifies your app component name.
+
+            - The following XML snippet shows how you might specify an intent filter in your manifest for deep linking. The URIs
+             “example://gizmos” and “http://www.example.com/gizmos” both resolve to this activity.
+
+        - <data>
+            Notice that the two intent filters only differ by the <data> element. Although it's possible to include multiple <data> elements in the same filter, it's 
+            important that you create separate filters when your intention is to declare unique URLs (such as a specific combination of scheme and host), because 
+            multiple <data> elements in the same intent filter are actually merged together to account for all variations of their combined attributes. For example, 
+            consider the following:
+                <intent-filter>
+                    ...
+                    <data android:scheme="https" android:host="www.example.com" />
+                    <data android:scheme="app" android:host="open.my.app" />
+                </intent-filter>
+        - Example on AndroidManifest.xml:
+        <activity
+            android:name="com.example.android.GizmosActivity"
+            android:label="@string/title_gizmos" >
+            <intent-filter android:label="@string/filter_view_http_gizmos">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
+                <data android:scheme="http"
+                    android:host="www.example.com"
+                    android:pathPrefix="/gizmos" />
+                <!-- note that the leading "/" is required for pathPrefix-->
+            </intent-filter>
+            <intent-filter android:label="@string/filter_view_example_gizmos">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "example://gizmos” -->
+                <data android:scheme="example"
+                    android:host="gizmos" />
+            </intent-filter>
+        </activity>
+
+    # ------- Exploitation:
+        - Through adb:
+            adb shell am start -W -a <action_name> -d "schema://<domain>"
+        - example:            
+            adb shell am start -W -a android.intent.action.VIEW -d “http://xe.com” com.app.damnvulnerablebank
+
+# -----------------------   end Deep link attacks ----------------------- #

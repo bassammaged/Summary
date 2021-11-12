@@ -1,0 +1,122 @@
+# ------------------- start missing certificate validation ------------------- #
+    # ----- Quick introduction about the certificate:
+        1. Certificates are created by generating a public and private key pair.
+        2. Certificates are signed by Certificate Authoriity (CA).
+        3. Certificate could be verified by CA public key. 
+
+        # -- CA public certificates:
+            - Almost large precentage of CAs are trusted by default by most software (ex, Google Chrome) and system. Trusting means that the system or the software has
+            their public key for verifying the certificate that already signed by them.
+            - most important certificate fields:
+                1. Issued to
+                2. Issued by
+                3. Period of validity
+                4. fingerprints 
+
+        # -- Certificate be invalid:
+            1. Certificate already revoked.
+            2. Certificate period of validity already passed.
+            3. Hostname not matching with the DNS.
+
+    # ----- How android works with the certificates?
+        - Android 6.0 (API 23) or below, by default the application trust system store certificates and user store certificates.
+        - While API 24+ by default the application trust only system store cetificates. 
+
+    # ----- Scenario attack:
+        # -- Detection: 
+            # -- 1st: source code review: 
+                1. Developer write a code to ignore the certificate validation.
+                    a. TrustManager
+                    b. SSLSocket
+                    c. SSLSocketFaCTORY.GetInsecure
+                    d. HostNameVerifier 
+
+            # -- 2nd: Create a certificate with fake hostname.
+                1. Trust proxy certificate and trying to intercept the connection.
+
+    # ------ Bypassing SSL verification and certificate pinning:
+        # -- 1st: Adding a custom CA to the trusted certificate store
+            - Downgrade the targeted sdk from 24+ to 23 or lower.
+            - example: 
+                - <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.test.app" platformBuildVersionCode="25" platformBuildVersionName="7.1.1">
+                - platformBuildVersionCode="25" --- Change it to --> platformBuildVersionCode="23"
+                - repackign and reasign the application.
+
+            # -- OR reconfigure the network_security_config.xml
+                - unpacking the apk.
+                - review /res/xml/network_security_config.xml
+                    - extract which path that used by the developer to store trusted certificates.
+                - Edit /res/xml/network_security_config.xml to add your certificate hostname and save your certificate at the trusted path.
+                - Repacking and sign the application.
+
+                Note: example on network_security_config.xml: https://stackoverflow.com/questions/53984725/networksecurityconfig-no-network-security-config-specified-using-platform-defa
+
+        # -- 2nd: Overwriting a packaged CA cert with a custom CA cert
+            - Story: What if you successfully install your certificate to the user-added CA store, the application is targeting Android 6.0, and your certificate shows 
+            up as valid when you try and browse other SSL-protected resources, but the application still dies with SSL errors? It’s possible that the developers 
+            have taken additional steps to restrict the set of CAs trusted by the application. Recall from technique 1 we defined a custom trust anchor and provided 
+            a path to a CA certificate – this is intended functionality that may be used by developers to attempt to protect their application from SSL interception.
+
+            - If a custom certificate chain is being distributed with an application, extracting the APK and overwriting the provided CA with our custom CA.
+
+        # -- 3rd: Using Frida to hook and bypass SSL certificate checks
+            - Using objection to inject frida-gadget and repacking and asign the application.
+            - Install the repacking APKK with adb
+            - connect to frida server: 
+                frida-ps -U
+                frida -U gadget
+                objection explore
+
+        # -- 4th: Reversing custom certificate code
+            - Story: it’s possible that a developer would choose to provide their own SSL libraries instead of relying on the system libraries to 
+            handle the SSL certificate validation. If this is the case, we’ll likely want to extract the APK and convert the smali back to Java so 
+            we can look for the code responsible for handling the certificate validation.
+
+            - d2j-dex2jar test_app.apk
+            - Open jd-gui
+
+    # ------ Mitigation:
+        1. Using x509TrustManager in secure way.
+            - x509TrustManager helps to trust specific information that could be mentioned within the public certificate.
+        2. Trust specific CAs or even your own custom CA.
+            # -- Implementation:
+                    1. Add your custom CAs public keys.
+                    2. Using one of them to sign the public and private key of your API.
+                    3. Configure the androidManifest.xml and network_security_config.xml for trusting your own CAs only.
+                    Note: Store the private keys of the rest of CAs in air-gap (isoluated machine)
+        3. SSL pinning.
+            # -- Implementaion:
+                - Scenario 1:
+                    1. Get the public certificate pin.
+                    2. Trust the public certificate pin by the application code.
+                - Scenario 2:
+                    1. Get the public certificate for our API.
+                        openssl s_client -showcerts -connect api.github.com:443 </dev/null 2>/dev/null|openssl x509 -outform PEM >mycertfile.pem 
+                    2. Converting to a .bks keystore (You need: Bouncy Castle implementation:  http://repo2.maven.org/maven2/org/bouncycastle/bcprov-ext-jdk15on/1.46/bcprov-ext-jdk15on-1.46.jar)
+                        keytool -importcert -v -trustcacerts -file "mycertfile.pem" -alias ca -keystore "keystore.bks" -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath "bcprov-ext-jdk15on-1.46.jar" -storetype BKS -storepass testing
+                            a. Use -file argument to specify .pem, .cert or .crt certificate file. Output keystore is specified usting -keystore argument. Path to 
+                            Bouncy Castle .jar must be provided with -providerpath argument. Finally, the password for the generated keystore is set with 
+                            -storepass argument. 
+                    3. Pinning the certificate to DefaultHttpClient
+                        a. Using trial and error it has been established that only .bks keystores can be used for certificate pinning. Keystore file must be placed 
+                        in res/raw folder.
+                        b. The following snippet demonstrates loading a keystore:
+                            InputStream in = resources.openRawResource(certificateRawResource);
+                            keyStore = KeyStore.getInstance("BKS");
+                            keyStore.load(resourceStream, password);
+                        c. When creating an instance of DefaultHttpClient that keystore can be used to pin the certificates that it contains by adding a scheme 
+                        as follows (the code is simplified in order to give you the basic idea):
+                            HttpParams httpParams = new BasicHttpParams();
+
+                            SchemeRegistry schemeRegistry = new SchemeRegistry();
+                            schemeRegistry.register(new Scheme("https", new SSLSocketFactory(keyStore), 443));
+
+                            ThreadSafeClientConnManager clientMan = new ThreadSafeClientConnManager(httpParams, schemeRegistry);
+
+                            httpClient = new DefaultHttpClient(clientMan, httpParams);                    
+    # ----- Resources: 
+    - https://github.com/ikust/hello-pinnedcerts
+    - https://github.com/moxie0/AndroidPinning
+    - https://www.netspi.com/blog/technical/four-ways-bypass-android-ssl-verification-certificate-pinning/
+# -------------------   end missing certificate validation ------------------- #
+

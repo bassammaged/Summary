@@ -1,0 +1,9 @@
+# ------------------- start setting up the test environment ------------------- #
+    # ----- Required tools/applications:
+        - Android studio.
+            - Link: https://developer.android.com/studio/preview?utm_source=android-studio
+        - Intel Hardware Accelerated Execution Manager (HAXM) (Installed by default with Android studio)
+            - Link: https://github.com/intel/haxm
+        - Genymotion emulator
+        - Android VDK manager emulator (Feature in Android studio) 
+# -------------------   end setting up the test environment ------------------- #

@@ -1,0 +1,78 @@
+# ------------------- start android build process ------------------- #
+    # ----- android building process
+    
+    # ----- Compiling:
+        - buidling of android applications run through three major steps:
+            1. compilation
+            2. packaging
+            3. signing
+            4. zip packing
+
+        # ----- Compilation and packaging:
+            - Step 1: the building process starts by implementing the Android Asset Packaging Tool (aapt) to compile the application resources, the result of
+            compilation is "R.java" and compiled resources.
+            - Step 2: Java compiler (javac) transform ".java", ".aidl" into ".class" files
+            - Step 3: the compilers convert the result of javac ".class" files into ".dex" or ".odex" files.
+            - Step 4: apkbuilder to packaging ".dex" or ".odex" with compiled resources into APK files.
+            - Step 5: (optional) Signing the APK.
+                ==> Note: .aidl is a compiled Java code that implementation of IPC protocol to allow developer to marsheling the object communication across
+                different processes.
+            - As shown "../#00-images/android-compile-process.png"
+            - You can check the following link for more details: https://developer.android.com/studio/build?authuser=1
+
+        # ----- Singing how it works:
+            - The APK Packager signs your APK using either the debug or release keystore:
+                - If you are building a debug version of your app, that is, an app you intend only for testing and profiling, the packager signs your app 
+                with the debug keystore. Android Studio automatically configures new projects with a debug keystore.
+                
+                - If you are building a release version of your app that you intend to release externally, the packager signs your app with 
+                the release keystore. To create a release keystore, read about signing your app in Android Studio.
+
+
+    # ----- APK structure:
+        - AndroidManifest.xml
+        - classes.dex
+        - resources.arsc
+        - /lib
+        - /res
+        - /META-INF
+        - Thrid-party libraries, etc
+
+        # ----- AndroidManifest.xml:
+            - File Description found in android_summary/02-create-project
+            - file contains security related features such as minSDKVersion, TargetSDKVersion
+                - <uses-sdk> xml tag holds sdk values.
+                - <uses-permissions> holds permission that used by the application.
+                - Security tip: when the application support older OS version the app effectively inherits the vulnearbilities that have been identifed in
+                those versions and application is exposing to exploitable risk.
+            
+        # ----- *.dex:
+            - APK support only one .dex file.
+                - there are different ways to configre APK to support multiple .dex files.
+            - one .dex file support 65,535 methods which can stored in a single dex file.
+        
+        # ----- Assets directory:
+            - Assets directories contains HTML, fonts, MP3, images and extra. its act like res/* but without restriction on naming.
+
+        # ----- lib directory:
+            - storing libraries and precompiled code and linux shared object (.so)
+            - Security tips: .so files are libraries created by the developer of third-party, could be replaced or modified file and
+            get them to execute, this could lead to RCE.
+
+        # ----- META-INF directory:
+             - directory contains files relatedd to the integrity and authenticity of the application.
+                - MANIFEST.MF: a listing of all the resources files and their SHA1
+                - CERT.RSA: The developer's siging certificate.
+                - CERT.SF: list of resources and their hashes, correspnding to the MANIFEST.MF
+            
+        # ----- res directory:
+            - contains all of the resources such as images which are not compiled into the resources.arsc file.
+
+    # ----- Code signing:
+        Refer: "../android-technique-code-signing"
+
+    # ----- Zip packing:
+        - zipalign is an archive alignment tool that provides important optimization to Android application (APK) files. The purpose is to ensure 
+        that all uncompressed data starts with a particular alignment relative to the start of the file. Specifically, it causes all uncompressed data 
+        within the APK, such as images or raw files, to be aligned on 4-byte boundaries.                                                                                     
+# -------------------   end android build process ------------------- #

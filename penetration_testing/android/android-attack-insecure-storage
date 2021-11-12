@@ -1,0 +1,53 @@
+# ------------------- start data storage ------------------- #
+    # ----- what is data storage:
+        The most common security concern for an application on Android is whether the data that you save on the device is accessible to other apps. There are 
+        three fundamental ways to save data on the device:
+        - Internal storage.
+        - External storage.
+        - Content providers.
+
+
+    # ----- Type of local storage:
+        1. Local files.
+            a. internal storage.
+            b. external storage.
+            c. shared preferences.
+        2. Local database (SQLite).
+        3. content provider.
+
+        # -- Internal storage:
+            - By default internal sotrage accessiable only to your app.
+            - Security tips:
+                1. Generally avoid the MODE_WORLD_WRITEABLE or MODE_WORD_READABLE.
+                2. Encrypt the internal storage using security library which provde encryptedFile class.
+
+            - Location of the internal storage:
+                1. Internal sotrage usually be stored in /data/data/<app_package_name>
+                2. Internal storage for the system apps in /system/app or /system/priv-app
+
+        # -- External storage:
+            - Files created on external storage, such as SD cards, are globally readable and writable. Because external storage can be removed by the user and also 
+            modified by any application, don't store sensitive information using external storage.
+            - Location of the external storage:
+                1. /sdcard
+                2. /mnt/sdcard
+            - there is a require permission "WRITE_EXTERNAL_STORAGE"
+
+        # -- shared preferences:
+            - One of the most Interesting Data Storage option Android provides its users is Shared Preferences. Shared Preferences is the way in which one 
+            can store and retrieve small amounts of primitive data as key/value pairs to a file on the device storage such as String, int, float, Boolean 
+            that make up your preferences in an XML file inside the app on the device storage.
+                four different mode for share preferences:
+                    1. MODE_PRIVATE: defaukt mode where the creted file can only be accessed by the calling application or by an applications with the same user id.
+                    2. MODE_WORLD_READABLE: all other applications have read access to the file.
+                    3. MODE_WORLD_WRITEABLE: all other applications have write access to the file.
+                    4. MODE_APPEND: if the file already exist, write data to the end.
+
+        # -- content provider:
+            - read more about it here "./01-introduction/10-content-providers-component"
+# -------------------   end data storage ------------------- #
+# ------------------- start insecure storage ------------------- #
+    # ------ what is insecure data storage:
+        Storage data within the device, with no any access restriction, misconfigured premission, with no layer of encryption.
+
+# -------------------   end insecure storage ------------------- #

@@ -1,0 +1,46 @@
+# ---------------------------- start Content Provider ---------------------------- #  
+    # ----- What is content provider:
+        - In Android, Content Providers are a very important component that serves the purpose of a relational database to store the data of applications. The role 
+        of the content provider in the android system is like a central repository in which data of the applications are stored, and it facilitates other applications 
+        to securely access and modifies that data based on the user requirements.
+        - Android system allows the content provider to store the application data in several ways. Users can manage to store the application data like 
+        images, audio, videos, and personal contact information by storing them in SQLite Database, in files, or even on a network. 
+        - In order to share the data, content providers have certain permissions that are used to grant or restrict the rights to other applications to 
+        interfere with the data.
+
+    # ----- What is Content URI?
+        - Content URI(Uniform Resource Identifier) is the key concept of Content providers. To access the data from a content provider, URI is used as a query string. 
+        - Structure of a Content URI: content://authority/optionalPath/optionalID
+            - content:// – Mandatory part of the URI as it represents that the given URI is a Content URI.
+            - authority – Signifies the name of the content provider like contacts, browser, etc. This part must be unique for every content provider.
+            - optionalPath – Specifies the type of data provided by the content provider. It is essential as this part helps content providers to 
+            support different types of data that are not related to each other like audio and video files.
+            - optionalID – It is a numeric value that is used when there is a need to access a particular record.
+
+            Note: If an ID is mentioned in a URI then it is an id-based URI otherwise a directory-based URI.
+
+    # ----- The main syntax of content provider:
+        1. Create a class in the same directory where the that MainActivity file resides and this class must extend the ContentProvider base class.
+        2. To access the content, define a content provider URI address.
+        3. Create a database to store the application data.
+        4. Implement the six abstract methods of ContentProvider class.
+            1. query(): A method that accepts arguments and fetches the data from the desired table. Data is retired as a cursor object.	
+            2. insert(): To insert a new row in the database of the content provider. It returns the content URI of the inserted row. 
+            3. update(): This method is used to update the fields of an existing row. It returns the number of rows updated.
+            4. Delete(): This method is used to delete the existing rows. It returns the number of rows deleted.
+            5. getType(): This method returns the Multipurpose Internet Mail Extension(MIME). type of data to the given Content URI.
+            6. onCreate(): As the content provider is created, the android system calls. this method immediately to initialise the provider.
+
+        5. Register the content provider in AndroidManifest.xml file using <provider> tag.
+        6. Set android:protectionLevel for the content provider such as "android:protectionLevel=signature".
+        7. Set <grant-uri-permission> could to be  FLAG_GRANT_READ_URI_PERMISSION or FLAG_GRANT_WRITE_URI_PERMISSION.
+
+    # ------ Access control for content provider:
+        - The provider must be enabled and exported within the app manifest file for it to be exposed to external apps.
+        - Different permissions can be required for read and write operations on the provider, including null. Null permissions allow access to any app. Without the 
+        appropriate read or write permission (or null), external applications cannot perform the read or write operation on the provider.
+        - Different permissions can also be required for read and write operations on specific sub-paths of the provider URI (path permissions).
+# ----------------------------   end Content Provider ---------------------------- #  
+
+Have to be written by me in the end of this week:
+Example of content provider: https://www.geeksforgeeks.org/content-providers-in-android-with-example/

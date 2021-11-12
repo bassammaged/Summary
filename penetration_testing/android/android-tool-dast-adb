@@ -1,0 +1,83 @@
+# ---------------------- start adb commands ---------------------- #
+    # ----- Quick introduction:
+        - adb is an invaluable tool, which allows you to interact with a running application or even an android device itself, ADB can be used with either 
+        a physical device or emulator.
+        - In order to connect to a physical device, you'll need to connect your device your computer using a USB cable. follow the following instructions:
+            https://developer.android.com/studio/command-line/adb.html#Enabling
+
+        # -- main component of adb:
+            1. Client.
+                - is the program you directly interact with.
+            2. Server.
+                - the server manages communication between the client and daemon on the physical or virtual device.
+            3. Daemon.
+                - runs in the background on the device or emulator and executes the commands, psased via the server from the client.
+    
+    # ----- commands:
+        # -- administration commands:
+            - Show help menu
+                adb
+            - Show devices attached 
+                adb devices
+            - Connect to new device
+                adb connect <device_ip:port>
+            - Establish a shell
+                adb -s <device_serial> <shell|root>
+                # -- change from normal user to root user.
+                    adb -s <device_serial> shell
+                    sodu su
+            
+        # -- Screenshots 
+            - Take screenshots
+                adb dexec-out screencap -p > <screenshot_name.png>
+
+        # -- Dealing with the packages: 
+            - List all installed packages
+                adb shell pm list packages
+            - return paths to the apps files (include APK path)
+                adb shell pm path <package_name>
+            - return the PID of the package
+                adb shell pidof com.android.insecurebankv2
+
+        # -- Add or extract files
+            - Adding
+                adb push <path_of_the_file> <location_to_be_stored_at>
+            - Extract
+                adb pull <path_of_the_file> <location_to_be_stored_at>
+
+        # -- Installation of the package
+            adb install <apk_file>
+            adb uninstall <application_name>
+
+        # -- Interact with intent:
+            - start an activity
+                adb shell am start
+            - send a broadcast
+                adb shell am broadcast
+            - start a service
+                adb shell am startservice
+        
+        # -- Logs
+            # -- LogCat
+                - Get logcat logs
+                    adb shell logcat
+                - Clear all logcat
+                    adb logcat -c
+                - Save the logcat outbut on the local system
+                    adb locgat -d > <local_file_path>
+
+    
+# ---------------------- start adb commands ---------------------- #
+
+Cheatsheet: https://gist.github.com/ernestkamara/d0a11cc36f331ebb8a41aa36991eee9a
+adb shell am start –a android.intent.action.EDIT –n com.example.android.notepad/.NoteEditor –d content://com.google.provider.NotePad/notes/1
+
+# ----- adb information
+        adb shell getprop ro.build.version.release 
+
+    
+        
+        # -- All device information
+            adb bugreport > <local_file_path> // Will dump the whole device information like dumpstate, dumpsys and logcat output.
+
+        

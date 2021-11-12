@@ -1,0 +1,79 @@
+# ------------------------ start reverse apk ------------------------ #
+    # ----- Unpackage the APK
+        # -----  Tools:
+            - apktool:
+            - zip
+                
+        
+        # ----- apktool:
+            - A tool for reverse engineering 3rd party, closed, binary Android apps. It can decode resources to nearly original form and rebuild them after 
+                making some modifications. It also makes working with an app easier because of the project like file structure and automation of some repetitive 
+                tasks like building apk, etc.
+
+            - Command: 
+                apktool d <apk_file>
+                apktool d <apk_file> -s     # In order to prevent the classes.dex file from being disassembled you can specify -s
+
+        # ----- zip:
+            - Changing the extension from .apk to .zip and uncompress the packaging.
+                - the result will contain a classes.dex.
+            Note: you can use baksmali to smali form that it is more redable than the bytecode and dexcode.
+
+    # ----- Convert dex to jar
+        # ----- Tools:
+            - apktool:
+
+        # ----- dex2jar:
+            - tools to work with android .dex and java .class files
+            - command:
+                d2j-dex2jar <classes.dex> -o <output.jar>       # Run the command against dex file
+                d2j-dex2jar <file.apk> -o <output.jar>          # OR run the command against apk file directly.
+
+    # ----- Decompile .jar
+        # ----- Tools:
+            - jd-gui
+            - procyon.
+            - fernflower.
+
+        # ----- jd-gui
+            - The “Java Decompiler project” aims to develop tools in order to decompile and analyze Java 5 “byte code” and the later versions. 
+             - JD-GUI is a standalone graphical utility that displays Java source codes of “.class” files. You can browse the reconstructed 
+             source code with the JD-GUI for instant access to methods and fields.
+
+    # ----- Reverse smail/baksamli
+        - Samli/baksamli are programs commonly refeered to as an assembler and disassembler, for android, the bytecode is in .dex format,
+        which disammbled by baksmali, produces an assembly langauge which is commonly referred to as "smali code".
+        - assembly (smali) is readable than the bytecode.
+
+        # ----- Extract the assembly code from .dex
+            # ----- Tools:
+                - java
+                - baksmali or smali-2.5.2
+
+
+    # ----- Obfuscation:
+        - Obfuscation is the process of intentionally making code harder to read for the purpose of making it more difficult to reverse and developers
+        wanting to protect their intellectual property, namely the code itself. On the other hand, obsfuscation has side effect of optimizing and minifying the code
+        which leads to imporve performance and reduce the apps size.
+        - Obfuscation doesn't guarantee and security at all, it just make reverse process harder than before.
+        - Many of commercial and non-commercial tools that preform the obfuscation for example: ProGuard (Free), yGuard (Commercial).
+        - check the result of ProGuard and how to use it: https://riis.com/blog/android-obfuscation-proguard-dexguard/
+
+        - Obfuscation could me change the long names to shortest one, for example: public class UserRegiestration() {} ==> public class a() {}
+
+        # ----- How we deal with Obfuscation:
+            - Incase we don't have the source code itself, it a painstaking process to deobfuscated what it already obfuscated.
+            - Or you can jump into bytecode itself. 
+
+        # ----- V.I Note:
+            - If you understand Java bytecode, a good way to edit JARs is to use a bytecode assembler/disassembler such as Krakatau, baksamli. Since this 
+            operates directly at the level of compiled bytecode, you can edit any Java classfiles, no matter how obfuscated, and you don't have to 
+            worry about compiler errors.
+
+            - Introduction to bytecode (assembly):
+                https://source.android.com/devices/tech/dalvik/dalvik-bytecode
+                https://proandroiddev.com/diving-deep-into-android-dex-bytecode-48db82b170c8
+
+                
+# ------------------------   end reverse apk ------------------------ #
+

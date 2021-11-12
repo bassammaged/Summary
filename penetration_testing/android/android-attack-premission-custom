@@ -1,0 +1,11 @@
+# --------------------- start the custom permission attack --------------------- #
+    # ----- Race condition:
+        # -- Scenario:
+            1. The application use specific custom permission and used for exported specific activity or service.
+            2. The application assign level of protection as signture or even SignatureOrSystem.
+            3. Attacker identitfied the name of the custom permission from the AndroidManifest.xml
+            4. Attacker create evil application that use the same custom permission with normal level of protection.
+                - Condition: the evil application must to be installed first.
+            5. After Installation the real application, the real application will take the ownership of these custom permission but with the same level of protection
+            that identified by the evil application.
+# ---------------------   end the custom permission attack --------------------- #

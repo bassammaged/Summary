@@ -1,0 +1,77 @@
+# ---------------------------- start Root Device ---------------------------- #
+    # ----- What is rooting?
+        - Root, at least the way we're talking about it here, is the superuser. Your Android phone uses Linux permissions and file-system ownership. You are a user 
+        when you sign in, and you are allowed to do certain things based on your user permissions. Apps you install are also given a type of user ID, and they all 
+        have permissions to do certain things — you see those when you install them on older versions of Android, or you are prompted to allow them on  Marshmallow or 
+        higher — in certain folders with certain files. 
+
+        - Root is also a user. The difference is the root user (superuser) has permission to do anything to any file anywhere in the system. This includes things we 
+        want to do, like uninstall application forced on us, or things we don't want to do that can put your Android in an unusable state. When you're doing things 
+        with superuser permissions, you have the power to do anything.
+
+        - Rooting is a process by which one obtains “root” or system level access to an Android device. This is equivalent to having a root account on a Linux 
+        system. 
+
+        - But unlike a typical Linux system, the manufacturers and/or carriers do not intend for the user to have this level of access to their device. 
+        Essentially, it’s breaking into your own device, to get more flexibility in customizing it. Because many OEMs and/or carriers don’t want users to have
+        this access, obtaining root access often requires exploiting a vulnerability on a device.
+
+    # ----- How the rooting get granted?
+        - When you root your Android, you're simply adding a standard Linux function that was removed. A small file called su is placed in the system and given 
+        permissions so that another user can run it. It stands for Switch User, and if you run the file without any other parameters it switches your credentials 
+        and permissions from a normal user to that of the superuser. You are then in complete control and can add anything, remove anything and access functions on 
+        your phone or tablet that you couldn't reach before.
+
+        # -- Explain in detail:
+            - First approach:
+                1. The vulnerability generally needs to be in a process, which itself has system level access. 
+ 
+            - Second approach:
+                1. Exploit vulnerability to gain unprivileged access.
+                2. Exploit another vulnerability to elevate that access to system or “root” level.
+                Note: These vulnerabilities are often specific to device, version or specific piece of code/
+                3. Once the exploit is complete, the next step in the process involves copying the Linux su binary to a location specified in the in the user’s PATH 
+                environment variable, for example /system/xbin
+
+        Note: Everything described above is how Linux-based systems normally work, and how Android worked before version 4.3.
+
+    # ----- Android 4.3, How it works against rooting?
+        - Since the release of Android 4.3 the process that handles requests for root access has to run as soon as you turn on your phone. 
+        This daemon (that's what these sorts of processes are called) also needs special permissions so it can work as intended. To make both of these things happen, 
+        files in the phone's system folder had to be modified.
+
+    # ----- Android 5.0, How it works against rooting?
+        - When Android 5.0 was released things changed and the boot image — software that does exactly what you think it does: boot up Android on your phone — need to 
+        be modified so that the su daemon was launched. Since this doesn't modify the system partition, it was called a systemless root.
+
+    # ----- Why its important to root the device?
+        - Unlike normal users, developers and security testers often need root access to devices in order to see what’s going on
+        under the hood. For example, we may need to view what data was written to a protected file, which wouldn’t normally be allowed, even using ADB. 
+
+    # ----- Recommendation:
+        - it’s best to have a Nexus device on hand as a test device. This avoids the need for exploits.
+
+    # ----- Why the rooted device not secure?
+        - Once a device has been rooted, the potential exists that any app on the device could request root access. If a malicious app obtains this 
+        capability, either through a vulnerability, social engineering or other method, there is literally no limit to the destruction it can cause to the 
+        device’s software and the user’s data. 
+        - The cornerstone of the Android security is the UID separation between apps. The UID is what prevents a normal app from modifying the system 
+        configuration as well.
+# ----------------------------   end Root Device ---------------------------- #
+
+# ---------------------------- start Techniques and Tools  ---------------------------- #
+    # ----- Tools:
+        - superuser (google play app)
+        - superSU (google play app)
+        - Xposed framework + Magisk framework
+        - Kingo Root
+        - BaiduRoot
+        - One Click Root
+        - Framaroot 
+        - Firmware.mobi
+# ----------------------------   end Techniques and Tools  ---------------------------- #
+
+
+# ------ Resources: 
+    - https://www.androidcentral.com/root (Done)
+    - 

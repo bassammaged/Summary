@@ -1,0 +1,590 @@
+# ---------------------------- Start intent ---------------------------- #  
+    # ----- What is the intent?
+        - Android Intent is the message that is passed between components such as activities, content providers, broadcast receivers, services etc.
+        - It is generally used with startActivity() method to invoke activity, broadcast receivers etc.
+        - The dictionary meaning of intent is intention or purpose. So, it can be described as the intention to do action.
+    
+        # -- Intent used for:
+            - Intent is used to invoke components. It is mainly used to:
+                a. Start the service.
+                b. Launch an activity.
+                c. Display a web page.
+                d. Display a list of contacts.
+                e. Broadcast a message.
+                f. Dial a phone call, etc...
+        # -- Type of android intents
+            1. implicit intent
+            2. explicit intent
+            3. broadcast intent
+            4. pending Intent
+            5. deep link
+
+            # -- implicit intent:
+                - Implicit Intents do not directly specify the Android components which should be called, it only specifies action to be performed. A Uri can be used 
+                with the implicit intent to specify the data type.
+                - for example:
+                    Intent intent = new Intent(ACTION_VIEW,Uri.parse("http://www.google.com"));
+                    - This will cause web browser to open a webpage. Android system searches for all components which are registered for the specific action and 
+                    the data type.If many components are found then the user can select which component to use.
+
+            # -- Explicit intent:
+                - Explicit intents are used in the application itself wherein one activity can switch to other activity.
+                - for example:
+                    Intent intent = new Intent(this,Target.class);
+                    - this causes switching of activity from current context to the target activity. Explicit Intents can also be used to pass data to other 
+                    activity using putExtra method and retrieved by target activity by getIntent().getExtras() methods.
+
+            # -- Broadcast intent:
+                - Unlike the other intents that received by one app, broadcast intents can be received by multiple apps. when sending broadcasts, care needs to be taken
+                so that no sensitive data is leaked in the process.
+                - Broadcast intents are Intent objects that are broadcast via a call to the sendBroadcast(), sendStickyBroadcast() or sendOrderedBroadcast() methods 
+                of the Activity class (the latter being used when results are required from the broadcast). In addition to providing a messaging and event system 
+                between application components, broadcast intents are also used by the Android system to notify interested applications about key system 
+                events (such as the external power supply or headphones being connected or disconnected).
+                - When a broadcast intent is created, it must include an action string in addition to optional data and a category string. As with standard intents, 
+                data is added to a broadcast intent using key-value pairs in conjunction with the putExtra() method of the intent object. The optional category 
+                string may be assigned to a broadcast intent via a call to the addCategory() method.
+                - The action string, which identifies the broadcast event, must be unique and typically uses the application’s package name syntax.
+
+                Note: If you need to ensure that only a select app recieves a broadcast, starting with API version 14 (android 4.0 Ice cream sandwich), you can specify
+                the app using Intent.setPackage or use a permission when sending the broadcast by specify uses-permission element in their AndroidManifest.xml
+
+                - broadcast syntax: sendBroadcast(intent, receiverPermission)
+
+                Note: Permission that you declare is reserved for system level apps, any app could also have declared the same permission. the only protection
+                offered in this situation is at app install time, but that has suffered from vulnerabilites.
+
+                # -- Type of broadcasts:
+                    1. Normal broadcast.
+                        - Asynchronous and can be processed by multiple application in any order or potentially simultaneous.
+                    2. Order broadcast.
+                        - runs onee at a time, in a disay-chained fashion. the order is determined by the priority defined with the corresponding receiver element, within
+                        the receiving app's AndroidManifest.xml
+                        - This means that each app can process, relay or even drop the broadcast.
+                    3. Sticky broadcast.
+                        - A Sticky Broadcast is a Broadcast that stays around following the moment it is announced to the system. Most Broadcasts are sent, 
+                        processed within the system and become quickly inaccessible. However, Sticky Broadcasts announce information that remains accessible beyond the 
+                        point at which they are processed. A typical example is the battery level Broadcast. Unlike most Broadcasts, the battery level can be 
+                        retrieved within applications beyond the point at which it was sent through the system. This means that apps can find out whatever the 
+                        last battery level broadcast was.
+                        - sendStickyBroadcast() performs a sendBroadcast(Intent) known as sticky, i.e. the Intent you are sending stays around after the broadcast is 
+                        complete, so that others can quickly retrieve that data through the return value of registerReceiver(BroadcastReceiver, IntentFilter). In 
+                        all other ways, this behaves the same as sendBroadcast(Intent).
+                        - Security tip: Sticky broadcasts should not be used. They provide no security (anyone can access them), no protection (anyone can modify them), and
+                         many other problems. The recommended pattern is to use a non-sticky broadcast to report that something has changed, with another mechanism 
+                         for apps to retrieve the current value whenever desired.
+                        - This method was deprecated in API level 21.
+                        - For exmaple:
+                            Intent intent = new Intent("some.custom.action");
+                            intent.putExtra("some_boolean", true);
+                            sendStickyBroadcast(intent);
+                    
+
+                V.I Note: Incase you send broadcast within your application only you could you LocalBroadCastManager package or AndroidX package.
+            
+            # -- Pending intent:
+                - When constructing a pending intent, developer specifies an intent, action and pass the app permission too, if this intent is not an explicit intent, a malicious
+                application could receive it and perform the action on behalf of the victim app.
+                - Example of pneding intent, We want to provide an Intent to Notification, in this case we want to open a Activity which performs Camera capture functionality. Here, 
+                if we pass simply Intent, the NotificationManager doesnt have this permission although my app has this permission stated in Manifest; due to this the 
+                action wont work as NotificationManager doesnt have the permission to do so. But, if you use PendingIntent, here the permission that my app have will be 
+                used instead of NotificationManager. Therefore, even if NotificationManager doesnt have Camera permission and my app has it will still open up the activity 
+                and perform the app.
+                    - As desribed in CVE-2014-8609 the android app suffered from a privilege escalation vulnerabilty, due to its use of an implicit rather than explicit intent
+                    when costructing a pending intent. 
+
+                - Vulnerable code line:
+                    mPendingIntent  = PendingIntent.getBroadcast(this,0,new Intent(),0)
+
+                - Safe code:
+                    new Intent(SampleAction, SimpleUri, this, Example.class)
+            # -- Deep link:
+
+# ----------------------------   end intent ---------------------------- #  
+
+# ---------------------------- start example of implicit ---------------------------- #
+    # ----- activity_main.xml
+        <?xml version="1.0" encoding="utf-8"?>  
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+            xmlns:app="http://schemas.android.com/apk/res-auto"  
+            xmlns:tools="http://schemas.android.com/tools"  
+            android:layout_width="match_parent"  
+            android:layout_height="match_parent"  
+            tools:context="example.javatpoint.com.implicitintent.MainActivity">  
+        
+            <EditText  
+                android:id="@+id/editText"  
+                android:layout_width="wrap_content"  
+                android:layout_height="wrap_content"  
+                android:layout_marginEnd="8dp"  
+                android:layout_marginStart="8dp"  
+                android:layout_marginTop="60dp"  
+                android:ems="10"  
+                app:layout_constraintEnd_toEndOf="parent"  
+                app:layout_constraintHorizontal_bias="0.575"  
+                app:layout_constraintStart_toStartOf="parent"  
+                app:layout_constraintTop_toTopOf="parent" />  
+        
+            <Button  
+                android:id="@+id/button"  
+                android:layout_width="wrap_content"  
+                android:layout_height="wrap_content"  
+                android:layout_marginRight="8dp"  
+                android:layout_marginLeft="156dp"  
+                android:layout_marginTop="172dp"  
+                android:text="Visit"  
+                app:layout_constraintEnd_toEndOf="parent"  
+                app:layout_constraintHorizontal_bias="0.0"  
+                app:layout_constraintStart_toStartOf="parent"  
+                app:layout_constraintTop_toBottomOf="@+id/editText" />  
+        </android.support.constraint.ConstraintLayout>  
+    
+    # ----- MainActivity.java
+        package example.javatpoint.com.implicitintent;  
+        
+        import android.content.Intent;  
+        import android.net.Uri;  
+        import android.support.v7.app.AppCompatActivity;  
+        import android.os.Bundle;  
+        import android.view.View;  
+        import android.widget.Button;  
+        import android.widget.EditText;  
+        
+        public class MainActivity extends AppCompatActivity {  
+        
+            Button button;  
+            EditText editText;  
+        
+            @Override  
+            protected void onCreate(Bundle savedInstanceState) {  
+                super.onCreate(savedInstanceState);  
+                setContentView(R.layout.activity_main);  
+        
+                button = findViewById(R.id.button);  
+                editText =  findViewById(R.id.editText);  
+        
+                button.setOnClickListener(new View.OnClickListener() {  
+                    @Override  
+                    public void onClick(View view) {  
+                        String url=editText.getText().toString();  
+                        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(url));  
+                        startActivity(intent);  
+                    }  
+                });  
+            }  
+        }  
+# ----------------------------   end example of implicit ---------------------------- #
+
+# ---------------------------- start example of explicit ---------------------------- #
+    # ----- activity_main.xml
+        <?xml version="1.0" encoding="utf-8"?>  
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+            xmlns:app="http://schemas.android.com/apk/res-auto"  
+            xmlns:tools="http://schemas.android.com/tools"  
+            android:layout_width="match_parent"  
+            android:layout_height="match_parent"  
+            tools:context="example.javatpoint.com.explicitintent.FirstActivity">  
+        
+            <TextView  
+                android:layout_width="wrap_content"  
+                android:layout_height="wrap_content"  
+                android:layout_marginEnd="8dp"  
+                android:layout_marginStart="8dp"  
+                android:layout_marginTop="8dp"  
+                android:text="First Activity"  
+                app:layout_constraintBottom_toBottomOf="parent"  
+                app:layout_constraintEnd_toEndOf="parent"  
+                app:layout_constraintHorizontal_bias="0.454"  
+                app:layout_constraintLeft_toLeftOf="parent"  
+                app:layout_constraintRight_toRightOf="parent"  
+                app:layout_constraintStart_toStartOf="parent"  
+                app:layout_constraintTop_toTopOf="parent"  
+                app:layout_constraintVertical_bias="0.06" />  
+        
+            <Button  
+                android:id="@+id/button"  
+                android:layout_width="wrap_content"  
+                android:layout_height="wrap_content"  
+                android:layout_marginEnd="8dp"  
+                android:layout_marginStart="8dp"  
+                android:layout_marginTop="392dp"  
+                android:onClick="callSecondActivity"  
+                android:text="Call second activity"  
+                app:layout_constraintEnd_toEndOf="parent"  
+                app:layout_constraintStart_toStartOf="parent"  
+                app:layout_constraintTop_toTopOf="parent" />  
+        
+        </android.support.constraint.ConstraintLayout>  
+
+    # ----- MainActivityOne.java
+        package example.javatpoint.com.explicitintent;  
+  
+        import android.content.Intent;  
+        import android.support.v7.app.AppCompatActivity;  
+        import android.os.Bundle;  
+        import android.view.View;  
+        
+        public class FirstActivity extends AppCompatActivity {  
+        
+            @Override  
+            protected void onCreate(Bundle savedInstanceState) {  
+                super.onCreate(savedInstanceState);  
+                setContentView(R.layout.activity_first);  
+            }  
+            public void callSecondActivity(View view){  
+                Intent i = new Intent(getApplicationContext(), SecondActivity.class);  
+                i.putExtra("Value1", "Android By Secranix");  
+                i.putExtra("Value2", "Simple Tutorial");  
+                // Set the request code to any code you like, you can identify the  
+                // callback via this code  
+                startActivity(i);  
+            }  
+        
+        } 
+
+    # ----- activitytwo_main.xml
+        <?xml version="1.0" encoding="utf-8"?>  
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+            xmlns:app="http://schemas.android.com/apk/res-auto"  
+            xmlns:tools="http://schemas.android.com/tools"  
+            android:layout_width="match_parent"  
+            android:layout_height="match_parent"  
+            tools:context="example.javatpoint.com.explicitintent.SecondActivity">  
+        
+            <TextView  
+                android:layout_width="wrap_content"  
+                android:layout_height="wrap_content"  
+                android:layout_marginEnd="8dp"  
+                android:layout_marginStart="8dp"  
+                android:layout_marginTop="8dp"  
+                android:text="Second Activity"  
+                app:layout_constraintBottom_toBottomOf="parent"  
+                app:layout_constraintEnd_toEndOf="parent"  
+                app:layout_constraintHorizontal_bias="0.454"  
+                app:layout_constraintLeft_toLeftOf="parent"  
+                app:layout_constraintRight_toRightOf="parent"  
+                app:layout_constraintStart_toStartOf="parent"  
+                app:layout_constraintTop_toTopOf="parent"  
+                app:layout_constraintVertical_bias="0.06" />  
+        
+            <Button  
+                android:id="@+id/button"  
+                android:layout_width="wrap_content"  
+                android:layout_height="wrap_content"  
+                android:layout_marginEnd="8dp"  
+                android:layout_marginStart="8dp"  
+                android:layout_marginTop="392dp"  
+                android:onClick="callFirstActivity"  
+                android:text="Call first activity"  
+                app:layout_constraintEnd_toEndOf="parent"  
+                app:layout_constraintStart_toStartOf="parent"  
+                app:layout_constraintTop_toTopOf="parent" />  
+        </android.support.constraint.ConstraintLayout>  
+
+    # ----- MainActivityTwo.java
+        package example.javatpoint.com.explicitintent;  
+  
+        import android.content.Intent;  
+        import android.support.v7.app.AppCompatActivity;  
+        import android.os.Bundle;  
+        import android.view.View;  
+        import android.widget.Toast;  
+        
+        public class SecondActivity extends AppCompatActivity {  
+        
+            @Override  
+            protected void onCreate(Bundle savedInstanceState) {  
+                super.onCreate(savedInstanceState);  
+                setContentView(R.layout.activity_second);  
+                Bundle extras = getIntent().getExtras();  
+                String value1 = extras.getString("Value1");  
+                String value2 = extras.getString("Value2");  
+                Toast.makeText(getApplicationContext(),"Values are:\n First value: "+value1+  
+                        "\n Second Value: "+value2, Toast.LENGTH_LONG).show();  
+            }  
+            public void callFirstActivity(View view){  
+                Intent i = new Intent(getApplicationContext(), FirstActivity.class);  
+                startActivity(i);  
+            }  
+        
+        }  
+# ----------------------------   end example of explicit ---------------------------- #
+
+# ---------------------------- start example of broadcast ---------------------------- #
+    # ----- Sender application
+        # -- activity_main.xml
+            <?xml version="1.0" encoding="utf-8"?>
+            <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MainActivity">
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Send a broadcast message"
+                    android:onClick="onBroadcastSendBtnClicked"
+                    tools:layout_editor_absoluteX="158dp"
+                    tools:layout_editor_absoluteY="71dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        # -- MainActivity.java
+            package com.secranix.broadcastsender;
+
+            import androidx.appcompat.app.AppCompatActivity;
+            import android.content.Intent;
+            import android.os.Bundle;
+            import android.view.View;
+
+            public class MainActivity extends AppCompatActivity {
+
+                @Override
+                protected void onCreate(Bundle savedInstanceState) {
+                    super.onCreate(savedInstanceState);
+                    setContentView(R.layout.activity_main);
+                }
+
+                public void onBroadcastSendBtnClicked(View v) {
+                    Intent intentObject = new Intent();
+                    intentObject.setAction("com.secranix.broadcastsender.heartest");
+                    intentObject.setFlags(intentObject.FLAG_INCLUDE_STOPPED_PACKAGES);
+                    sendBroadcast(intentObject);
+                }
+            }
+
+        # ----- Receiver application
+            # -- MyReciever.java
+                package com.secranix.broadcastreceiver;
+                import android.content.BroadcastReceiver;
+                import android.content.Context;
+                import android.content.Intent;
+                import android.widget.Toast;
+
+                public class MyReceiver extends BroadcastReceiver {
+
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        // TODO: This method is called when the BroadcastReceiver is receiving
+                        // an Intent broadcast.
+                        Toast.makeText(context,"I hear you well!",Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            # -- MainActivity.java
+                package com.secranix.broadcastreceiver;
+
+                import androidx.appcompat.app.AppCompatActivity;
+
+                import android.content.IntentFilter;
+                import android.os.Bundle;
+
+                public class MainActivity extends AppCompatActivity {
+
+                    @Override
+                    protected void onCreate(Bundle savedInstanceState) {
+                        super.onCreate(savedInstanceState);
+                        setContentView(R.layout.activity_main);
+
+                        IntentFilter IntentFilterObject = new IntentFilter("com.secranix.broadcastsender.heartest");
+                        MyReceiver MyReceiverObject     = new MyReceiver();
+                        registerReceiver(MyReceiverObject,IntentFilterObject);
+                    }
+                }
+            # -- AndroidManifest.xml
+                <?xml version="1.0" encoding="utf-8"?>
+                <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+                    package="com.secranix.broadcastreceiver">
+
+                    <application
+                        android:allowBackup="true"
+                        android:icon="@mipmap/ic_launcher"
+                        android:label="@string/app_name"
+                        android:roundIcon="@mipmap/ic_launcher_round"
+                        android:supportsRtl="true"
+                        android:theme="@style/Theme.BroadcastReceiver">
+                        <receiver
+                            android:name=".MyReceiver"
+                            android:enabled="true"
+                            android:exported="true">
+                            <intent-filter>
+                                <action android:name="com.secranix.broadcastsender.heartest"></action>
+                            </intent-filter>
+                        </receiver>
+
+                        <activity android:name=".MainActivity">
+                            <intent-filter>
+                                <action android:name="android.intent.action.MAIN" />
+                                <category android:name="android.intent.category.LAUNCHER" />
+                            </intent-filter>
+                        </activity>
+                    </application>
+
+                </manifest>
+# ----------------------------   end example of broadcast ---------------------------- #
+
+# ---------------------------- start example of pending intent ---------------------------- #
+    # ----- MainActivity.java
+        package com.secranix.pendingintent;
+
+        import androidx.appcompat.app.AppCompatActivity;
+        import androidx.core.app.NotificationCompat;
+        import android.app.Notification;
+        import android.app.NotificationManager;
+        import android.app.PendingIntent;
+        import android.content.Intent;
+        import android.os.Bundle;
+        import android.view.View;
+
+        public class MainActivity extends AppCompatActivity {
+
+            @Override
+            protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.activity_main);
+            }
+
+            public void PendingWithNotification(View v){
+                Intent IntentObject             = new Intent(MainActivity.this,NotificationActivity.class);
+                PendingIntent PendingObject     = PendingIntent.getActivity(MainActivity.this,0,IntentObject,0);
+                Notification NotificationObject = new NotificationCompat.Builder(this).setSmallIcon(android.R.drawable.ic_dialog_info)
+                        .setContentTitle("Test the pending intent").setContentText("Open NotificationActivity.class :)").setAutoCancel(true)
+                        .setContentIntent(PendingObject).build();
+
+                NotificationManager NotificationManagerObject   = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                NotificationManagerObject.notify(1,NotificationObject);
+            }
+        }
+    # ----- NotificationActivity.java
+        package com.secranix.pendingintent;
+
+        import androidx.appcompat.app.AppCompatActivity;
+        import android.os.Bundle;
+        public class NotificationActivity extends AppCompatActivity {
+            @Override
+            protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.activity_notification);
+            }
+        }
+
+    # ----- activity_main.xml
+        <?xml version="1.0" encoding="utf-8"?>
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainActivity">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pending Intent with Notification"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.441" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click for testing Pending Intent"
+                android:onClick="PendingWithNotification"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.518" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    # ----- activity_notification.xml
+        <?xml version="1.0" encoding="utf-8"?>
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".NotificationActivity">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="326dp"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="You opened NotificationActivity.class from Notification Manager Successfully."
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+# ----------------------------   end example of pending intent ---------------------------- #
+
+# ---------------------------- start deep link intent ---------------------------- #
+    # ----- AndroidManifest.xml
+        <?xml version="1.0" encoding="utf-8"?>
+        <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+            package="com.secranix.deeplinking">
+
+            <application
+                android:allowBackup="true"
+                android:icon="@mipmap/ic_launcher"
+                android:label="@string/app_name"
+                android:roundIcon="@mipmap/ic_launcher_round"
+                android:supportsRtl="true"
+                android:theme="@style/Theme.DeepLinking">
+                <activity android:name=".MainActivity">
+                    <intent-filter>
+                        <action android:name="android.intent.action.MAIN" />
+
+                        <category android:name="android.intent.category.LAUNCHER" />
+                    </intent-filter>
+
+                    <intent-filter>
+                        <action android:name="android.intent.action.VIEW"/>
+                        <category android:name="android.intent.category.DEFAULT"/>
+                        <category android:name="android.intent.category.BROWSABLE"/>
+                        <data android:scheme="https" android:host="secranix.com"/>
+                    </intent-filter>
+                </activity>
+            </application>
+
+        </manifest>
+    
+    # ----- ActivityMain.java
+        package com.secranix.deeplinking;
+
+        import androidx.appcompat.app.AppCompatActivity;
+
+        import android.net.Uri;
+        import android.os.Bundle;
+        import android.widget.Toast;
+
+        import java.util.List;
+
+        public class MainActivity extends AppCompatActivity {
+
+            @Override
+            protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.activity_main);
+
+                Uri uri     = getIntent().getData();
+
+                if (uri != null) {
+                    Toast.makeText(this,"uri="+uri, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"id="+uri.getQueryParameter("id")+" & name="+uri.getQueryParameter("name"), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(),"You open the application directly!",Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+# ----------------------------   end deep link intent ---------------------------- #

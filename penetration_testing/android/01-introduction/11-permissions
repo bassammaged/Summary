@@ -1,0 +1,38 @@
+# ------------------- start permission ------------------- # 
+    # ----- AndroidManifest.xml
+        - Default permission:
+            <uses-permission>:
+                - If you request a hardware-related permission — CAMERA, for example — Google Play assumes that your application requires the underlying hardware feature and filters the application from devices that do not offer it.
+                - Example: 
+                    <uses-permission android:name="string" android:maxSdkVersion="integer" />
+        - Custom permission:
+            - Android allows you to define custom permissions with your application. For example, if you wanted to prevent certain users from starting one of the 
+            activities in your application, you could do that by defining a custom permission. To use custom permissions, you first declare them in
+            your AndroidManifest.xml file.
+            - Once you've defined a permission, you can then refer to it as part of your component definition. We'll show you how this works.
+            - Example:
+                <permission android:name="com.secranix.infoprovider.permission" android:protectionlevel="normal"></permission>
+                <uses-premission android:name="com.secranix.infoprovider.permission"/>
+
+                <service android:name="com.secranix.custmperms.provider.InfoProviderService" android:exported="true" android:permission="com.secranix.infoprovider.permission"/>
+
+            # -- Component of custom permission:
+                1. name: attribute is a string identifying the permssion.
+                2. protection-level: dictate how the permissions are granted.
+                3. premission-group: which allows for grouping related permssions. 
+
+            # -- Level of protection:
+                - Normal: Low Risk. This is the default protection level. Automatically granted to the application upon installation. The user’s approval is not required during installation.
+                - Dangerous: Higher Risk than Normal. User’s approval is required before an application is granted this permission.
+                - Signature: Only applications that have the same signature as of the application defining the permission are granted this permission. The user’s approval is not required during installation.
+                - SignatureOrSystem: Only applications in the android’s system image or applications that have the same signature as of the application defining the permission are granted this permission. The user’s approval is not required during installation.
+            
+            # -- security concerns:
+                1. Race condition: when Evil app. installed first with the same custom permission name but with different level of protection, when the TrustedApp installed
+                the trusted app will take the ownership but with the level of protection that already identified by Evil app.
+            
+
+    # ----- Resources:
+        - https://datatheorem.github.io/2014/04/16/custom-permissions/
+
+# -------------------   end permission ------------------- # 

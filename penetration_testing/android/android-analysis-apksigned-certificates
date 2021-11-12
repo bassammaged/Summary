@@ -1,0 +1,10 @@
+# ------------------------ start certificate analysis ------------------------ # 
+    # ----- Check certficate:
+        jarsigner -verify -verbose -certs <apk_file>
+
+    # ----- Convert certificate extenison CER to PEM:
+        openssl pkcs7 -inform DER -print_certs -out cert.pem -in CERT.RSA 
+
+    # ----- Details about public key:
+        openssl x509 -in cert.pem -noout -text
+# ------------------------   end certificate analysis ------------------------ # 

@@ -1,0 +1,23 @@
+# --------------- Start dynamic code analysis --------------- #
+    # ----- What is dynamic code analysis:
+        - Dynamic code analysis is a process by which code is reviewed for vulnerabilities by executing some or all of the code. this execution can occur in a 
+        normal environment, virtualized environment or in a debugger.
+
+        - While the application is executing, you can directly examine the changes made to memory or the file system as they occur.
+        - Also, allows you to directly observe network requests, interactions wuth other applications and the result of any error conditions encountered.
+
+        # -- Debugging:
+            - There are numerous methods to debug applications:
+                1. Android studio built-in debugger: as described here: https://developer.android.com/studio/debug/index.html#groovy
+                    - this approach works best for apps where you have or can obtain the original source.
+                    # -- debug based on application element:
+                        - If its application element sets the value of its android:debuggable="true" attribute to true. that's mean android will manage all logs 
+                        file regarding your application.
+
+    # ----- Dynamic analysis tools:
+        # -- ADB:
+            - you can check the "./android-tool-dast-adb" file
+
+        # -- frida:
+            - you can check the "./android-tool-dast-frida" file.
+# ---------------   end dynamic code analysis --------------- #

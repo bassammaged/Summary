@@ -1,0 +1,6 @@
+# ------------------------ start zip packing ------------------------ # 
+    # ----- What is zipalign:
+        - You can check it "./01-introduction/03-android-build-process"
+    # ----- align APK:
+        zipalign -v 4 infile.apk outfile.apk
+# ------------------------   end zip packing ------------------------ # 

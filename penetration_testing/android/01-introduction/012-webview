@@ -1,0 +1,48 @@
+# ------------------ start webview ------------------ #
+    # ----- What is webview?
+        - Let's get the boring definition out of the way. A WebView is an embeddable browser that a native application can use to display web content.
+
+        - The WebView in Android enables you to show the web browser in your Activity. It is very useful if our application needs to embed some web content, 
+        like maps from some other providers and so on.
+        - WebView in Android turns the application into a web application. It comes from android.webkit.WebView. Here, the WebView class is an extension of 
+        Android’s View class which is used to show the web pages.
+
+        # -- Bbrowser vs webview:
+            - Browser:
+                - The word to highlight is embeddable browser. We all know what a browser is. It is a standalone app that we can use to surf the internet.
+                - If you think of the browser as two parts, one part is the UI (address bar, navigation buttons, etc.), and the other part is the engine 
+                that turns markup and code into the pixels we can see and interact with.
+
+            - Webview:
+                - A WebView is just the browser engine part that you can insert sort of like an iframe into your native app and programmatically tell it what 
+                web content to load.
+
+                - our WebView is almost like a web-friendly island inside a large ocean of nativeness. The contents of this island don't have to be local to your app. 
+                Your WebView will commonly load web content remotely from a http:// or https:// location. This means you can take parts (or all) of your web app 
+                that lives on your server and rely on the WebView to display it inside your native app.
+                - This flexibility opens up a whole world of code reuse between your browser-focused web app and the parts of your web app that you want to 
+                display inside a native app. If all of this doesn't sound crazy awesome.
+
+                # -- Two types of webview:
+                    1. WebViewClient: rednering simple HTML.
+                    2. WebChromeClient: fully fledged chrome browser.
+
+        
+    # ----- Security concerns:
+        - JavaScript running inside your WebView has the ability to call native system APIs.
+            1. This means you aren't limited by the traditional browser security sandbox that your web code normally has to adhere by. The following diagram explains
+            the architectural differences that make this possible: "../#00-images/webview-vs-browser.PNG".
+    
+    # ----- Mitigations:
+        1. WebViewClient has no ability to access native browser's cookies or access app's other cookie by default.
+        2. Sanitized the user-controlled data that is passed into WebView class functions and attributes such as loadUrl, loadData, loadDataWithBaseURL.
+        3. Configure and limit the ability of webview through getSetting methid of a WebView.
+            a. Disable or enable setJavaScriptEnasbled option.
+            b. Disable or enable addJavaScriptInterface option that allow to inject java objects into a WebView by making them accessible to javascript.
+            c. Disable or enable setAllowUniversalAccessFromFileURLs, that allow the URLs to read internal resources.
+            d. Disable or enable setAllowContentAccess, that allow the webview to access content provider through content:// protocol.
+            e. Disable
+    # ----- Resources:
+        - https://www.kirupa.com/apps/webview.htm
+
+# ------------------   end webview ------------------ #

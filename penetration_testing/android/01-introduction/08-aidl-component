@@ -1,0 +1,51 @@
+# ---------------------------- Start AIDL ---------------------------- #  
+    # ----- What is AIDL
+        - AIDL is implementation for Binders.
+        - AIDL is Android Interface Definition Language. This basically allows you to do IPC calls.
+
+    # ----- examples of AIDL:
+        # -- Example 1:
+            Process A needs info of Call status to determine whether it needs to change Call Type (for example Audio to Video Call or Vice-versa). You may get call 
+            status from certain listeners but to change Call type from Audio to Video, Process A needs a hook to change. This "Hook" or way of changing calls is 
+            typically part of Telephony Classes which are part of Telephony Process. So in order to obtain such an information from Telephony process, One may 
+            write a telephony service (which runs as a part of android telephony process), which will allow you to query or change call type. Since 
+            Process A(Client) here is using this remote Service which communicates with Telephony process to alter call type, it needs to have an interface 
+            to talk to service. Since Telephony service is the provider, and Process A (client) is the user, they both need to agree on an interface (protocol) they 
+            can understand and adhere to. Such an interface is AIDL, which allows you to talk (via a remote service) to Telephony process and get some work done.
+
+            Simply put in laymen terms, AIDL is an "agreement" Client gets, which tells it about how to talk to service. Service itself will have a copy of 
+            that agreement(since it published for it's clients). Service will then implement details on how it handles once a request arrives or say when 
+            someone is talking to it.
+
+            So process A requests to change call via Service, Service gets the request, it talks to telephony process(since it's part of it) and changes call to video.
+
+        # -- Example 2:
+             have the same thinking about an example of AIDL, it's very difficult to find an idea to make an example app which uses AIDL. Then I have an idea 
+             about it create a LocalLogServerApp. Maybe it can not become a production app but it still shows some value in using AIDL
+
+             The main function of this app is
+
+                1. Receive the local log from other local apps (another app need to implement AIDL to send log)
+                2. Save the log to datastore
+                3. Display the logs
+                4. Maybe do something with the local log (eg: search, delete)
+                5. Maybe notify developer when error log happened
+                6. The benefit of this app
+
+                The local log can use when you have some very strange issues which sometimes happened in a few moments and in some specific device. In this case, 
+                common Log won't help, debug won't help, Firebase Log may help but Firebase receive log from multiple device. Reusable, many apps can 
+                use it with less code.
+
+            - Two apps available: 
+                - https://github.com/PhanVanLinh/AndroidLocalLogServer 
+                - https://github.com/PhanVanLinh/AndroidLocalLogClientTest
+
+        Note: An important point to note is, AIDL is only necessary for multithreading environment. You could do away with Binders if you don't need to deal 
+        with multithreaded arch.
+
+
+
+    # ----- How to implement it: 
+            Server AIDL: https://www.youtube.com/watch?v=tZO1BwLjOEc
+            Client AIDL: https://www.youtube.com/watch?v=9OCEpnV9jto 
+# ----------------------------   end AIDL ---------------------------- #  

@@ -1,0 +1,25 @@
+# ---------------------- start frida ---------------------- #
+    # ----- Quick introduction:
+        - 
+    
+
+        
+    # ----- Installation:
+        1. identify the arch of android device through adb
+        2. Download the compatible frida server verion from here: https://github.com/frida/frida/releases
+        3. Install frida on your client (Ex: laptop):
+            python3 -m install frida
+            python3 -m install frida-tool
+            python3 -m install objection
+
+        # -- Check the connectivity:
+        frida-ps -U     # to get all processes are running.
+            
+            
+    # ----- How to use frida: 
+        #-- Trace the class and methods 
+                frida-trace -j '<package_name>*!*' -U <package_name>
+
+        # -- Inject the JS script
+                frida -U "<package_name>' -l <script_name.js>
+# ----------------------   end frida ---------------------- #

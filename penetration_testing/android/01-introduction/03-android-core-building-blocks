@@ -1,0 +1,30 @@
+# ------------------- start Android Core Building Blocks ------------------- #
+    # ----- what are Android Core Building Blocks?
+        1. Activity
+            - An activity is a class that represents a single screen. It is like a Frame in AWT.
+        2. View
+            - A view is the UI element such as button, label, text field etc. Anything that you see is a view.
+        3. Intent
+            - Intent is used to invoke components. It is mainly used to:
+                a. Start the service
+                b. Launch an activity
+                c. Display a web page
+                d. Display a list of contacts
+                e. Broadcast a message
+                f. Dial a phone call etc.
+            - example:
+                Intent secranix = new Intent(Intent.ACTION_VIEW);  
+                secranix.setData(Uri.parse("http://www.secranix.com"));  
+                startActivity(secranix);  
+        4. Service
+            - Service is a background process that can run for a long time.
+            - There are two type of services (Local service, Remote service):
+                a. Local service: service is accessed from within the application only.
+                b. Remote service: service is accessed remotely from other applications running on the same device.
+        5. Content Provider
+            - Content Providers are used to share data between the applications.
+        6. Fragment
+            - Fragments are like parts of activity. An activity can display one or more fragments on the screen at the same time.
+        7. AndroidManifest.xml
+            - It contains informations about activities, content providers, permissions etc. It is like the web.xml file in Java EE.
+# -------------------   end Android Core Building Blocks ------------------- #

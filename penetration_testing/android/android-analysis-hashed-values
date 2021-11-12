@@ -1,0 +1,10 @@
+# ------------------- start analysis hashes values ------------------- #
+    # ------ Technique:
+        1. Check the files and thier hashes.
+        2. Identify the hash algorthim.
+        3. Use openssl to hash the files and compare the result.
+            openssl <algorthim> -binary <file_path> | openssl base64
+            - example: 
+                openssl sha1 -binary MANIFEST.MF | openssl base64
+                - compare the result with the SHA1 of MANIFEST.MF that stored in CERT.SF
+# -------------------   end analysis hashes values ------------------- #

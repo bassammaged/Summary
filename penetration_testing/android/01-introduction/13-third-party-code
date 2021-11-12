@@ -1,0 +1,26 @@
+# ------------------ start third party code ------------------ #
+    # ----- What is third party code:
+        - In computer programming, a third-party software component is a reusable software component developed to be either freely distributed or sold by 
+        an entity other than the original vendor of the development platform. The third-party software component market thrives because many programmers believe 
+        that component-oriented development improves the efficiency and the quality of developing custom applications. Common third-party software includes macros, 
+        bots, and software/scripts to be run as add-ons for popular developing software.
+
+            # -- type of third party code:
+                1. SDK 
+                    - SDK or software development kit are generally classes or .jar files. which make it easier for developers to interface with code written by 
+                    third parties, these files are directly included into other apps which use them.
+                    - Example: Facebook SDK, allows apps to implement a "login with facebook functionaity".
+                    
+                    # -- security concerns:
+                        1. SDK is a part of the application and any flaws in the SDK could affect the entire application so, developer has to pay his/her attention to 
+                        make sure the SDK developers bring security to their SDKs.
+                
+                2. Library:
+                    - is a collection of pre-built compiled code which you can use to extend your application's features. For example, you may 
+                    need to show some graphics in your application. Instead of creating this from scratch, you may choose to use a pre-built library someone 
+                    else has developed which will give you the features you need thus saving you some time.
+
+                    # -- security concerns:
+                        1. Same as SDK security concerns.
+
+# ------------------   end third party code ------------------ #
