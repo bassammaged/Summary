@@ -5,4 +5,15 @@ So, I decided to summarize all things that I learnt and require an surplus effor
 
 ## Content of the sammary:
 - Programming Language summaries.
+  -  Golang
+  -  java
+  -  python
+- Misc
+  - xpath
+  - Powershell (upcoming)
 - Penetration testing summaries.
+  - Android
+  - bof
+  - network
+  - webservices
+  - wireless (upcoming)
