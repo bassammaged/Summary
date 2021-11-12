@@ -1,0 +1,4 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: the server does not properly destory the session after
+    a logout operation. from the server's prespective, the session is still alive.
+# ------------------------------- start overview ------------------------------- # 

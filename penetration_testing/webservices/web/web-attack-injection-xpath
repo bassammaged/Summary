@@ -1,0 +1,24 @@
+# ------------------------------- start Xpath overview ------------------------------- # 
+    ==> Quick view: XPath uses path expressions to select nodes or node-sets in an XML document. These path expressions look very much like the expressions 
+    you see when you work with a traditional computer file system. XPath expressions can be used in 
+    JavaScript, Java, XML Schema, PHP, Python, C and C++, and lots of other languages.
+
+    ==> Example for credentials check:
+    //user[username/text()='<username>' and password/text()='<password>'] 
+
+    ==> Injeection points:
+        - GET/POST.
+        - Headers.
+        - Cookies.
+
+    ==> Types of Xpath Injeection:
+        - Error based
+        - blind based
+
+    ==> What is the danger of Xpath injection?
+        - Bypassing authentication.
+        - Extracting the XML document strcture and content.
+
+    ==> Tools:
+        - Xcat: https://xcat.readthedocs.org/
+# -------------------------------   end Xpath overview ------------------------------- # 

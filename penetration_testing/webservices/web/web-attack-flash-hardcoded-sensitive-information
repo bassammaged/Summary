@@ -1,0 +1,10 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick View: flash contents need to be complied before they can be run,
+                    many flash developers believe that it is impossible to obtain the source code.
+                    they are often misled by this idea, any may in turn hardcode information:
+                        - URLs of hidden resources.
+                        - Credentials of services. 
+
+    # ---------- |tools| ---------- #
+        - SWFinvestigator
+# -------------------------------   end overview ------------------------------- # 

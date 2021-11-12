@@ -1,0 +1,76 @@
+# ------------------------------- start XSS overview ------------------------------- # 
+    ==> Quick view: Cross-Site Scripting (XSS) attacks are a type of injection, in which malicious scripts 
+                    are injected into otherwise benign and trusted websites. XSS attacks occur when an attacker 
+                    uses a web application to send malicious code, generally in the form of a browser side script, 
+                    to a different end user. Flaws that allow these attacks to succeed are quite widespread and 
+                    occur anywhere a web application uses input from a user within the output it generates without 
+                    validating or encoding it.
+
+                    # ----- Four types of xss:
+                        - Presistence (stored) XSS:
+                            XSS attack is possible when a website or web application stores user input and later serves it to other users. 
+                        - Reflected XSS:
+                            Malicious code is executed by the victim’s browser, and the payload is not stored anywhere; instead, it is returned 
+                            as part of the response HTML that the server sends.
+                        - DOM XSS:
+                            - An attacker may use several DOM objects to create a Cross-site Scripting attack. 
+                            The most popular objects from this perspective are (document.url, document.location, and document.referrer)
+
+                            - There are two fundamental keywords: source and sinks
+                                - sources: source of untrusted input. For example: location.hash, window.location & etc..
+                                - sinks: where the input is used. For example: .innerHTML, eval() & etc..
+                        - Unviersal XSS:
+                            - Particualr type of XSS, it does not leverage the flaws against web application but the browser, its extensions or its plugins.
+
+                    # ----- Injeection points:
+                        - POST/GET request.
+                        - Cookies.
+                        - HTTP Headers.
+
+                    # ----- exploiting XSS vulnerability:
+                        - Cookie stealing.
+                        - Defacement.
+                        - phishing / malware.
+                        - XSS worms.
+                        - client side exploitation.
+
+                    # ----- Mitigation: 
+                        - Input validation.
+                        - Input Sanitization.
+                        - Using Header:
+                            - CSP
+                            - Content-Type
+                            - X-Content-Type-Options
+# -------------------------------   end XSS overview ------------------------------- # 
+
+# ------------------------------- start XSS attack ------------------------------- # 
+    ==> Reflected XSS attack scenario:
+            1st: if there correlation between both output-input and the user-supplied data is part of the output.
+            2nd: we have found a potential mount point for an XSS attack.
+        
+    # ---------- |Tools| ---------- #
+        - Burp
+        - Live HTTP header (Firefox extension)
+        - Cookie Editor (Firefox extension)
+# -------------------------------   end XSS attack ------------------------------- # 
+
+# ------------------------------- start Obfuscating ------------------------------- # 
+    # ---------- |Tools| ---------- #
+        - Site: https://www.javascriptobfuscator.com/Javascript-Obfuscator.aspx
+        - Non-alphanumeric JS:
+            - JSFuck
+                - encode site: http://www.jsfuck.com/
+                - decode site: https://enkhee-osiris.github.io/Decoder-JSFuck/, http://codertab.com/jsunfuck 
+            - BrainFuck
+            - aaencode
+                -site: https://utf-8.jp/public/aaencode.html
+            - jjencode
+                - site: https://utf-8.jp/public/jjencode.html
+        - Minifying and packing
+            - Google Tool: https://developers.google.com/closure/compiler/
+            - Yui Tool: http://yui.github.io/yuicompressor/ 
+            - JSMin Tool: https://www.crockford.com/jsmin.html 
+            - Site: http://dean.edwards.name/packer/
+# -------------------------------   end Obfuscating ------------------------------- # 
+
+

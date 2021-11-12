@@ -1,0 +1,43 @@
+# ------------------------------- start OS command overview ------------------------------- # 
+    # ------- What is OS command:
+        - Command injection is an attack in which the goal is execution of arbitrary commands on the host operating system via a vulnerable application. Command injection 
+        attacks are possible when an application passes unsafe user supplied data (forms, cookies, HTTP headers etc.) to a system shell. In this attack, the attacker-supplied 
+        operating system commands are usually executed with the privileges of the vulnerable application. Command injection attacks are possible largely due to insufficient 
+        input validation.
+
+        # ------ Example:
+            1. Consider a shopping application that lets the user view whether an item is in stock in a particular store. This information is accessed via a URL like:
+                https://insecure-website.com/stockStatus?productID=381&storeID=29
+
+            2. To provide the stock information, the application must query various legacy systems. For historical reasons, the functionality is implemented by 
+            calling out to a shell command with the product and store IDs as arguments:
+                stockreport.pl 381 29
+
+            3. This command outputs the stock status for the specified item, which is returned to the user.
+            4. Since the application implements no defenses against OS command injection, an attacker can submit the following input to execute an arbitrary command:
+                & echo aiwefwlguh &
+
+            5. If this input is submitted in the productID parameter, then the command executed by the application is:
+                stockreport.pl & echo aiwefwlguh & 29
+
+            6. he echo command simply causes the supplied string to be echoed in the output, and is a useful way to test for some types of OS command injection. The & character 
+            is a shell command separator, and so what gets executed is actually three separate commands one after another. As a result, the output returned to the user is:
+                Error - productID was not provided
+                aiwefwlguh
+                29: command not found
+
+        # ----- Other types of OS Command:
+            - Blind OS command:
+                - Many instances of OS command injection are blind vulnerabilities. This means that the application does not return the output from the 
+                command within its HTTP response. Blind vulnerabilities can still be exploited, but different techniques are required.
+                    1. Consider a web site that lets users submit feedback about the site. The user enters their email address and feedback 
+                    message. The server-side application then generates an email to a site administrator containing the feedback. To do this, it 
+                    calls out to the mail program with the submitted details. For example:
+                        mail -s "This site is great" -aFrom:peter@normal-user.net feedback@vulnerable-website.com
+
+    # ----- How to prevent OS command injection attacks:
+        - Validating against a whitelist of permitted values.
+        - Validating that the input is a number.
+        - Validating that the input contains only alphanumeric characters, no other syntax or whitespace.
+
+# -------------------------------   end OS command overview ------------------------------- # 

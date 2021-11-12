@@ -1,0 +1,61 @@
+# ------------------------------- start Information Disclosure ------------------------------- #
+    # ----- What is Information Disclosure?
+        - Information disclosure is when an application fails to properly protect sensitive and confidential information from parties that 
+        are not supposed to have access to the subject matter in normal circumstances. These type of issues are not exploitable in most cases, but are 
+        considered as web application security issues because they allows malicious hackers to gather relevant information which can be used later in 
+        the attack lifecycle, in order to achieve more than they could if they didn’t get access to such information.
+
+    # ----- What are the type of Information Disclosure?
+        - Banner Grabbing/Active Reconnaissance.
+        - Source Code Disclosure
+        - Inappropriate Handling of Sensitive Data
+        - File Name & File Path Disclosure
+        - Data about other users, such as usernames or financial information
+        - Sensitive commercial or business data
+        - etc...
+
+    # ----- Examples on information disclosure:
+        - Revealing the names of hidden directories, their structure, and their contents via a robots.txt file or directory listing
+        - Providing access to source code files via temporary backups
+        - Explicitly mentioning database table or column names in error messages
+        - Unnecessarily exposing highly sensitive information, such as credit card details
+        - Hard-coding API keys, IP addresses, database credentials, and so on in the source code
+        - Hinting at the existence or absence of resources, usernames, and so on via subtle differences in application behavior
+
+    # ----- How to assess the severity of information disclosure vulnerabilities?
+        - Although the ultimate impact can potentially be very severe, it is only in specific circumstances that information disclosure is a high-severity 
+        issue on its own. During testing, the disclosure of technical information in particular is often only of interest if you are able to demonstrate 
+        how an attacker could do something harmful with it.
+
+    
+    # ----- How to find information disclosure?
+        - Fuzzing.
+        - Content Discovery.
+        - Change the request method.
+        - Parameter tempering.
+        - Engineering informative responses.
+        - Analysis the 302 response.
+        - Debuging mode.
+        - Search for backups.
+        - check robots.txt, sitemap.xml
+        - Insecure configuration
+        - version control history, for example .git, /.git
+
+    # ----- How to prevent information disclosure vulnerabilities?
+        - Make sure that everyone involved in producing the website is fully aware of what information is considered sensitive. Sometimes seemingly 
+        harmless information can be much more useful to an attacker than people realize. Highlighting these dangers can help make sure that sensitive 
+        information is handled more securely in general by your organization.
+        - Audit any code for potential information disclosure as part of your QA or build processes. It should be relatively easy to 
+        automate some of the associated tasks, such as stripping developer comments.
+        - Use generic error messages as much as possible. Don't provide attackers with clues about application behavior unnecessarily.
+        - Double-check that any debugging or diagnostic features are disabled in the production environment.
+        - Make sure you fully understand the configuration settings, and security implications, of any third-party technology that you 
+        implement. Take the time to investigate and disable any features and settings that you don't actually need.
+
+    # ----- Tools:
+        - Burp Intruder.
+        - Burp Scanner.
+        - Logger++ Burp extension: to log all requests that sent by burp and analysis them.
+        - Burp Engagement tool
+
+# -------------------------------   end Information Disclosure ------------------------------- #

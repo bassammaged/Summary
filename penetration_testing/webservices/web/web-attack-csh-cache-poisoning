@@ -1,0 +1,21 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: Web cache poisoning has long been an elusive vulnerability, a 'theoretical' threat used mostly to scare developers into obediently patching 
+                    issues that nobody could actually exploit.
+
+    ==> what is caching?
+        - Caching is intended to speed up page loads by reducing latency, and also reduce load on the application server. Some companies host 
+        their own cache using software like Varnish, and others opt to rely on a Content Delivery Network (CDN) like Cloudflare, with caches 
+        scattered across geographical locations. Also, some popular web applications and frameworks like Drupal have a built-in cache.
+        - The concept of caching might sound clean and simple, but it hides some risky assumptions. Whenever a cache receives a request for a resource, 
+        it needs to decide whether it has a copy of this exact resource already saved and can reply with that, or if it needs to forward the request to 
+        the application server.
+
+    ==> Methodolgy attack:
+    Detect unkeyed input ==> Explore input potential ==> Inject into cache ==> Map cache rules ==> Find target page (then start from Inject into cache)
+
+    Tools:
+        - Burp extentions: Param Miner, https://github.com/PortSwigger/param-miner
+
+    
+    ==> V.I Note: resource: https://portswigger.net/research/practical-web-cache-poisoning
+# ------------------------------- start overview ------------------------------- # 

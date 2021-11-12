@@ -1,0 +1,69 @@
+# ------------------------------- start CORS overview ------------------------------- # 
+    # ------ Read more about SOP you can check './web-mechanism-sop'
+
+    # ------ What is CORS?
+        Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any other origins (domain, scheme, or port) than 
+        its own from which a browser should permit loading of resources. CORS also relies on a mechanism by which browsers make a “preflight” request 
+        to the server hosting the cross-origin resource, in order to check that the server will permit the actual request. In that preflight, the browser 
+        sends headers that indicate the HTTP method and headers that will be used in the actual request.
+
+    # ------- Simple requests:
+         - Some requests don’t trigger a CORS preflight. Those are called “simple requests” 
+         - A “simple request” is one that meets all the following conditions:
+            - One of the allowed methods:
+                - GET
+                - HEAD
+                - POST
+            - Apart from the headers automatically set by the user agent (for example, Connection, User-Agent, or the other headers defined in the Fetch spec 
+            as a “forbidden header name”).
+                - Accept
+                - Accept-Langauge
+                - Content-Langauge
+                - Content-Type
+            - The only allowed values for the Content-Type header are:
+                - application/x-www-form-urlencoded
+                - multipart/form-data
+                - text/plain
+
+
+    # ------- Preflight requests:
+        - Unlike “simple requests” (discussed above), for "preflighted" requests the browser first sends an HTTP request using the OPTIONS method to the resource on 
+        the other origin, in order to determine if the actual request is safe to send.
+
+        - Example:
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://bar.other/resources/post-here/');
+            xhr.setRequestHeader('X-PINGOTHER', 'pingpong');
+            xhr.setRequestHeader('Content-Type', 'application/xml');
+            xhr.onreadystatechange = handler;
+            xhr.send('<person><name>Arun</name></person>');
+
+    # ------- CORS Headers:
+        - Request Header:
+            - Origin
+            - Access-Control-Request-Method
+            - Access-Control-Request-Headers
+        - Response Header:
+            - Access-Control-Allow-Origin
+            - Access-Control-Allow-Headers
+            - Access-Control-Allow-Methods
+            - Access-Control-Allow-Credentials
+            - Access-Control-Max-Age
+            - Access-Control-Expose-Headers
+# -------------------------------   end CORS overview ------------------------------- # 
+
+# ------------------------------- start CORS attack scenarios ------------------------------- # 
+    # ------- Univeral allow attack scenario:
+        - CORS repsonse header is Access-Control-Allow-Origin: * or |
+        this configuration allows attacker to read the response from the vulnerable domain, attacker also can chain it with XSS that found on the same domain
+
+    # ------- Allow by server-side attack scenario:
+        - Developer check Origin header from the server side, which allows the attacker to spoofing the Origin header with MITM techniques. 
+
+    # ------- Errors parsing Origin headers
+        - Developer check Origin to parsing it and allow connection based on subdomain name only, that allow attacker to regist subdomain and start to abusing CORS,
+        for example Developer allow connection from test.trust.com, attacker starts to test with Origin's value equal to: Origin: test.attacker.com
+        
+    # ------- Bypass Anti CSRF scenario:
+        - parsing the resposne of domain and gain Anti-CSRF token and re-build the new request with the desire values and stealed anti-csrf token.
+# -------------------------------   end CORS attack scenarios ------------------------------- # 

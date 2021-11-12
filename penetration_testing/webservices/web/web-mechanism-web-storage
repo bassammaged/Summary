@@ -1,0 +1,32 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: HTML5 allows websites to store data locally in the browser. this is done by 
+                    accessing the localStorage and the sessionStorage object via JavaScript.
+
+    ==> Different between web storage and cookie:
+        - Size: Cookie size limited to 4KB, localStorage from 5MB to 10MB.
+        - Interface: cookies are accessed by client/server and transffered over HTTP connections.
+        localStorage is known only to the browser.
+        - Data model: cookies represent a complex structure, web storage provides a simpler interface by using an associative array data model.
+
+    ==> web storage types:
+        - localStorage.
+        - sessionStorage.
+
+    ==> local storage:
+        - HTML pages loaded by the browser and sahring the same origin will use the same local storage.
+        - lifetime:
+            - web application deletes storage through localStorage API.
+            - user deletes storage using the browser cleaning feature.
+    
+    ==> sessionStorage:
+        - bound to the browser window where a website is open, if a broswer has ten tabs pointing to same URL "example1.com/index.html"
+        each of them will have its own sessionStorage object.
+        - lifetime
+            - web application deletes storage through sessionStorage API.
+            - user deletes storage using the browser cleaning feature.
+            - user closes the browser window. 
+
+    ==> IndexedDB:
+       IndexedDB is a low-level API for client-side storage of significant amounts of structured data, including files/blobs. This API uses indexes 
+       to enable high-performance searches of this data.
+# -------------------------------   end overview ------------------------------- #

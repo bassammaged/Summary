@@ -1,0 +1,15 @@
+# ------------------------------- start web storage overview ------------------------------- # 
+    # ------ Read more about web storage you can check './web-mechanism-web-storage'
+
+    # ------ Flaws in web storage & indexedDB
+        - No security flags like HTTPOnly, secure.
+        - No sepcific directories/path for web storage to run.
+# -------------------------------   end web storage overview ------------------------------- # 
+
+# ------------------------------- start web storage attack scenarios ------------------------------- # 
+    # ------- manipulate storage values attack scenario:
+        Could allows the attacker to hijacking session.
+
+    # ------- XSS session values access attack scenario:
+        web storage values accessiable by Javascript, which allows the attacker to access web storage containers with XSS.
+# -------------------------------   end web storage attack scenarios ------------------------------- # 

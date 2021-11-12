@@ -1,0 +1,85 @@
+# ------------------------------- start same origin policy overview ------------------------------- # 
+    ==> Quick view: Two URLs have the same origin if the protocol, port (if specified), and host are the same for both. 
+                    The following table gives examples of origin comparisons with the URL http://store.company.com/dir/page.html:
+                    -------------------------------------------------------------------------------------------------
+                    |                    URL                            | Outcome	    |   Reason                  |
+                    |   http://store.company.com/dir2/other.html        | Same origin	|   Only the path differs   |
+                    |   http://store.company.com/dir/inner/another.html	| Same origin	|   Only the path differs   |
+                    |   https://store.company.com/page.html	        	| Failure   	|   Different protocol      |
+                    |   http://store.company.com:81/dir/page.html		| Failure   	|   Different port          |
+                    |   http://news.company.com/dir/page.html			| Failure   	|   Different host          |
+                    -------------------------------------------------------------------------------------------------
+
+    ==> Covered topics:
+        - Inherited origins
+        - Exceptions in Internet Explorer
+        - Changing origin
+        - Cross-origin script API access
+                    
+
+    # ---------- |start Inherited origins| ---------- #
+        ==> Quick View: Scripts executed from pages with an about:blank or javascript: URL inherit the origin of the document 
+                        containing that URL, since these types of URLs do not contain information about an origin server.
+
+                        execluded from SOP images,css,js
+    # ---------- |  end Inherited origins| ---------- #
+
+    # ---------- |start Exceptions in Internet Explorer| ---------- #
+        - Port, IE doesn't include port into same-origin checks
+        - Trust Zones: If both domains are in the highly trusted zone (e.g. corporate intranet domains),
+                       then the same-origin limitations are not applied.
+    # ---------- |  end Exceptions in Internet Explorer| ---------- #
+    
+    # ---------- |start Changing origin| ---------- #
+        ==> Quick View: A page may change its own origin, with some limitations. A script can set the value of document.domain 
+                        to its current domain or a superdomain of its current domain. If set to a superdomain of the current domain, 
+                        the shorter superdomain is used for same-origin checks. 
+
+                        For example, assume a script from the document at http://store.company.com/dir/other.html executes the following:
+                        document.domain = "company.com";
+
+         ==> V.I Note: When using document.domain to allow a subdomain to access its parent securely, you need to set 
+                       document.domain to the same value in both the parent domain and the subdomain. This is necessary even if 
+                       doing so is simply setting the parent domain back to its original value. Failure to do this may result in 
+                       permission errors.
+    # ---------- |  end Changing origin| ---------- #
+   
+    # ---------- |start Cross-origin script API access| ---------- #
+        ==> Quick View: JavaScript APIs like iframe.contentWindow, window.parent, window.open, and window.opener allow documents to directly 
+                        reference each other. When two documents do not have the same origin, these references provide very limited access to 
+                        Window and Location objects, as described in the next two sections. 
+                        To communicate between documents from different origins, use window.postMessage.
+
+        - windows objects:
+            - Methods
+                window.blur
+                window.close
+                window.focus
+                window.postMessage
+        
+            - attributes:
+                -------------------------------------
+                | window.closed     |   Read only.  |
+                | window.frames     |   Read only.  |
+                | window.length     |   Read only.  |
+                | window.location   |   Read/Write. |
+                | window.opener     |   Read only.  |
+                | window.parent     |   Read only.  |
+                | window.self       |   Read only.  |
+                | window.top        |   Read only.  |
+                | window.window     |   Read only.  |
+                -------------------------------------
+
+            ==> V.I Note: Some browsers allow access to more properties than the above.
+
+        - Location objects:
+            - Methods
+                location.replace
+            - Attributes
+                -------------------------------------
+                | URLUtils.href     |   Write only. |
+                -------------------------------------
+                
+    # ---------- |  end Cross-origin script API access| ---------- #
+    
+# -------------------------------   end same origin policy overview ------------------------------- # 

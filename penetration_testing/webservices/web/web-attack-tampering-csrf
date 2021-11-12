@@ -1,0 +1,35 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: Cross-Site Request Forgery (CSRF) is an attack that forces an end 
+                    user to execute unwanted actions on a web application in which they’re 
+                    currently authenticated. CSRF attacks specifically target state-changing requests, 
+                    not theft of data, since the attacker has no way to see the response to the forged request.
+
+
+    # ---------- |tools| ---------- #
+        - burp suite pro
+
+    # ---------- Attack scenario:
+        step 1: ensure the web application verify only on session value that send through cookie.
+        step 2: ensure victim has a valid and active session when the malicious request is executed.
+        step 3: extra: you can bypass csrf token with many techniques.
+            - remove token.
+            - fixed value.
+            - token equal to null.
+            - change the request.
+            - CSRF token is not tied to the user session.
+            - CSRF token is tied to a non-session cookie. (hard to exploit, its need to allow attacker to set a cookie (CRLF vulnuerability) with 
+            valid associated csrf token).
+            - CSRF token is simply duplicated in a cookie.
+            - CSRF token could be not validated if referer header is omitted.
+            - CSRF Could be mitigated based on referer header, send the request with no referer header.
+            - CSRF Could be mitigated based on referer header, Back-end valid if the referer contains the website domain or not. 
+            - chain CORS or XSS for extracting CSRF token.  
+        step 4: the victim browse your mailicious form with auto submit.
+
+    # ---------- Impact:
+        - unwanted on behalf of the user/admin leads to RCE, account takeover, etc.. 
+
+    # ---------- mitigation:
+        - Check referer header.
+        - Unpredictable anti-csrf token 
+# ------------------------------- start overview ------------------------------- # 

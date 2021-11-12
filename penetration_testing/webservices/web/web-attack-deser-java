@@ -1,0 +1,46 @@
+# ------------------------------- start java serialization ------------------------------- #
+    # ----- understanding the serialization in java:
+        1. install jdk (Java development kit) and jre (Java runtime environment).
+            - check installation: 
+                Command: java -version
+        2. create 2 files ended with .java extension.
+            - Book.java
+            - Serialize.java
+        3. Book.java file: "/web/test_area/insecure-deserialization/java/Book.java"
+        4. Serialize.java file: "/web/test_area/insecure-deserialization/java/Serialize.java"
+        5. Compile the java files:
+            Command: javac Book.java Serialize.java
+        6. Run complied program:
+            Command: java Serialize
+        7- Examine the output file
+            Command: hexdump -C store.ser
+        8. Deserialize the object we have to create the following file: "/web/test_area/insecure-deserialization/java/Deserialize.java"
+        9. Compile the java files:
+            Command: javac Deserialize.java
+        10. Run complied program:
+            Command: java Deserialize
+    
+        # ----- V.I Note: 
+            - the files that contain serialized object starts with 'ac ed 00 05' = '\xac\xed\x00\x05'
+            - serialized object starts with rO0ABQ== incase it encode as base64
+                command: echo -en '\xac\xed\x00\x05' | base64
+# -------------------------------   end java serialization ------------------------------- #
+
+# ------------------------------- start insecure deserialization ------------------------------- #
+    - During deserialization, the object’s properties are accessed recursively, leading to code execution at the very end of this process.
+    - An opaque class order that allows chaining subsequent classes through reflection.
+        example: Java.lang.Runtime.getRuntime.exec("id")
+    
+    - A potentially exploitable condition in Java occurs when readObject() or a similar function is called on usercontrolled object. An attacker 
+    is able to craft such an object containing multiple, nested properties, that upon method call will do something completely different.
+    
+    - There are some specific Java libraries that were identified to contain some universal gadgets used to build serialized exploit objects. These 
+    libraries are called gadget libraries.
+
+    # ------ Tools:
+        - ysoserial: Create java serialize payloads based on global libraries/gadget.
+            - Source: https://github.com/frohoff/ysoserial
+            - precompiled: https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar
+        - Java Deserialization Scanner
+        - Freddy, Deserialization Bug Finder
+# -------------------------------   end insecure deserialization ------------------------------- #

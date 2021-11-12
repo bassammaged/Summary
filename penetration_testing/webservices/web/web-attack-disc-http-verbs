@@ -1,0 +1,21 @@
+# ------------------------------- start http verbs overview ------------------------------- # 
+    ==> Quick view: By manipulating the HTTP verb it was possible to bypass the authorization on this directory. 
+                    The scanner sent a request with a custom HTTP verb (WVS in this case) and managed to bypass the authorization. 
+                    The attacker can also try any of the valid HTTP verbs, such as HEAD, TRACE, TRACK, PUT, DELETE, and many more.
+
+                    - OPTIONS: check the avialable http verbs.
+                    - PUT: it allows upload file.
+                    - DELETE: it allows remove file from server.
+
+
+# -------------------------------   end http verbs overview ------------------------------- # 
+
+# ------------------------------- start http verbs attack ------------------------------- # 
+    ==> attack scenario:
+            1st: Check avialable http verbs.
+            2nd: try to exploit one of them.
+        
+    # ---------- |Tools| ---------- #
+        - burpsuite or nc.
+        - manually.
+# -------------------------------   end http verbs attack ------------------------------- # 

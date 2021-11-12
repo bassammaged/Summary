@@ -1,0 +1,25 @@
+# ------------------------------- start .NET serialization ------------------------------- #
+    # ----- understanding the serialization in .NET:
+        - .NET using more than one technique for serialization and deserialization of data:
+            1. Binary format.
+            2. DataConstructSerializer.
+            3. NetDataConstractSerializer.
+            4. XML Serialization.
+        - Each of these serialization methods results in a different format of serialized object.
+        - .NET serialized object could be found as base64 to send non-ascii characters in http requests and response.
+
+    # Common inputs:
+        - VIEWSTATE: is the state of the page and all its controls. its automatically maintained across the web application bt the ASP.NET framework.
+        - .NET remoting services: is mechanism that allow sending pure .NET objects via TCP.
+# -------------------------------   end .NET serialization ------------------------------- #
+
+ ------------------------------- start insecure deserialization ------------------------------- #
+    # ----- VIEWSTATE parameter attack:
+        - You have to try inejct mailicous deserialized object.
+        - Incase of missing VIEWSTATE within http request, try to inject it by your self.
+
+        #----- Mitigation:
+            - Enable MAC validation.
+    # ------ Tools:
+        - ysoserial.net: https://github.com/pwntester/ysoserial.net/releases/download/v1.34/ysoserial-1.34.zip
+# -------------------------------   end insecure deserialization ------------------------------- #

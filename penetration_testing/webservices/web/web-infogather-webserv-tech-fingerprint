@@ -1,0 +1,47 @@
+# ------------------------------- start webserver Fingerprinting ------------------------------- # 
+    # ---------- |Tools| ---------- #
+        - nc
+        - httprint
+        - netcraft website
+        
+    # ---------- |nc| ---------- #
+        nc <target_domain> <port> [Enter].
+            GET / HTTP/1.1 [Enter].
+            Host: <target_domain> [Enter].
+            [Enter] [Enter].
+                
+            | Note: you can change HTTP request method for example HEAD.
+
+    # ---------- |httprint| ---------- #
+        httprint -h <target_domain> -s <signatures_files>
+        
+        ==> options:        
+            -h: identify host.
+            -s: identify signature files.
+            
+            example: httprint -h www.google.com -s signatures.txt
+            
+        ==> Note: httprint support only HTTP and can't be use in case of HTTPS is up.
+# -------------------------------   end webserver Fingerprinting ------------------------------- #       
+
+# ------------------------------- start webserver technologies Fingerprinting ------------------------------- # 
+    # ---------- |Tools| ---------- #
+        - whatweb
+        - wappalayzer extension
+        - HTML source Code
+
+    # -------- Fingerprinting the web server and technologies
+        ==> whatweb tool
+            ==> whatweb -h
+                -h: show options
+            ==> whatweb <target_domain>
+            ==> whatweb -v <target_domain>
+                -v: redable outupt.
+        
+        ==> wappalyzer extension
+
+        ==> HTML source Code
+        
+        ==> netcraft website to figure out the web server service, version
+# -------------------------------   end webserver technologies Fingerprinting ------------------------------- # 
+

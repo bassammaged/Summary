@@ -1,0 +1,26 @@
+# ------------------------------- start ESI ------------------------------- # 
+    # ------- What is ESI?
+        - Edge Side Includes or ESI is a small markup language for edge level dynamic web content assembly. The purpose of ESI is to tackle the problem of 
+        web infrastructure scaling.
+        - ESI has a form of xml tags, which dynamically added to chaced static content in order to enrish them with some dynamic features.
+
+
+    # ------- ESI type:
+        - Non-blind.
+        - Blind.
+    
+    # ------- Deteciton:
+        # ----- header detection:
+            - the intermediate device is addling this header in the response headers.
+                - Surrogate-Control: content="ESI/1.0"
+
+        # ----- Through SSRF:
+            - usually cause the proxies to erslove arbitrary addresses resulting in SSRF.
+
+    # ----- Impact:
+        - SSRF.
+        - XSS.
+        - RFI (Remote File Include).
+        - exfiltrate cookie directly.
+        - RCE through XSLT.
+# -------------------------------   end ESI ------------------------------- # 

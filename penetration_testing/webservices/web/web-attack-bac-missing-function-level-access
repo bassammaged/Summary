@@ -1,0 +1,7 @@
+# ------------------------------- start restrict url access overview ------------------------------- # 
+    ==> Quick view: If the authentication check in sensitive request handlers is insufficient or non-existent 
+                    the vulnerability can be categorised as Missing Function Level Access Control.
+                    Example of a common type of this vulnerability would be to simply hide a feature from the user,
+                    but allowing the request if the user is able to figure out how to conduct it.
+# -------------------------------   end restrict url access overview ------------------------------- # 
+

@@ -1,0 +1,126 @@
+# ------------------------------- start ldap vs ad ------------------------------- #
+    # ----------- philosophy
+        AD: Active Directory is a database based system that provides authentication, directory, policy and dother services in a windows environment. It is a centralized
+        hierarchical directory database which contains information of all user account in t he network.
+        LDAP: an application protocol for querying and modifying items in directory service providers like active directory which supports a form of LDAP.
+# -------------------------------   end ldap vs ad ------------------------------- #
+
+# ------------------------------- start Active Directory overview ------------------------------- #
+    # ------------ What is Active directory?
+        - Active Directory (AD) is a Windows OS directory service that facilitates working with interconnected, complex and different network resources in a unified manner.
+        - Active Directory serves as a single data store for quick data access to all users and controls access for users based on the directory’s security policy.
+        - Active Directory provides a common interface for organizing and maintaining information related to resources connected to a variety of network directories.
+        - The directories may be systems-based (like Windows OS), application-specific or network resources, like printers.
+
+        # ------------ Active Directory provides the following network services:
+            - Lightweight Directory Access Protocol (LDAP) — An open standard used to access other directory services
+            - Security service using the principles of Secure Sockets Layer (SSL) and Kerberos-based authentication
+            - Hierarchical and internal storage of organizational data in a centralized location for faster access and better network administration
+            - Data availability in multiple servers with concurrent updates to provide better scalability
+# -------------------------------   end Active Directory overview ------------------------------- #
+
+
+# ------------------------------- start ldap overview ------------------------------- # 
+    # ------------ What is LDAP?
+        - LDAP stands for Lightweight Directory Access Protocol. It is a protocol used to modify and query directory services over TCP/IP.
+        - LDAP can not only query objects from a directory database, it can also be used for management and authentication.
+        - Note that LDAP is just the protocol to access Directory Service (LDAP is used to communicate with Directory Databases), not a storage mechanism itself.  
+        - Default Port: 389
+
+    # ------------ what is Directory service?
+        - is a database-like virtual storage that holds data in specific hierarchical structure. LDAP structure is based on a tree of directory of entries.
+        - LDAP is object oriented, thus every entry in an LDAP directory services is an instance of an object and must correspond to the rules fixed for 
+        the attributes of the object.
+    
+    # ------------ Example:
+        Example on directory structure is: Microsoft Active Directory (where LDAP is often used in authentication process OpenLDAP protocol).
+
+    # ------------ LDAP syntax:
+        - "="   (equal to)
+        - |     (logical or)
+        - !     (logical not)
+        - &     (logical and)
+        - *     (wildcard) – stands for any string or character
+
+        # ------------ example:
+        - (cn=John)         will fetch personal entries where canonical name is "John"
+        - (cn=J*)           will fetch personal entries where canonical name starts with "J", as a wildcard is placed in the query
+        - (|(sn=a*)(cn=b*)) In this case, the first OR operator is used in order to indicate that we either look for all records which surname starts with "a" or 
+        canonical name starts with "b"
+
+    # ------------ LDAP Implementations:
+        - The LDAP as a protocol can be a completely independent imeplementation from the underlying database. With that said, we can, for example, configure a web 
+        application to serve as a front-end to an Active Directory database. 
+        - In such a scenario, the web application might take the user’s input and incorporate it into the LDAP query in order to retrieve database results and present 
+        it to the application user.
+# -------------------------------   end ldap overview ------------------------------- #
+
+
+# ------------------------------- start LDIF overview ------------------------------- #
+    # ------------ LDIF Format:
+        - Objects in directory databases accessed via LDAP are stored in LDIF which stands for LDAP Data Interchange Format.
+        - LDIF defines directory content as a set of records, one record for each object (or entry). It also represents update requests, such as Add, Modify, Delete,
+        and Rename, as a set of records, one record for each update request.
+        
+        - Note:
+            - A directory database can support LDIF by defining its assumptions in a LDIF file. It can be a plaintext file simply containing directory data representation as 
+            well as LDAP commands. They are also used to read, write, and update data in a directory.
+
+    # ------------ Directory Database structure:
+        # ------------ File content:
+        dn: dc=org
+        dc: org
+        objectClass: dcObject
+        
+        dn: dc=samplecompany,dc=org
+        dc: samplecompany
+        objectClass: dcObject
+        objectClass: organization
+        
+        dn ou=it,dc=samplecompany,dc=org
+        objectClass: organizationalUnit
+        ou: it
+        
+        dn: ou=marketing,dc=samplecompany,dc=org
+        objectClass: organizationalUnit
+        ou: marketing
+    
+        dn: cn= ,ou= ,dc=samplecompany,dc=org
+        objectClass: personalData
+        cn:
+        sn:
+        gn:
+        uid:
+        ou:
+        mail:
+        phone:
+
+        # ------------ Explain File content:
+            - Lines 28-30: We are defining the toplevel domain "org".
+            - Lines 32-35: Next, we are defining the subdomain „samplecompany", for example „samplecompany.org".
+            - Lines 37-43: We define two organization units (ou): it and marketing.
+            - Lines 45-53: We then add objects to the domain „samplecompany.org" and assign attributes with values. For example, „sn” stands for „surname”, „cn” stands 
+            for canonical name (or first name), while „mail” is a placeholder for an email address.
+
+        # ------------ LDIF attributes:
+            - Entry ID:(optional)
+            - Distinguished Name:(Mandatory) Known as dn.
+            - Object classes: It indicates the type of attributes,schemas associated with the object class.(Example: person, top, uidObject etc.)
+            - Attribute Types: It defines the list of attributes that have been used to customize the schema. (Example: userPassword)
+# -------------------------------   end LDIF overview ------------------------------- #
+
+# ------------------------------- start LDAP vulnerabilities ------------------------------- #
+    # ------- Introduction:
+        The basic and most obvious vulnerability can be LDAP injection. If the query is not sainitized enough, an attacker can place a wildcard instead of a legitimate 
+        object, pulling all the objects instead of just one or even break down the LDAP query and custom it as attacker wish.
+
+    # ------- Type of LDAP injection:
+        - Error Based.
+        - Blind Based.
+    
+    # ------- Impact:
+        - Leakage sensitive information that stored in Directory services.
+        - Authentication bypass.
+        - Privilege escalation (horizontally or vertically)
+        - DOS by retrieve large amout of data.
+# -------------------------------   end LDAP vulnerabilities ------------------------------- #

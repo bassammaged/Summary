@@ -1,0 +1,39 @@
+# ------------------------------- start SSI overview ------------------------------- # 
+    # ------- What is SSI:
+        - SSI stands for server side includes, Basically server side includes are directives which you can place into your HTML (or other) documents 
+        to execute scripts or output, for example, environment variables or file statistics.
+
+        - SSI are an Apache feature implemented by mod_include. This feature allows us to place special code 'elements' in our documents 
+        which will carry out certain actions as specified. When a page is sent from the server to the requesting client the page is scanned by 
+        the server for the SSI code elements and carry's out the required actions based on the code element.
+
+        - Files with the extension .shtml (or others as explained later) are processed by the server for SSI.
+
+        # ------- What can SSI be used for? 
+            - SSI can be used for many great things! Their primary uses are to provide interactivity to a web site and to aid site maintenance! 
+            For example, content which is common to all your web pages can be placed in a single document and then included on ALL your 
+            pages. To make any changes you only need to modify this source document!
+
+            - Displaying document information such as document name, URI, modified date, file size.
+            - Using the "echo command" you can 'echo' environmental variables.
+            - User information such as IP address or browser information.
+            - Redirect user.
+            - Perform query and update a database.
+            - Send an email.
+
+    # ------- SSI types:
+        - Non-blind SSI.
+        - Blind SSI.
+
+    # ------- Impact:
+        - Redirect user.
+        - information disclosure.
+            - environment variable.
+            - XSS.
+            - database queries.
+            - Send an email on behalf of the owner.
+            - Remote command execution (RCE)
+
+    # ------- resources:
+        - http://www.ssi-developer.net/ssi/ssi-intro.shtml
+# -------------------------------   end SSI overview ------------------------------- # 

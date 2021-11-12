@@ -1,0 +1,160 @@
+# ------------------------------- start XXE overview ------------------------------- # 
+    ==> Quick view: XML is dervied from the SGML standard and is the same standard on which
+                    HTML* is based, with a lightwight implementation this means that some SGML-based
+                    features, such as unclosed end-closed tags, etc are not implemented.
+
+                    There are many fields that use XML such sa:
+                        - PDF.
+                        - Docs.
+                        - SVG.
+                        - SOAP protocol.
+                        - XMLRCP protocol.
+                        - WebDav.
+
+    ==> XML DTD blocks:
+        - Elements.
+        - Tags.
+        - Attributes.
+        - Entities.
+        - PCDATA.
+        - CDATA.
+
+    ==> XML document structures:
+        - Internal DTD
+            <?xml version="1.0"?>
+            <!DOCTYPE message [
+                <!ELEMENT message (from,to,body)>
+                <!ELEMENT from (#PCDATA)>
+                <!ELEMENT to (#PCDATA)>
+                <!ELEMENT body (#PCDATA)>
+                <!ATTLIST body time CDATA "">
+            ]>
+            <message>
+                <from>Mario</from>
+                <to>Luigi</to>
+                <body time="16.38">Wanna play? - Cheers, SuperMario!</body>
+            </message>
+        - External DTD
+            <?xml version="1.0"?>
+            <!DOCTYPE message SYSTEM "message.dtd">             # message.dtd contains ELEMENT definition.
+            <message>
+                <from>Mario</from>
+                <to>Luigi</to>
+                <body time="16.38">Wanna play? - Cheers, SuperMario!</body>
+            </message>
+
+    ==> XML Entities:
+        - what is XML Entities?
+            An entity is a declaration that states a named reference to be used in the XML in place of content or markup.
+
+        - Example on XML entity:
+            <?xml version="1.0" encoding="UTF-8"?>
+            <!DOCTYPE myDoc [
+                <!ENTITY author "Joe">
+            ]>
+
+            <myDoc>
+                <date>7-5-2016</date>
+                <otherInfo>Author: &author;</otherInfo>
+            </myDoc>
+
+            - &author; will be replaced by Joe
+
+        - Predefined Entities:
+            - &quote;       "
+            - &amp;	        &
+            - &lt;	        <
+            - &gt;          >
+            - &apos;	    '
+
+        - Type of entities:
+            - Internal entities: 
+                An internal entity (as we saw in above example) is one that is defined locally. 
+                Basic purpose of an internal entity is to avoid duplications by using same entity reference multiple times.
+            - External entities:
+                The difference with Internal Entity is; the external entity is defined in an separate file.
+            
+            - General entities:
+                - as we saw in <!ENTITY author "joe"> above example.
+            - Parameter entities:
+                - Define a constant that can hold the common parts of the content specification for all kinds of listings and refer to that constant from inside the content specification of each element.
+                - A parameter entity reference is declared much like a general entity reference. However, an extra percent sign is placed between the
+                <!ENTITY and the name of entity.
+
+                - Example on parameter entity:
+                    <!ENTITY % residential_content "address, footage, rooms, baths">
+                    <!ENTITY % rental_content      "rent">
+                    <!ENTITY % purchase_content    "price">
+
+                    <!ELEMENT apartment (%residential_content;, %rental_content;)>
+                    <!ELEMENT sublet    (%residential_content;, %rental_content;)>
+                    <!ELEMENT coop      (%residential_content;, %purchase_content;)>
+                    <!ELEMENT condo     (%residential_content;, %purchase_content;)>
+                    <!ELEMENT house     (%residential_content;, %purchase_content;)>
+
+
+            - Parsed entity:
+                sometimes referred to as a text entity, becomes part of the XML document after it's examined and processed.
+            - unparsed entity:
+                An unparsed entity may or may not be text, but even if it is, it isn't made part of the XML document. 
+                An example of such an entity is a binary image file.  The file isn't parsed or interpreted by the XML processor, 
+                but is translated by the appropriate visualization tool.
+
+
+            - External entities:
+                - Private:
+                    - Restricted to a either a single author or group of authors.
+                    - Example:
+                        <?xml version='1.0'?>
+                        <!DOCTYPE message [
+                            <!ELEMENT sign (#PCDATA)>
+                            <!ENTITY c SYSTEM 'http://my.site.copyright.xml'>
+                        ]>
+                        <sign>&c;</sign>
+                - Public:
+                    - Designed for a broader usage.
+                    - Example:
+                        <?xml version='1.0'?>
+                        <!DOCTYPE message [
+                            <!ELEMENT sign (#PCDATA)>
+                            <!ENTITY c PUBLIC "-//W3C//TEXT Co[yright//EN" "http://my.site.copyright.xml">
+                        ]>
+                        <sign>&c;</sign>
+
+                | Note: it is important to note that the URI field does not limit parses from resolving HTTP(s) protocols,
+                        there are a number of valid URI schemes allowed (FILE,FTP,DNS,PHP,etc.).
+
+
+
+    ==> Attack View: Attack against application which parsing XML data, in another word the attack aim to
+                     exploit/abuse misconfiguration for XML parser
+
+    ==> XXE attack types:
+        - XML Tag injection
+            - Attacker be able to alter the XML document structure by injecting both XML data and XML tags.
+        - XXE (XML eXternal Entities)
+            - XML parser to load externally defined entities, therefore making it possible to access sensitive content stored
+            on the vulnerable host.
+
+
+# -------------------------------   end XXE overview ------------------------------- # 
+
+# ------------------------------- start XXE attack ------------------------------- # 
+    # ---------- |start XML Tag injection| ---------- #
+        1st: attacker be able to inject some XML metacharacters within the XML document.
+            - metacharacters: ' " < > &
+        2nd: attacker can use the metacharacters to build many payloads.
+    # ---------- |  end XML Tag injection| ---------- #
+    
+            
+        
+    # ---------- |Tools| ---------- #
+        - Burp
+        - XXExploiter: https://github.com/luisfontes19/xxexploiter
+        - XXEinjector: https://github.com/enjoiz/XXEinjector
+
+
+    # ---------- |Resources| ---------- #
+        - https://github.com/payloadbox/xxe-injection-payload-list
+# -------------------------------   end XXE attack ------------------------------- # 
+

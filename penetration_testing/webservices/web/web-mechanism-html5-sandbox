@@ -1,0 +1,9 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: sandbox attribute is a new attribute of the element iframe.
+
+    ==> sandbox values:
+        - sandbox="": forms,scripts,and plugins are disabled, features that trigger automatically are blocked, no links can target other browsing context.
+        - sandbox="ALLOW-SCRIPT": allow script execution.
+        - sandbox="ALLOW-FORMS": allows form submission.
+        - sandbox="ALLOW-TOP-NAVIGATION": allows the iframe content to navigate its top-level browseing context.
+# ------------------------------- start overview ------------------------------- # 

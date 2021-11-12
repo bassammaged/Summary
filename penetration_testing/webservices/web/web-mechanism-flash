@@ -1,0 +1,214 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: Adobe flash is a technology used to create video, animations and other
+                    rich content. Flash files can be used as standalone application or be embedded
+                    in HTML page.
+
+                    the conents can be developed using several tools: Adobe flash professional, flash develop
+                    and more.
+
+                    the language called "ActionScript" is used to build the logic of the application, this language
+                    is similar to JavaScript.
+
+    ==> Compiling: flash ActionScript needs to be compiled before execution. the compiled object is in SWF format (Shockwave flash)
+                   it is very difficult to obtain the source code of the application.
+
+    ==> Decompiling: Many commercial tools known as flash decompilers have been built for this purpose, for example
+                    - sothink
+                    - trilix
+
+    # ---------- |tools| ---------- #
+        - SWFinvestigator
+            - decompiling SWF.
+            - SWF tag views.
+            - local shared object analyzing.
+            - Dynamic function calls
+            - fuzzing.
+    
+# ------------------------------- start overview ------------------------------- # 
+
+# ------------------------------- start embedded flash in HTML ------------------------------- # 
+    ==> Quick View: to embed a flash animation within a web page, you use an object element with
+                    type "application/x-Shockwave-Flash"
+
+    ==> code snapshot:
+                      <object type="application/x-Shockwave-Flash" width="700" hight="450"> 
+                        <param name="movie" value="myFirstAnimation.swf"/>
+                        <param name="allowScriptAccess" value="never"/>
+                        <embed src="myFirstAnimation.swf" width="700" hight="450"/>
+                      </object>
+
+    ==> allowScriptAccess attribute: describe the policy for communication between the animation and the parent
+                                     HTML page.
+
+                                     allowScriptAccess can have three values:
+                                        1- always: the SWF file can always communicate with the HTML page regardless of the domain.
+                                                   SWF can be on domain A and communicate with domain B.
+                                        2- sameDomain: the SWF file can communicate with the hrml page only if they share the same domain.
+                                        3- never: the SWF file can never communicate with the HTML page.
+# -------------------------------   end embedded flash in HTML ------------------------------- # 
+
+# ------------------------------- start passing arguments to flash files ------------------------------- # 
+    ==> Quick View: there are three ways to pass argument.
+
+        ==> method 1, Direct reference: Flash is not embedded in HTML page.  for example:
+                    http://www.coliseumlab.net/myFirstAnimation.swf?name=Mike&redirect=http://www.coliseumlab.net
+
+        ==> method 2, flash embedded in HTML: argument are passed through the attribute data of the object element
+                                              <object type="application/x-Shockwave-Flash" width="700" hight="450" data="myFirstAnimation.swf?name=Mike&redirect=http://www.coliseumlab.net"> 
+                                                <param name="movie" value="myFirstAnimation.swf"/>
+                                                <param name="allowScriptAccess" value="never"/>
+                                                <embed src="myFirstAnimation.swf" width="700" hight="450"/>
+                                            </object>
+
+        ==> method 3, flash embedded in HTML: argument are passed through the attribute FlashArgs of the object element.
+                                                <object type="application/x-Shockwave-Flash" width="700" hight="450" data="myFirstAnimation.swf"> 
+                                                    <param name="movie" value="myFirstAnimation.swf"/>
+                                                    <param name="allowScriptAccess" value="never"/>
+                                                    <param name="FlashArgs" value="name=Mike&redirect=http://www.coliseumlab.net"/>
+                                                  </object>
+# -------------------------------   end passing arguments to flash files ------------------------------- # 
+
+# ------------------------------- start flash security ------------------------------- # 
+    ==> Quick View: sandbox and stakeholder are two important concepts in the flash security.
+
+    ==> sandboxes: by default, SWF files hosted on the subdomain "a.example.com" can only access resources
+                   (swf files, images, sound, text files, etc.) on a.example.com
+                   
+                   Set of accessible resources the flash sandbox. Access control is performed by "stakeholders" that
+                   can restrict or retract the default policies.
+
+    ==> stakeholders: discribe different role (human or not) involved in the control of security settings.
+                      there are 4 stakeholders:
+                        - Administrator.
+                        - User settings.
+                        - Website settings.
+                        - Author settings.
+
+    ==> stakeholder, Administrator: is represented by the system administrator responsible for the flash player installation.
+                                    they can configure flash security settings that will affect all operating system users.
+                                
+                                    - configuration file: mms.cfg this text conf file is read when flash player starts.
+                                    it allow administrators to grant or restrict to a veriety of feature in Microsoft system,
+                                    it is generally located in the directory system32\macromed\Flash
+
+
+                                    - the global flash player trust directory: administrators can register SWF files as trusted for
+                                    all operating system users; this means that SWF files can interact with other SWF files and can
+                                    load data from local and remote locations
+
+    ==> stakeholder, user: is represented by the operation system user running a flash animation through the player.
+
+                            - the setting manager and setting UI provide security-related options such as: camera and
+                            micophone settings, shared object settings, settings related to legancy content and so on.
+
+                            - user flash player trust directory: users can register SWF files as trusted; this means that SWF files
+                            can interact with other SWF files and can load data from local and remote locations.
+
+    ==> stakeholder, website: represented by the web server component responsible for the delivery of the flash animation
+                              or flash resources to the client.
+
+                              - this role can decide if an external SWF animation can interact (through ActionScript) with data available
+                              on the server. for example: SWF animation (on domain: A.com) tries to access external resources
+                              (images and audio files) available on a different domain (B.com), the policy file (crossdomain.xml) on domain B.com
+                              will determine if the operation is allowed or not.
+
+                              - depending on the request resources, ActionScript can initiate two different types of connection:
+                                    1- Document Based server connection:
+                                        - Loader (to load SWF files or images).
+                                        - sound.
+                                        - URLLoader (to load text or binary data).
+                                        - URLStream.
+                                        
+                                        URL policy file is checked by flash player if it is a Document Based server connection (crossdomain.xml)
+                                        URL policy file is also known as the master policy file, example of a URL policy file:
+                                            <?xml version="1.0"?>
+                                            <cross-domain-policy>
+                                                <allow-cross-from domain="*.example.com"/>
+                                                <allow-cross-from domain="subdomain.example2.com"/>
+                                                <allow-cross-from domain="192.168.1.100"/>
+                                            </cross-domain-policy>
+
+                                            a SWF file can check for policy files in different locations by calling the "Security.loadPolicyFile()" method.
+
+                                    2- Socket connection.
+                                        - ActionScript socket.
+                                        - XMLSocket
+                                        
+                                        Socket policy file is checked by flash player if it is a socket connection.
+                                        By default, the flash player looks for a socket policy file on port 843; we refer to this policy file as the master policy file.
+
+    ==> stakeholder, author: is represented by the developer of the flash animation, this role can affect the interaction between SWF files available on diffeernt domains.
+                             the API "Security.allowDomain(<allowedDomain>)" grants permissions to the following features:
+                                    - the interactio between different SWF files (flash cross-scripting)
+                                    - Display list access.
+                                    - Event detection.
+                                    - Full access  to properties and methods of the stage object.
+
+    ==> Flash Cross-Scripting: by default, a SWF file cannot access the ActionScript properties and methods of another SWF file available
+                               on a different domain.
+
+                               access is granted only if the accssed SWF allows the domain of the calling SWF.
+# -------------------------------   end flash security ------------------------------- # 
+
+# ------------------------------- start JavaScript from ActionScript ------------------------------- #
+    ==> Quick View: flash animations are embedded in HTMl pages, ActionScript code (available in the SWF file can call the
+                    parent page's JavaScript code by using the "ExternalInterface" class.
+                    for example:
+                        //Javascript code inside index.html
+                        function sayHelloToActionScript(){
+                            return "Hello ActionScript, I'm JavaScript"
+                        }
+                        // ActionScript code inside flash.swf (embedded in index.html)
+                        var result:String = ExternalInterface.call("sayHelloToActionScript")
+# -------------------------------   end JavaScript from ActionScript ------------------------------- # 
+
+# ------------------------------- start ActionScript from JavaScript ------------------------------- # 
+    ==> Quick View: Flash animation are embedded in HTML pages, JavaScript code can call ActionScript code included
+                    in the embedded flash file.
+                    for example:
+                        // JavaScript code inside html.html
+                        getFlashMovie("myFlashMovie").sayHelloToJavaScript();
+                        // ActionScript code inside flash.swf (embedded in index.html)
+                        ExternalInterface.addClassback("sayHelloToJavaScript",sayHelloToJavaScript)
+# -------------------------------   end ActionScript from JavaScript ------------------------------- # 
+
+# ------------------------------- start method NavigateToURL ------------------------------- # 
+    ==> Quick View: this method has the following definition:
+                    - NavigateToURL (<URLRequest>, [target])
+                    - this ActionScript method is used to open a URL in the window embedding the flash file. it is similar to the JavaScript function
+                    window.open this function has optional second parameter - target, this parameter can be used to specify where the URL
+                    should be opened (a given fram, current window or new window).
+
+    ==> URLRequest contain JavaScript: URLRequest parameter can contain JavaScript code, such as "javascript:alert('HellofromActionScript')"
+                                       incase of the following conditions is true:
+                                            - the SWF file is a locally trusted file.
+                                            - the target is the HTML page in which the SWF file is embedded and the "allowScriptAccess"
+                                            rules described above apply.
+                                            - the target and the SWF file are part of the same sandbox (thet are located in the same subdomain).
+# -------------------------------   end method NavigateToURL ------------------------------- # 
+
+# ------------------------------- start local shared object ------------------------------- # 
+    ==> Quick View: flash features an internal storage mechanism based on local shared onject
+                    local shared objects are similar to browser cookies:
+                        - they can be used to track user activity or to store preferences.
+                        - they are read-only by subdomains that have set them.
+                    there also some significant differents:
+                        - they are not sent back and forth over HTTP connections.
+                        - they do not expire.
+# -------------------------------   end local shared object ------------------------------- # 
+
+# ------------------------------- start pentesting flash application ------------------------------- # 
+    ==> Quick View: brief walkthrough of the security check to perform pen test on flash application:
+                    - client-side components (swf files and container page)
+                        - hard-coded information (URL, credentials info, etc.).
+                        - check if input paramters are sanitized.
+                        - analysis of the container page.
+                            - Check the "allowScriptAccess" parameter.
+                        - analysis of the website hosting the flash application
+                            - check the policy file "crossdomain.xml"
+                    - the communication protocol between the client side player and the server-side components.
+                        - check protocol used for example: SOAP, AMF
+                    - server-side component
+                        - common vulnerability could be found: RFI, SQLi, etc..
+# -------------------------------   end pentesting flash application ------------------------------- # 
+

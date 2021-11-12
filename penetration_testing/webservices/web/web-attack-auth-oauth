@@ -1,0 +1,76 @@
+# ------------------------------- start OAuth overview ------------------------------- # 
+    # --------- What is OAuth?
+        - OAuth is an open-standard authorization protocol or framework that provides applications the ability for “secure designated access.” For example, you can tell 
+        Facebook that it’s OK for ESPN.com to access your profile or post updates to your timeline without having to give ESPN your Facebook password. This minimizes 
+        risk in a major way: In the event ESPN suffers a breach, your Facebook password remains safe.
+
+        - V.I Note: OAuth doesn’t share password data but instead uses authorization tokens to prove an identity between consumers and service providers.
+        OAuth is an authentication protocol that allows you to approve one application interacting with another on your behalf without giving away your password.
+
+    # --------- How it works?
+        - Main components/actors:
+            1. Resource owner: user that can grant access to a protected resources, in our case the end-user.
+            2. Client: An application requesting to access to a protected resource that belongs to the resource owner.
+            3. Resource server: the server that hosting the protected resources that belong to the resource owner, it may be an API.
+            4. Authorization server: ther server that autheticates the resource owner and issue acess token after authorization, authorization server is also called
+            identiy provider (IdP).
+            5. User agent: the anget used by Resource owner(user) to interact with the client, for example: browser or mobile application.
+
+            - V.I Note: authorization server and resource server in some times will be the same.
+
+        - Main OAuth parameters:
+            1. redirect URI: this is parameter to redirect resource owner back to client after grant the permission.
+            2. response type: the type of information the client expect to recieve. In the most cases the type is code/authorization code.
+            3. scope: permissions that client want to get.
+            4. client id: used to identify the client to the authorization server.
+            5. client secret: secret password only the client and authorization server know.
+            6. authorization code: short-lived temporary code, the authorization server send back to the client, client send the authorization code back to the authorization
+            server along with the client secret in exchange for an access token.
+            7. access token: the client will use from that point forward to communicate with the resource server.
+            8. state: parameter guarantee this request done by the user to avoiding any CSRF attack (Optional parameter).  
+            
+            - V.I Note: consent: a message appears to the resource owner to get a permission from the owner to grant access to the client based on the scope.
+        
+        - OAuth flows with an example (Authorization code grant type):
+            user want to allow "pun" client to access his/her contact that found in google account to send invitiation to all his/her friends.  
+
+            1. resource owner runs puns client function to share.
+            2. 'puns' client will send the request to authorization server.
+                - client id.
+                - response type.
+                - scope.
+                - redirect URI/callback URI.
+            3. 'google' authorization server check active session with the resource owner, incase of no session found. the resource owner will sign in authorization server
+            'google' to get active session.
+            4. after resource owner get active session with 'google' authorization server, 'google' authorization server will ask the resource owner to accept/allow the scope.
+            if the resource owner allow the required scope we are going to move to the next step.
+            5. 'google' authorization server will redirect the resource owner to the 'puns' client using redirect URI parameter along with a temprary authorization code.
+            6. the 'puns' client will send back the authorization code along with client id and client secret directly without using user-agent 'browser'
+            7. after verification the data that sent by client, authorization server will send the token code to the client.
+            8. client will use the token code for authentication with resource server to grant access for the scope that allowed by the owner.
+
+        - oAuth flow with an example (Implicit grant type)
+            1. resource owner runs puns client function to share.
+            2. 'google' authorization server check active session with the resource owner, incase of no session found. the resource owner will sign in authorization server
+            'google' to get active session.
+            3. after resource owner get active session with 'google' authorization server, 'google' authorization server will ask the resource owner to accept/allow the scope.
+            4. google' authorization server will redirect the resource owner to the 'puns' client using redirect URI parameter along with an access token.
+
+    # ------ Recon:
+        - Doing some basic recon of the OAuth service being used can point you in the right direction when it comes to identifying vulnerabilities. As these 
+        services provide a public API, there is often detailed documentation available that should tell you all kinds of useful information, such as the 
+        exact names of the endpoints and which configuration options are being used.
+
+        - Once you know the hostname of the authorization server, you should always try sending a GET request to the following standard end-points.
+
+        # -- End-points:
+            /.well-known/oauth-authorization-server
+            /.well-known/openid-configuration
+
+    # ------ Attack Scenarios:
+        1. Authentication bypass via OAth implicit flow (Change the returned email/username from IdP leads to account takeover).
+        2. Missing state parameter could lead to CSRF. 
+            a. CSRF for linking victim profile with your IdP account with non-used code.
+            b. Abusing callback function through redirect_URI parameter concatenate with CSRF vulnerability to steal the authenticated code.
+        3. signup with the same account which registed by oAuth before.
+# -------------------------------   end OAuth overview ------------------------------- #

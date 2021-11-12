@@ -1,0 +1,19 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: the main issue when taking into Captcha challenge-response schema
+                    is that it is not easy to create it from scratch; therefore,
+                    this may sometimes introudce new security issues. this also
+                    applies to thrid-part Chaptcha schemas too.
+# ------------------------------- start overview ------------------------------- # 
+
+# ------------------------------- start bypass Chaptcha attack ------------------------------- #
+    # ---------- |Fixed Chaptcha requset| ---------- #
+        ==> Quick View: fix the captcha value that entered by you and captcha details that sent
+        while request.
+
+    # ---------- |change validation response| ---------- #
+        ==> Quick View: change validation response to be true.
+
+    # ---------- |Fixed valid captcha| ---------- #
+        ==> Quick View: incase the application request to reset valid captcha to be not usable anymore
+        intercept the request and drop it, that could make your valid captcha still usable.
+# -------------------------------   end bypass Chaptcha attack ------------------------------- # 

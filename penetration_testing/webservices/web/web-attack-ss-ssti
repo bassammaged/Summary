@@ -1,0 +1,49 @@
+# ------------------------------- start ssti overview ------------------------------- # 
+    # --------- What is SSTI?
+        - SSTI stands for Server Side Template Injection, this type of vulnerability considering as Language Evaluation issue.
+
+        - Most front-end developers have needed to work with server-side templates at some point. They may not have been called that—there was a time when 
+        these templates were simply called “PHP pages”, “JSPs”, or similar, before the push to apply separation of concerns on the web. These days it’s more 
+        common to see pages and views rendered by any back-end framework trimmed of as much business logic as possible.
+
+        - Post popluar languages which use templates in web development techologies are:
+            - php (Twig,Smarty).
+            - Python (Flask, Jinja/2).
+            - Java (Freemarker).
+
+    # --------- Why developers use SST?
+        - Template engines are designed to generate web pages by combining fixed templates with volatile data.
+        - Have you noticed how some emails, even though looks like it’s from a mass email campaign, are addressed to your name? That’s a template engine at work. 
+        Some of the server-side template engines that are most frequently used are Smarty, Mako, Twig, and Jinja2. Web applications commonly use these template 
+        engines to present dynamic data on web pages and emails. Examples include wikis, blogs, content management systems, and marketing applications.
+
+    # --------- Language Evaluation:
+        Langauge evaluation is a generic name we chose for vulenabilities that include:
+            - Double evaluation.
+            - Server Side Template Injection.
+            - Experssion language Injection.                         
+
+    # --------- Impact:
+        - XSS
+        - RCE
+
+    # --------- Detection:
+        step 1: Detect back-end technologies
+            - Headers.
+            - common extension.
+            - Libraries that used.
+            - Comments.
+            - Host scan.
+            - bause error.
+        
+        step 2:  
+            Trying to inject SST payloads over parameters, headers or http body
+
+    # --------- Example:
+        - SST code: $template->render("Hello ${username}!")
+            for printing username for the user. due to template engine the ${username} will be replaced by the username of the user.
+
+    # --------- resources:
+        - payloads resources:
+            https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection#freemarker-java
+# -------------------------------   end ssti overview ------------------------------- #

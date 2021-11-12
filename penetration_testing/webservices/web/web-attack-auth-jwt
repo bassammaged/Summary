@@ -1,0 +1,79 @@
+# ------------------------------- start JWT overview ------------------------------- #
+    # -------- what is JWT?
+        A JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties 
+        as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret or a public/private key pair.
+
+        - Example on JWT:
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibW9kZXJhdG9yIn0=.SE1BQ1NIQTI1NihiYXNlNjQoaGVhZGVyKSsnLicrYmFzZTY0KHBheWxvYWQpKQ==
+
+
+    # -------- Where I can find JWT?
+        - Parameter.
+        - Response body.
+        - Cookie.
+        - Web storage (Local/session storage).
+        - Baerer authentication header or could be called by token authentication header.
+
+    # -------- What Is the JSON Web Token Structure?
+        1. Header:
+            - The header typically consists of two parts: the type of token, which is JWT, and the hashing algorithm that is used, such as HMAC SHA256 or RSA.
+            - For example:
+                {
+                "alg": "HS256",
+                "typ": "JWT"
+                }
+
+        2. Payload:
+            - The second part of the token is the payload, which contains the claims. Claims are statements about an entity.
+            - An example payload is shown below:
+                {
+                "sub": "1234567890",
+                "name": "John Doe",
+                "admin": true
+                }
+
+        3. Signature:
+            - To create the signature part, you have to take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that.
+            - for example:
+                HMACSHA256(
+                base64UrlEncode(header) + "." +
+                base64UrlEncode(payload),
+                secret)      
+
+    # -------- Example for JWT:
+        1. identify header as {"alg":"HS256","typ":"JWT"}
+        2. illustrate payload as {"role":"moderator"}
+        3. encode base64 header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+        4. encode base64 payload: eyJyb2xlIjoibW9kZXJhdG9yIn0=
+        5. create signature part: base64(HMACSHA256(base64(header)+'.'+base64(payload)))
+        6. JWT will be as the following:
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibW9kZXJhdG9yIn0=.SE1BQ1NIQTI1NihiYXNlNjQoaGVhZGVyKSsnLicrYmFzZTY0KHBheWxvYWQpKQ==
+
+
+    # -------- Security faults:
+        - No signature verfication even if signature not related to the payload.
+        - Empty signature. 
+        - the secret key is weak and vulnerable to brute-forced.
+        - faulty token expiration.
+        - JWT vulenrable to CSRF incase JWT stored in a cookie.
+        - Steal JWT through XSS.
+        - Improper token storage.
+        - enforce back-end to works with symmetric instead of asymmetric mechanism (Resign attack).
+
+
+    # -------- RS256 VS HS256:
+        - RS256 stands for "RSA Signature with SHA-256" is an asymmetric algorithm, and it uses a public/private key pair: the identity provider has a 
+        private (secret) key used to generate the signature, and the consumer of the JWT gets a public key to validate the signature. 
+        Since the public key, as opposed to the private key, doesn’t need to be kept secured, most identity providers make it easily available for consumers 
+        to obtain and use (usually through a metadata URL).
+
+        - HS256 stands for "HMAC with SHA-256" is a symmetric algorithm, with only one (secret) key that is shared between the two parties. Since the same key is 
+        used both to generate the signature and to validate it, care must be taken to ensure that the key is not compromised.
+
+        - Note: If you will be developing the application consuming the JWTs, you can safely use HS256, because you will have control on who uses the secret keys. 
+        If, on the other hand, you don’t have control over the client, or you have no way of securing a secret key, RS256 will be a better fit, since the consumer 
+        only needs to know the public (shared) key.
+
+    # --------- Tools:
+        - jwtears: https://github.com/KINGSABRI/jwtear
+# -------------------------------   end JWT overview ------------------------------- # 

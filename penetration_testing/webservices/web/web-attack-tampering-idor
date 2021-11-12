@@ -1,0 +1,7 @@
+# ------------------------------- start idor overview ------------------------------- # 
+    ==> Quick view: There can be many variables in the application such as “id”, “pid”, 
+                    “uid”. Although these values are often seen as HTTP parameters, they can be found 
+                    in headers and cookies. The attacker can access, edit or delete any of other users’ 
+                    objects by changing the values. This vulnerability is called IDOR.
+# -------------------------------   end idor overview ------------------------------- # 
+

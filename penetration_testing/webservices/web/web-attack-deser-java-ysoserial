@@ -1,0 +1,30 @@
+# ------------------------------- start ysoserial ------------------------------- #
+    # ------ Introduction:
+        - riginally released as part of AppSecCali 2015 Talk "Marshalling Pickles: how deserializing objects will ruin your day" with gadget chains 
+        for Apache Commons Collections (3.x and 4.x), Spring Beans/Core (4.x), and Groovy (2.3.x). Later updated to include additional gadget chains 
+        for JRE <= 1.7u21 and several other libraries.
+
+        - ysoserial is a collection of utilities and property-oriented programming "gadget chains" discovered in common java libraries that can, 
+        under the right conditions, exploit Java applications performing unsafe deserialization of objects. The main driver program takes a user-specified 
+        command and wraps it in the user-specified gadget chain, then serializes these objects to stdout. When an application with the 
+        required gadgets on the classpath unsafely deserializes this data, the chain will automatically be invoked and cause the command to be 
+        executed on the application host.
+# -------------------------------   end ysoserial ------------------------------- #
+
+
+# ------------------------------- start usage ------------------------------- #
+    # ----- help
+        java -jar ysoserial.jar
+
+    # ----- java serialize payload
+        java -jar ysoserial.jar <gadget_name> "<command>"
+        ex: java -jar ysoserial.jar CommonsCollections1 "id"
+
+    
+    # ----- exploit utility:
+        java -cp ysoserial.jar <exploit_utility_path>
+        java -cp ysoserial.jar <classname>       
+        ex: 
+            java -cp ysoserial.jar exploit/JSF.java
+            java -cp ysoserial.jar ysoserial.exploit.JSF
+# -------------------------------   end usage ------------------------------- #

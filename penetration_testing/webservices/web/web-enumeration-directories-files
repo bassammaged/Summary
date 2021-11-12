@@ -1,0 +1,21 @@
+# ------------------------------- start finding hidden paths and files ------------------------------- # 
+    ==> Most common extensions:
+    .bak,.bac,.old,~,.01,.000,.001,_bak,_bac,.xxx,.inc,.conf,.docs,.pdf,.txt,.list,/,.cgi,cgi-bin,.json,.package,.xml
+    
+    bak,bac,old,_bak,_bac,01,000,001,~,inc,xxx,config,conf,pdf,docs,list,cgi,cgi-bin,txt,/
+    
+    # ---------- |Techniques| ---------- #
+        - spidering
+        - bruteforce
+    
+    # ---------- |spidering| ---------- #
+        # ---------- |tools| ---------- #
+            - Burp suite spider
+    
+    # ---------- |bruteforce| ---------- #
+        # ---------- |tools| ---------- #
+            - Dirbuster GUI.
+            - dirb CLI
+    
+    ==> V.I Note: pay atention to files and directories that were not list by burp and listed by bruteforce tools. 
+# -------------------------------   end finding hidden paths and files ------------------------------- # 

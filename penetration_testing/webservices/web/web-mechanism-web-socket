@@ -1,0 +1,16 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: web socket is a new protocol to meet real time web application needs.
+
+    ==> web socket features:
+        - connection established by upgarding an existing HTTP connection to webSocket.
+        - supported by browsers
+            - ws://
+            - wss://
+        - HTTP standard prots 80,443.
+            - this means: no firewall issues for the users.
+        - full-duplex
+            - the protocol allows communication in both directions.
+
+    ==> connect to webSocket server.
+    ==> Recieve notification about the opened connection use the onopen event lisnter.  
+# ------------------------------- start overview ------------------------------- # 

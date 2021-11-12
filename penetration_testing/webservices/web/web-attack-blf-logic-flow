@@ -1,0 +1,117 @@
+# ------------------------------- start Business Logic overview ------------------------------- # 
+    # ----- What is Business logic flaw?
+        - Business logic vulnerabilities are flaws in the design and implementation of an application that allow an attacker to elicit unintended 
+        behavior. This potentially enables attackers to manipulate legitimate functionality to achieve a malicious goal. These flaws are generally the 
+        result of failing to anticipate unusual application states that may occur and, consequently, failing to handle them safely. 
+        
+        - Logic flaws are often invisible to people who aren't explicitly looking for them as they typically won't be exposed by normal use of the 
+        application. However, an attacker may be able to exploit behavioral quirks by interacting with the application in ways that developers never intended.
+
+
+        - Business logic vulnerabilities often arise because the design and development teams make flawed assumptions about how users will interact with 
+        the application. These bad assumptions can lead to inadequate validation of user input.
+
+   
+    # ----- Use cases on Business logic flaw:
+        - Example 1: 
+            if the developers assume that users will pass data exclusively via a web browser, the application may rely entirely on weak client-side controls 
+            to validate input. These are easily bypassed by an attacker using an intercepting proxy.
+
+
+    # ----- Impact:
+        - The likelihood of business logic problems really depends on the circumstances. You’ll need to evaluate the threat agents who could possibly 
+        exploit the problem and whether it would be detected. 
+
+
+    # ----- How could we avoiding business logic flaw?
+        - Logic flaws are particularly common in overly complicated systems that even the development team themselves do not fully understand. To avoid 
+        logic flaws, developers need to understand the application as a whole. This includes being aware of how different functions can be combined in 
+        unexpected ways. Developers working on large code bases may not have an intimate understanding of how all areas of the application work. Someone 
+        working on one component could make flawed assumptions about how another component works and, as a result, inadvertently introduce serious logic flaws. 
+        If the developers do not explicitly document any assumptions that are being made, it is easy for these kinds of vulnerabilities to creep 
+        into an application.
+
+    # ----- Use cases on Business logic flaw (Cont.):
+        - Example 2:
+            An e-commerce merchant, YYY.com sells electronic merchandise to consumers worldwide. The typical checkout process during fulfillment 
+            includes the following steps in sequence:
+                1. User picks one or more items and adds to basket.
+                2. User then heads to order page to initiate purchase.
+                3. User pushes purchase or checkout button.
+                4. Merchant YYY.com sends order and customer information to it’s partner payments processor (for authorization and capture).
+                5. Payments processor returns transaction-id back to Merchant YYY.com
+                6. Merchant YYY.com displays confirmation details on fulfillment page to consumer.
+            
+            An attacker carefully tracks the request/response through each of these stages prepares to induce a currency attack on this merchant.
+                1. At step (3), the attacker manipulates a currency related parameter in the POST request within the HTTP header and changes the currency 
+                type from `EU Pounds` to `US Dollars`. As a result the attacker was able to exploit this logic flaw by paying less for his/her order.
+
+        - Example 3:
+            Imagine a website where you can buy t-shirts. The usual workflow of a client is the following:
+                1. Adds 2 t-shirts to the basket.
+                2. Pays with their credit card.
+                3. Adds more t-shirts (10) to the basket.
+                4. Finalize the order and gets 12 t-shirts, for the price of 2.
+
+        - Example 4: (Logic Flaw Linked to a Temporal Attack)
+            During a penetration test on an event management site, there was a ticket booking functionality. When a customer started a reservation 
+            by adding tickets to their shopping cart, their tickets were blocked for other customers for a given number of minutes, to let the user have time 
+            to finalise their order.
+
+            During the attack, we created a script that reserved all the tickets. By running this script, we blocked the entire site. This 
+            was a denial of service (DoS), because real customers could no longer use the website to buy their cards. For the website, this leads to 
+            a loss of income (because users switch to competing websites), a loss of trust, a deterioration of their brand image.
+
+            To prevent this type of vulnerability linked to temporal attacks, several solutions are possible and can be combined depending on the situation: 
+                1. setting up a captcha at the beginning of the booking process. 
+                2. checking identity when creating the account (validating the telephone number for example). 
+                3. checking that a bank card is associated with only one account.
+                4. etc...
+
+        - Example 5: (Logic Flaw Linked to Bypassing a Workflow)
+            One website had a subscription system for users to access its content. At the time of registration, each account received one free content download.
+
+            During the penetration test, we registered and then unsubscribed from the service. We then re-registered, and during this second registration 
+            with the same account we were entitled to a new content download. A malicious attacker could have taken advantage of this 
+            vulnerability to download a large amount of content.
+
+            This vulnerability was possible because this behavioural scenario was not taken into account during development.
+
+        - Example 6: (Affect availability by using thier weapon).
+            One of the application which apply defense mechanism against bruteforcing, the developer's mechanism was block the user after three 
+            failed login attempt.
+
+            During Penetration testing, we were able to deny all of the user for performing the login and using the application, Due to we perfromed login bruteforce
+            against the user list that we had.
+
+
+        - Example 7: (Time plays a significant role in our lives).
+            At one of the engagement that we involved in, we faced cipher text with unkown algorithm and keys.
+
+            While we are trying to crack it, we noted that there was a request with time response is not like other requests that we done. is it a sign?
+            yup it is, after analysis the requests we discovered that "the application response will be delay based on the plaintext contains right values or not.
+
+    
+    # ----- As penetration tester, How could you detect the vulnerability?
+        - Finding logic flaws goes beyond what any automated tool can do. A penetration test enables to discover them. It is necessary to study and to 
+        understand the expected (and hence unexpected) behaviour of a website or a mobile application and to think ‘attack’: which gains could obtain 
+        attackers in this situation.
+
+        - Vulnerabilities scanners are not bad at detecting technical flaws when conditions are good. They are testing technical flaws related to code 
+        or configuration errors. But they are not able to understand a situation and to think about how to circumvent or divert a control.
+
+
+    # ----- Use cases on Business logic flaw (Cont.):
+        1. Parameter manipulation (example, E-Commerce Item Price, Item quality with negative).
+        2. Exploit maximum value for variables (example, Int 2,147,483,647 after that loop back from the - 2,147,483,647).
+        3. Register with authorized domain mail by using exceed max size of Text field in Database (for example, text field in DB accepts 255 characters, 
+        with no coding check allows you to enter your email domain with fake.
+        4. Update an email with no verification.
+        5. Change password of the another user (Idor).
+        6. Break down the sequence of the functions.
+        7. Break down the condition (for example, Use 2 coupon alternatively to bypass you have been used the coupon before).
+        8. Repeat specific sequence that allows you for abusing (For example, repeat order request, extract coupon money in return, submit the coupon 
+        to receive money).
+
+# -------------------------------   end Business Logic overview ------------------------------- # 
+

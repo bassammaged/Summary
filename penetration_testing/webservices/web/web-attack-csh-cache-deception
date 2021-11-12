@@ -1,0 +1,14 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view:
+    - Web cache functionality is set for the web application to cache static files based on their extensions, disregarding any caching header.
+
+    ==> Attack condition:
+    - When accessing a page like http://www.example.com/home.php/nonexistent.css, the web server will return the content of home.phpfor that URL.
+    - Victim has to be authenticated while accessing the triggering URL.
+
+    ==> Mitigation:
+        - Don’t accept this! http://www.example.com/home.php/non-existent.css. Return 302 or 404 instead
+        - Only cache files if their HTTP caching headers allow.
+        - Store all static files in a designated directory
+        - Cache files by their content type
+# ------------------------------- start overview ------------------------------- # 

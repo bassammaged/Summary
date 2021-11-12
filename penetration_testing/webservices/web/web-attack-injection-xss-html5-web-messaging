@@ -1,0 +1,27 @@
+# ------------------------------- start web messaging overview ------------------------------- # 
+    # ------------ What is web messaging:
+        - In order to soften the SOP and allow documents to communicate with one other, regardless of t heir source, domain, HTMl5 introduced specification 
+        called web messaging this is referred as Cross Document Messaging or name of API postMessage.
+
+        - The window.postMessage() method safely enables cross-origin communication between Window objects; e.g., between a page and a pop-up that it spawned, or 
+        between a page and an iframe embedded within it.
+        In this case, the hosting web page can receive content from other domains without the server being involved, thus bypassing possible server-side security checks.
+
+        - Example of postMessage using:
+            Whilst this mechanism is unlikely to change, it doesn’t scale well as applications grow and become more distributed. For example, large integrated 
+            applications such as those offered by Google present a wide range of services each presented via different URLS (e.g. webmail via https://mail.google.com and 
+            video sharing via https://youtube.com/). Cookies set via mail.google.com cannot be accessed by youtube.com due to the Same Origin Policy, therefore in order 
+            to provide a seamless user experience, applications such as these implement Cross-Origin communication techniques in order to share information. Increasing 
+            smaller application are also employing Cross-Origin communication techniques to intergrade social networking sites such as Facebook, Twitter, and Linkedin 
+            (All of which implement HTML5 postMessage).
+
+# -------------------------------   end web messaging overview ------------------------------- # 
+
+# ------------------------------- start web messaging attack scenarios ------------------------------- # 
+    # ------- DOM XSS
+        - attacker exploit DOM XSS to control over the passed data to postMessage.
+    
+    # ------- Origin issue
+        - Developer doesn't checks on Origin from JS code which allow developer's code to parsing any data could be send to postMessage.
+        without any validation on Origin and data that passed, allow attacker to abusing this feature.
+# -------------------------------   end web messaging attack scenarios ------------------------------- # 

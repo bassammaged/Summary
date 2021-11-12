@@ -1,0 +1,19 @@
+# ------------------------------- start overview ------------------------------- # 
+    # ----- CSP overview:
+        - CSP is a browser security mechanism that aims to mitigate XSS and some other attacks. It works by restricting the resources (such as scripts and images) that a 
+        page can load and restricting whether a page can be framed by other pages. To enable CSP, a response needs to include an HTTP response header 
+        called Content-Security-Policy with a value containing the policy. The policy itself consists of one or more directives, separated by semicolons.
+
+    # ----- Mitigating XSS attacks using CSP
+        - Example on how CSP header can be used to mitigate XSS
+            - The following directive will only allow scripts to be loaded from the same origin as the page itself: script-src 'self'
+            - The following directive will only allow scripts to be loaded from a specific domain: script-src https://scripts.normal-website.com
+
+            # -- More advanced config
+                - The CSP directive can specify a nonce (a random value) and the same value must be used in the tag that loads a script. If the values do not match, 
+                then the script will not execute. To be effective as a control, the nonce must be securely generated on each page load and not be guessable by an 
+                attacker.
+                - The CSP directive can specify a hash of the contents of the trusted script. If the hash of the actual script does not match the value specified in the directive, 
+                then the script will not execute. If the content of the script ever changes, then you will of course need to update the hash value that is specified in the 
+                directive.
+# -------------------------------   end overview ------------------------------- #                                                                                      

@@ -1,0 +1,17 @@
+# ------------------------------- start overview ------------------------------- #
+    # ---------- Modern infrastructure:
+        - Currently our connection that established cis not handled by one single server. In our days: web application might consist of 
+        serveral servers serve the app (application server, database server).
+
+        Client (1) ---------------- WAF (2) ------------- Revere proxy/Loadbalancer (3) ------------ Firewall (4)
+                                                                                                        |
+                             database server (7) --------------  firewall (optional) (6) --------- app server (5)
+
+        - The new infrastructure design provide extra security and avialbility through caching and presenting users with a cached version of a website.
+        
+        - Critical configuration for example:
+            - reverse proxy/loadbalancer is usually redirect user based on host header. 
+            - reverse proxy/loadbalancer is providing caching based on rules for example extensions.
+
+        - 
+# -------------------------------   end overview ------------------------------- # 

@@ -1,0 +1,9 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: a web application that wants to redirect a user to a new page inserts this header into the 
+                    HTTP response.
+
+    ==> attack scenario example: unauthenticated  user will be redirect to http response including the following header
+        location:http://www.elsfoo.com/login, the user's browser will analyze the header of the HTTP response and will
+        perform a new GET request to the new page (login) without showing the content body of the first request.
+        but the content body will shown during intercepting of HTTP response that could be has sensitive information.
+# ------------------------------- start overview ------------------------------- # 

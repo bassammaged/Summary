@@ -1,0 +1,44 @@
+# ------------------------------- start usernames enumration ------------------------------- # 
+    ==> Quick view: User enumeration is when a malicious actor can use brute-force techniques to either guess or 
+        confirm valid users in a system. User enumeration is often a web application vulnerability, though it can also 
+        be found in any system that requires user authentication. Two of the most common areas where user enumeration 
+        occurs are in a site's login page and its ‘Forgot Password' functionality.
+        The malicious actor is looking for differences in the server's response based on the validity of submitted credentials.
+
+    ==> application behavior example:
+    -----------------------------------------------------------------------------------------
+    |           *user does not exist*               |               *user exist*            |
+    -----------------------------------------------------------------------------------------
+    |            Cookie are deleted                 |    cookie are not deleted or new      |
+    |                                               |              cookie is set            |
+    -----------------------------------------------------------------------------------------
+    |       user goes to a known fixed page         |   user hoes to a user-specific page   |
+    -----------------------------------------------------------------------------------------
+    |               the HTML is fixed               |   the html changes or is different    |
+    |                                               |         from an invalid user          |
+    -----------------------------------------------------------------------------------------
+    |               Error Message                   |               redirection             |              
+    -----------------------------------------------------------------------------------------
+    |               Error Message                   |   retrieve user, calculate Password   |
+    |                                               |   check if the password matches (how  |
+    |                                               |   long it takes to the app. to send a |
+    |                                               |   response).                          |
+    -----------------------------------------------------------------------------------------
+    
+# -------------------------------   end usernames enumration ------------------------------- # 
+
+# ------------------------------- start username enumration attacks ------------------------------- # 
+    # ---------- start general ---------- #
+        # ---------- |Tools| ---------- #
+            - burp suite
+            - Patator
+
+        ==> V.I Note: depending on respond of web application.
+    # ----------   end general ---------- #
+
+    
+    # ---------- start wordpress ---------- #
+        # ---------- |Tools| ---------- #
+            ==> wpscan
+    # ----------   end wordpress ---------- #
+# -------------------------------   end username enumration attacks ------------------------------- # 

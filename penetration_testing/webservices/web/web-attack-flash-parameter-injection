@@ -1,0 +1,13 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick View: a Flash parameter injection vulnerability occures when:
+                    - the attacker can insert malicious code into the web application.
+                    - the web application passes the input provided by the attacker to the flash animation without any
+                    significant sanitization.
+                    - the flash animation, embedded in the html page, does not sanitize input parameters.
+
+    ==> flash parameter injection could be vulnerable to XSS, example of payload site=javascript:alert('test');
+
+    # ---------- |tools| ---------- #
+        - SWFinvestigator
+            - contains a fuzzer that searches for XSS vulnerability.
+# -------------------------------   end overview ------------------------------- # 

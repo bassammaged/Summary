@@ -1,0 +1,18 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: the session identifier is the unique key that identifies a user session
+                    with a database of sessions.
+                    it is critical to the session management mechanism because, if an attacker
+                    manages to obtain it, he can impersonate or ride another user's session.
+
+    ==> strong session cretria:
+        - valid for only a single session.
+        - time limited.
+        - purely random (unpredictable).
+
+    ==> Very important to not store session tokens in:
+        - URL: the session token will be leaked to external sites through referrer header and in the user browser history.
+        - HTML: the session token could be cached in the brwoser or intermediate proxies.
+        - HTML5 web storage:
+            - localstorage: will last until it is explicitly deleted, so this may make session last too long.
+            - sessionstorage: is only destoryed when the browser is closed, there may be users will not close their browser in a long time.
+# ------------------------------- start overview ------------------------------- # 

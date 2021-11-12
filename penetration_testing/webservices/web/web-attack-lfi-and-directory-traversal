@@ -1,0 +1,31 @@
+# ------------------------------- start Local file inclusion and Directory traveral ------------------------------- #
+    # ----- What the difference between LFI and directory traveral?
+        - Directory traversal (AKA dot-dot-slash): This attack, also known as the dot-dot-slash attack (../), is usually performed by means of those characters that allow us to m
+        ove up in the directory tree. By prefacing the sequence with ../ it may be possible to access directories that are hierarchically higher than 
+        the one from which we are picking the file.
+        -  LFI: the vulnerabilities for this attack are divided into Remote and Local, depending on where the file to include is located. The attack 
+        allows you to access files locally/remotely and execute them.
+
+    # ----- Example on directory traversal:
+        1.	Reading arbitrary files via directory traversal, for example <img src="/loadImage?filename=218.png">
+        2. Execute a file via LFI, for example <?php inlcude($_GET['filename']);?>
+
+    # ----- How to prevent a directory traversal attack?
+        - The most effective way to prevent file path traversal vulnerabilities is to avoid passing user-supplied input to filesystem APIs altogether. Many 
+        application functions that do this can be rewritten to deliver the same behavior in a safer way. If it is considered unavoidable to pass user-supplied 
+        input to filesystem APIs, then two layers of defense should be used together to prevent attacks:
+            1. The application should validate the user input before processing it. Ideally, the validation should compare against a whitelist of 
+            permitted values. If that isn't possible for the required functionality, then the validation should verify that the input contains only permitted 
+            content, such as purely alphanumeric characters.
+            2. After validating the supplied input, the application should append the input to the base directory and use a platform filesystem API to 
+            canonicalize the path. It should verify that the canonicalized path starts with the expected base directory.
+            3. Prefer working without user input when using file system calls.
+            4. Use indexes rather than actual portions of file names when templating or using language files (ie value 5 from the 
+            user submission = Czechoslovakian, rather than expecting the user to return “Czechoslovakian”).
+            5. Ensure the user cannot supply all parts of the path – surround it with your path code.
+            6. Use chrooted jails and code access policies to restrict where the files can be obtained or saved to.
+            7. If forced to use user input for file operations, normalize the input before using in file io API’s, such as normalize().
+# -------------------------------   end Local file inclusion and Directory traveral ------------------------------- #
+
+
+php://filter/read=convert.base64-encode/resource=../../../../config

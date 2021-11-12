@@ -1,0 +1,8 @@
+# ------------------------------- start Error based Discovering Xpath injection ------------------------------- # 
+    '
+# -------------------------------   end Error basedc Discovering Xpath injection ------------------------------- # 
+
+# ------------------------------- start blind based Discovering Xpath injection ------------------------------- # 
+    ==> V.I Note: first condition must be false
+    1' or 'a'='a
+# -------------------------------   end blind based  Discovering Xpath injection ------------------------------- # 

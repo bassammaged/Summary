@@ -1,0 +1,16 @@
+# ------------------------------- start directory listing overview ------------------------------- # 
+    ==> Quick view: The web server is configured to display the list of files contained in this directory. 
+                    This is not recommended because the directory may contain files that are not normally exposed through 
+                    links on the web site.
+# -------------------------------   end directory listing overview ------------------------------- # 
+
+# ------------------------------- start directory listing attack ------------------------------- # 
+    ==> attack scenario:
+            1st: spidering all to get all directories.
+            2nd: bruteforce to get all directoires.
+            3rd: check listing "index of"
+        
+    # ---------- |Tools| ---------- #
+        - resource: web-enumeration-directories-files
+        - custom tool
+# -------------------------------   end directory listing attack ------------------------------- # 

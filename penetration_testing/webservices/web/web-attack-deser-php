@@ -1,0 +1,24 @@
+# ------------------------------- start php serialization ------------------------------- #
+    # ----- understanding the serialization in php:         
+        - PHP uses the serialize() and unserialize() functions to perform serialization.
+        - PHP Serialization is in non-binary format, looks similar to a JSON array and it is human-readable.
+    
+    # ----- Example on PHP serialized object: 
+        O:4:"Book":1:{s:9:"book_name";s:5:"Lupin";}
+        - PHP serialized object contain information about the type of the object (Book) and type of attributes as well:
+            - b:<i>;                where i is 0(false) or 1(true).
+            - s:<i>:"<s>";          where i is a string length, s is a string itself.
+            - a:<i>:{<elements>}    where i is the number of elements, elements are the <key><value>
+
+        - serialized object: O:<i>:"<s>":<i>:{<properties>}
+
+    
+    # ----- visibility of attributes:
+        - example of public properties:
+            s:4:"Name";s:5:"Moscu";
+
+        - example of private properties:
+            s:13:"'."\0".'Book'."\0".'Book_id";s:7:"10AC254";
+
+
+# -------------------------------   end php serialization ------------------------------- #

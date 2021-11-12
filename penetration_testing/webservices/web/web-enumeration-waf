@@ -1,0 +1,27 @@
+# ------------------------------- start WAF introduciton ------------------------------- # 
+    ==> Quick view: WAF works on 2 different modes:
+                        - passive mode.
+                        - reactive mode (blocking mode).
+                    
+                    regex is the main method to define the rules of how WAF should behave.
+                    
+                    Whitelisting mode is the best solution to protect a web application; on the other hand, to customize the rules
+                    is not an easy task. further more, the Whitelisting mode is prone to false positivies, which is the reason it is very
+                    common to find WAFs deployed in blacklisting mode rather than Whitelisting mode.
+# -------------------------------   end WAF introduciton ------------------------------- # 
+
+
+# ------------------------------- start WAF enumeration ------------------------------- # 
+    # ---------- start techniques ---------- #
+        - Cookie.
+        - Response header.
+        - Response server information header.
+        - Response body.
+        - Blocking message.
+    
+    # ---------- |Tools| ---------- #
+        - wafw00f: https://code.google.com/p/waffit/
+        - nmap: http-waf-fingerprint script
+        - imperva-detect: https://code.google.com/p/imperva-detect/
+    
+# -------------------------------   end WAF enumeration ------------------------------- # 

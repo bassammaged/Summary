@@ -1,0 +1,53 @@
+# ------------------------------- start subdomain takeover overview ------------------------------- # 
+    ==> Quick view: Subdomain takeover vulnerabilities occur when a subdomain (subdomain.example.com) is 
+        pointing to a service (e.g. GitHub pages, Heroku, etc.) that has been removed or deleted. This 
+        allows an attacker to set up a page on the service that was being used and point their page to 
+        that subdomain. For example, if subdomain.example.com was pointing to a GitHub page and the user 
+        decided to delete their GitHub page, an attacker can now create a GitHub page, add a CNAME file 
+        containing subdomain.example.com, and claim subdomain.example.com.
+
+        We’ve identified at least 17 Service Providers which do not handle the subdomain ownership verification properly
+        allowing this vulnerability to be exploited: 
+            - Heroku
+            - Github.
+            - Bitbucket.
+            - Squarespace. 
+            - Shopify.
+            - Desk.
+            - Teamwork.
+            - Unbounce.
+            - Helpjuice.
+            - HelpScout. 
+            - Pingdom.
+            - Tictail.
+            - Monitor.
+            - CargoCollective.
+            - StatusPage.io.
+            - Tumblr.
+# -------------------------------   end subdomain takeover overview ------------------------------- # 
+
+# ------------------------------- start subdomain takeover attack ------------------------------- # 
+    ==> Quick View: the attack scenario:
+        1st: Your company starts using a new service, eg an external Support Ticketing-service.
+        2nd: Your company points a subdomain to the Support Ticketing-service, eg support.your-domain.com
+        3rd: Your company stops using this service but does not remove the subdomain redirection pointing to the ticketing system.
+            example for record: CNAME   x.example.com   october-25550000052.herokussl.com
+        4th: Attacker signs up for the Service and claims the domain as theirs. No verification is done by the Service Provider, 
+            and the DNS-setup is already correctly setup.
+        5th: Attacker can now build a complete clone of the real site, add a login form, redirect the user, steal credentials 
+            (e.g. admin accounts), cookies and/or completely destroy business credibility for your company.
+
+    # ---------- |Impact| ----------#
+        - Cross-Origin Resource Sharing bypassing (Incase there is a trust relation between subdomain and other domains).
+        - Oauth whitelisting (Incase the developer allows the vulnerable subdomain as callback url).
+        - Content-Security Policies bypassing (Incase vulnerable subdomain is whitelisted in CSP value).
+        - Clickjacking attack (Incase vulnerable subdomain is whitelisted in X-Frame-Options value).
+        - stealing Cookie through shared paths.  
+        - Password managers that have a autofill credentials within *.domain.com that leads to leak the credentials information if it fill the
+        login form that could be created by the attacker within vulenrable subdomain.
+    # ---------- |Tools| ---------- #
+        - subdomain enumeration.
+            ==> resources: './web-enumeration-subdomains'
+        
+    
+# -------------------------------   end subdomain takeover attack ------------------------------- # 

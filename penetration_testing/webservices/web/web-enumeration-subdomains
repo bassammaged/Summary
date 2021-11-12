@@ -1,0 +1,71 @@
+# ------------------------------- start Subdomains enumerations ------------------------------- # 
+    # ---------- |Techniques| ---------- #
+        - DNS brute-force
+        - DNS zone transfer
+        - finding virtual hosts - subdomains
+        - brute-force
+        - Search engine
+        - netcraft
+
+    # ---------- |start DNS brute-force| ---------- #
+        ==> resources: network-dns-enumeration
+    # ---------- |  end DNS brute-force| ---------- #
+
+    # ---------- |start DNS zone transfer| ---------- #
+        ==> resources: network-dns-enumeration
+    # ---------- |  end DNS zone transfer| ---------- #
+    
+    # ---------- |start brute-force| ---------- #
+        # ---------- |Tools| ---------- #
+            - subbrute
+            - dnsrecon
+        
+        # ---------- |subbrute| ---------- #
+            subbrute -h
+                -h: show help
+            subbrute -s <dict_list.txt> -t <target_domain or list.txt>
+                -s: determine path of dict list [optional] or use default list.
+                -t: determine target or list of targets.
+
+        # ---------- |dnsrecon| ---------- #
+            ==> Quick View: similar to subbrute, can enumerate subdomains through wordlists,
+                            it also offers the possibility to use search engines like google.
+
+            dnsrecon -d <target_domain> -g --threads <thread_no>
+    # ---------- |  end brute-force| ---------- #
+
+            
+    # ---------- |start finding virtual hosts - subdomains| ---------- #
+        fiere tool:
+            ==> fiere -dns <target_domain>
+    # ---------- |  end finding virtual hosts - subdomains| ---------- #
+
+
+    # ---------- |start Search engine| ---------- #
+        # ---------- |Tools| ---------- #
+            - Google dork
+            - TheHarvester
+            - netcraft
+
+        # ---------- |Google dork| ---------- #
+            Google
+                *.<target_domain>
+                site:*.<target_domain> -inurl:www.
+       
+        # ---------- |TheHarvester| ---------- #
+        theharvester -h
+            -h: show options.
+        theharvester -d <target_domain> -l <limit_number> -b <data_source> -f <output>
+            -d: domain for enumration.
+            -l: limit numbers of result.
+            -b: data source such as google, bing, linkedin, PGP, facebook ....
+            -f: output file to html or xml file.
+        
+        # ---------- |netcraft| ---------- #
+            ==> http://searchdns.netcraft.com/
+    # ---------- |  end Search engine| ---------- #
+
+
+    
+
+# -------------------------------   end Subdomains enumerations ------------------------------- # 

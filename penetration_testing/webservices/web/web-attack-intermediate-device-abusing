@@ -1,0 +1,69 @@
+# ------------------------------- start abusing insecure paths ------------------------------- # 
+    # ------ Quick view:
+        proxy based on nigix and web/app server bsaed on tomcat, this type of combination leads to insecure condition. when rely on proxy for mitigate this
+        task, the proxy might not do that and allowing for escaping up on directory beacuse they will pass the path to Tomcat unchanged.
+        Tomcat will perform the request without any extra validation.
+
+        - Example:
+            - https://webapp.com/..;/manager/html
+    # ------ payload:
+        ..;/
+# -------------------------------   end abusing insecure paths ------------------------------- # 
+
+# ------------------------------- start abusing ajp proxy ------------------------------- # 
+    # ------ Quiick view:
+        - ajp proxy is usually to access tomcat; which could access hidden resources.
+        - ajp runs on 8009 port.
+        - ajp proxy port is not web application port, ahp 13 is binary protocol.
+
+    # ------ Impact:
+        - ajp could allow you to access the internal resources.
+
+    # ------ Attack scenario:
+        step 1: Install apache
+            apt-get install apache2
+        
+        step 2: install ajp module
+            apt-get install libapache2-mod-jk
+        
+        step 3: enable ajp
+            a2enmod proxy_ajp
+        
+        step 4: Create ajp config file, path /etc/apache2/sites-enabled/ajp.conf
+            ProxyRequests Off
+            # Only allow localhost to proxy requests
+            <Proxy *>
+            Order deny,allow
+            Deny from all
+            Allow from localhost
+            </Proxy>
+            # Change the IP address in the below lines to the remote servers IP address hosting the
+            Tomcat instance
+            ProxyPass / ajp://[TARGETIP]:8009/
+            ProxyPassReverse / ajp://[TARGETIP]:8009/
+        
+        step 5: restart apache.
+
+        step 6: visit the target website with http://127.0.0.1
+# -------------------------------   end abusing ajp proxy ------------------------------- # 
+
+# ------------------------------- start abusing client ip headers ------------------------------- #
+    # ------ Quick view:
+        - intermediate devices (WAF/proxy/loadbalancer) operate on the premise that they exist to forward requests from one system to another and to keep tracking the request, they generally add some extra value
+        like load balancing (scale), data leak prevention (security), or compression (performance).
+
+        - hat’s because a good number of applications rely on knowing the actual IP address of a client to help prevent fraud and enable access. If you’ve logged into 
+        your bank, or Gmail, or your Xbox account lately (hey, it’s where Minecraft lives, okay?) from a device other than the one you typically use, you might have gotten 
+        a security warning. Because the information about where you log in from is also tracked, in part to detect attempted fraud and misuse.
+
+        - Some systems also use X-Forwarded-For to enforce access control. WordPress, for example, uses the .htaccess file to allowlist access based on IP addresses. 
+        No, it’s not the best solution, but it’s a common one, and you have to at least give them props for trying to provide some app protection against misuse.
+
+    # ------ Attack scenario:
+        step 1: attacker try to detect the intermediate device.
+        step 2: trying to detect which header could be use.
+        step 3: spoofing the ip through hard code the header and spoof the header value.
+
+    #------- Example: 
+        Client-IP: 175.215.2.114
+# -------------------------------   end abusing client ip headers ------------------------------- #

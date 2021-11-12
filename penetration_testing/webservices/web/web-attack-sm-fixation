@@ -1,0 +1,9 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: is session hijacking attack where, the attacker fixates a sessionID
+                    and forces the victim to use it after the user logs in.
+
+    ==> Attack scenario:
+        1st: attacker obtains a valid session.
+        2nd: the attacker forces the victim to use this sessionID to establish a personal 
+             session with the web browser.
+# ------------------------------- start overview ------------------------------- # 

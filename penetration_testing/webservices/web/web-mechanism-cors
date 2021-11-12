@@ -1,0 +1,51 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: is a mechanism definded, it enables client-side cross-origin requests.
+                    the document describes how the browser and the web server must communicate one with each
+                    other to bypass the SOP. it also explains which HTTP headers must be used to do so.
+
+                    the HTTP headers are not part of the HTTP/1.1 standard.
+                    they'r called "Control Access-Headers"
+
+    ==> request type:
+        - simple request.
+        - preflight request.
+        - request with credentials
+
+    ==> simple request:
+        - it only uses GET, HEAD, POST HTTP methods.
+        - POST method, the content-type must be one of the following:
+            - application/x-www-form-unrlencoded
+            - multipart/form-data
+            - text/plain
+    
+    ==> preflight request:
+        - PUT,DELETE,POST,GET HTTP request.
+        - GET request with a custom header such as "X-PINGOTHER"
+
+        preflight request needs to send two HTTP requests. the first request is 
+        a HTTP OPTIONS request, which the browser sneds the target resource; this is
+        necessary to determine whether the actual request is considered safe by the web server.
+
+        - Access Control Headers:
+            - Access-Control-Allow-Origin 
+            - Access-Control-Allow-Credentials 
+            - Access-Control-Allow-Headers 
+            - Access-Control-Allow-Methods 
+            - Access-Control-Max-Age 
+            - Access-Control-Expose-Headers
+            - origin 
+            - Access-Control-Request-Method 
+            - Access-Control-Request-Header 
+# ------------------------------- start overview ------------------------------- # 
+
+# ------------------------------- start cross-window messaging ------------------------------- #
+    ==> Quick view: HTML5 allows iframes, frames, popups and the current window to communicate one with each other
+                    regardless of the same origin policy, by using a mechanism knows as "cross-window messaging",
+                    two windows that hava some kind of relationship can exchange messages:
+                        - A main window including an iframe.
+                        - A main window including some HTML code that generates a popup.
+
+    ==> example on sending and receiving message: eWAPT v3 module 9, slide 61,62 
+
+    ==> Security issue: occurs when the receiving window des not check the origin of the sender when receiving a message.
+# -------------------------------   end cross-window messaging ------------------------------- # 

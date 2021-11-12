@@ -1,0 +1,86 @@
+# ------------------------------- start SAML overview ------------------------------- #
+    # --------- What is SAML?
+        - SAML stands for Security Assertion Markup Language. defines an XML-based framework for describing and exchanging security information between on-line business
+        partners. this security information is expressed in the form of portable SAML assemtions that applications working across security domain boundaries can trust.
+        the OASIS SAML standard defines percise syntax and rules for requesting, creating, communicating and use SAML assertions.
+
+        - SAML comes to play to provide client identity to different service providers through IdP (identity provider), really cernteralized authentication.
+
+    # --------- Main components
+        - User-agent: represent the client who want to accecss specific service provider.
+        - IdP: stands for Identity provider that grant access the user to service providers.
+        - SP: stands for service providers which are the application the client want to access.
+        - SAML assertion: ????
+
+    # --------- overview: how SAML works?
+        - There are two ways for initiate SAML SSO authentication:
+            - IdP-INIT method
+                1. Client starts with authentication IdP.
+                2. After authentication, IdP issue SAML assertion that allows the client to access SP.
+                3. IdP send back SAML assertion to the client to allow the client to access thier service.
+                4. Client send SAML assertion through POST request to SP to gain the access.
+                5. SP validate the SAML assertion then establish the session with the user.
+            
+            - SP-INIT method
+                1. Client start to reach out the SP, incase the user is not authenticated the SP start to redirect the user to IdP.
+                2. Client starts with authentication IdP.
+                3. After authentication, IdP issue SAML assertion that allows the client to access SP.
+                4. IdP send back SAML assertion to the client to allow the client to access thier service.
+                5. Client send SAML assertion through POST request to SP to gain the access.
+                6. SP validate the SAML assertion then establish the session with the user.
+
+        - V.I Note: IdP and SP have trust relation between them to using SAML SSO protocol.
+
+    # --------- IdP and SP trust relation: How it starts?
+        - pre-request:
+            1. IdP has its configuration and certificate that clarified through 'IdP XML metadata' file.
+            2. SP XML has its own configuration and certificate that already identified "SP XML metadata".
+
+        - IdP and SP exchange thier metadata that help them to understanding exchange the data between them easily.
+
+        # --------- Metadata:
+            - Metadata contains: 
+                1. the user identifier: such as email (Both side must configurate the same).
+                2. certificate: for sign SAML assertion and used in validate the issuer and trust it.
+                3. Entity identifier: used is unique identifier for the idP or SP. for example IdP xml metadata will contain identifier for IdP itself.
+                4. Exchange metadata method: the both of them must have a deal how they echange the SAML assertion.
+                5. Method of authentication: describe client who authenticated with IdP (IdP xml metadata contains this band).
+
+    # --------- SAML assertion components:
+        1. NameID: client identifier such as email.
+        2. Method of authentication: that describe who the client has ahtneticated with IdP and this method must be allowed from SP.
+        3. Attributes: IdP add attribute such as Group membership to idnetify the level of the user.
+        4. Conditions: SAML assertion contains some Conditions such as how long it will be valid for, condition protect it from relay attack.
+        5. Issuer ID: identify IdP.
+        6. SAML singature: the whole SAML assertion must be hashed and sign by the issuer (IdP). to be verified from SP.
+
+    # --------- SAML 2.0 Bindings:
+        - Let's us think about how many ways could be follow to exchange SAML:
+            1. SAML SOAP binding (Based SAML 1.1).
+            2. Reverse SOAP (PAOS) binding.
+            3. HTTP redirect binding.
+            4. HTTP post binding.
+            5. HTTP artifact binding.
+            6. SAML URI binding.
+
+        # --------- HTTP post binding:
+             when the client reponsible to exchange SAML assertion with SP through POST request.
+        
+        # --------- HTTP redirect binding:
+            when SP redirect the user to authenticate with IdP, after authnetication IdP will redirect back the client to the SP along with SAML assertion.
+
+        # --------- HTTP artifact binding:
+            After the client authenticate with IdP, IdP issue SAML artifact and SAML assertion:
+                1. SAML artifact contains token point to SAML assertion that stored at IdP, IdP send SAMl artifact to the client.
+                2. Client starts to send it to the SP.
+                3. SP exchange SAML artifact with IdP to gain the right SAML assertion that belong to the client. 
+
+    # --------- Security faults:
+        1. SP doesn't check the signature of SAML assertion that allow attacker to change SAML NameID without change signature or even (Signature stripping) blank 
+        the signature that found:
+            - <ds:DigestValue></ds:DIgestValue>
+            - <ds:SignatureValue></ds:SignatureValue>
+
+    # --------- Tools:
+        1. SAML tracer: Firefox extension.
+# -------------------------------   end SAML overview ------------------------------- #

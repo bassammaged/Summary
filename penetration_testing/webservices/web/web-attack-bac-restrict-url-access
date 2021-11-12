@@ -1,0 +1,5 @@
+# ------------------------------- start restrict url access overview ------------------------------- # 
+    ==> Quick view: an attacker can change a parameter or the url in order to access privileged function
+                    attackers can usually guess links or bruteforce URLs to find unprotected pages.
+# -------------------------------   end restrict url access overview ------------------------------- # 
+

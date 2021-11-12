@@ -1,0 +1,33 @@
+# ------------------------------- start ssrf overview ------------------------------- # 
+    # ------ What is SSRF?
+        SSRF stands for Server-side request forgery is an attacker in which the user is able to make the application server ( or a proxy or another part of 
+        its infrastruture) make a request for external resources.
+
+    # ------ Impact of SSRF?
+        - Sensitive information disclosure (ex: headers).
+        - Stealing autnetication information (Windows NTLM).
+        - Files read/inclusion.
+        - Remote code execution.
+        - Reflected/Stored XSS.
+
+    # ------ Vulnerable points:
+        - load profile picture form URL.
+        - API specification import (WSDL import).
+        - Other file imports.
+        - Connection to remote server (FTP).
+        - Parsing URLs that exist within parameter value.
+        - Parsing URLs in request body.
+        - Parsing URLs in document that converted into PDF or parsed in general.
+
+    # ------ SSRF types:
+        1- Non-Blind SSRF.
+            Non-Blind SSRF is typically the most critical issue. In these scenarios, data from an arbitrary URI can be fetched from an internal service 
+            and will be returned to the attacker.
+        2- Blind SSRF.
+            Blind SSRF occurs when you never get any information about a target service from the initial request. Typically, an attacker will provide a URL, 
+            but data from this URL will never be returned to the attacker.
+        3- Semi-blind
+            Semi-blind SSRF, similarly to blind SSRF, does not return all details about a resulting request, however, some data is exposed. This could be 
+            partial data or error messages that give the attacker more information. Sometimes metadata about a request, such as response times, can also be 
+            considered semi-blind as they allow an attacker to validate if a request succeeds.
+# -------------------------------   end ssrf overview ------------------------------- # 
