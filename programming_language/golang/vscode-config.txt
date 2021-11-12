@@ -1,0 +1,92 @@
+// -------- vscode extensions
+- advanced-new-file
+- auto close tag
+- beautify
+- bracket pair colorzied
+- color highlight
+- material theme- ESlint
+- go
+- Highlight matching tag
+- HTML Snippets
+- Intellisense for CSS class names 
+- Material theme icons
+- path intellisense
+- project manager
+- python
+- sublime text keymap 
+- vscode color picker
+- vscode-database
+
+
+
+
+// -------- install vscode golang tools
+- CTRL + Shift + P
+- go:install/update tools
+- mark all tools
+
+
+// -------- config
+{
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.iconTheme": "eq-material-theme-icons-darker",
+    "workbench.colorTheme": "Community Material Theme Darker High Contrast",
+    "window.zoomLevel": 0,
+   
+    // "go.buildOnSave": true,
+    // "go.lintOnSave": true,
+    // "go.vetOnSave": true,
+    // "go.buildTags": "",
+    // "go.buildFlags": [],
+    // "go.lintTool": "golint",
+    // "go.lintFlags": [],
+    // "go.vetFlags": [],
+    // "go.testOnSave": false,
+    // "go.coverOnSave": false,
+    // "go.useCodeSnippetsOnFunctionSuggest": false,
+    // "go.formatOnSave": true, 
+    // "go.formatTool": "goreturns",
+    // "go.formatFlags": [],
+    // "go.goroot": "",
+    // // "go.gopath": "/Users/Moscu/go",
+    // "go.inferGopath": false,
+    // "go.gocodeAutoBuild": true,
+    // "go.testFlags": ["-v"],
+
+
+
+//     "go.useLanguageServer": true,
+    
+
+    
+    // start updated by me
+    "editor.codeActionsOnSave": null,
+    // "go.testOnSave": true,
+    "go.lintOnSave": "package",
+    // "go.formatTool": "goimports",
+    "go.buildTags": "",
+    "go.buildFlags": [],
+    "go.lintTool": "golint",
+    "go.lintFlags": [],
+    "go.vetFlags": [],
+    "go.testOnSave": false,
+    "go.coverOnSave": false,
+    "go.useCodeSnippetsOnFunctionSuggest": false,
+    "go.formatFlags": [],
+    "go.goroot": "",
+    "go.inferGopath": false,
+    "go.gocodeAutoBuild": true,
+    "go.gopath": "C:/Users/Moscu/go",
+    "go.testFlags": [
+        "-v"
+    ],
+    "go.autocompleteUnimportedPackages": true,
+    // end updated by me
+    "[go]": {
+        "editor.insertSpaces": false,
+        "editor.formatOnSave": false,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": false
+        }
+    }
+}
