@@ -1,0 +1,49 @@
+- difference between python 2 and python 3
+    - Division operator
+        If we are porting our code or executing python 3.x code in python 2.x, it can be dangerous 
+        if integer division changes go unnoticed (since it doesn’t raise any error). It is preferred to use the floating 
+        value (like 7.0/5 or 7/5.0) to get the expected result when porting our code.
+        Output in Python 2.x  
+            1  
+            
+            -2  
+        Output in Python 3.x :  
+            1.4  
+            -1.4  
+    - print function
+        This is the most well-known change. In this, the print keyword in Python 2.x is replaced by the print() function in Python 3.x. However, 
+        parentheses work in Python 2 if a space is added after print keyword because the interpreter evaluates it as an expression.
+        print 'Hello, Geeks'      # Python 3.x doesn't support  
+        print('Hope You like these facts')  
+    
+    - Unicode
+        In Python 2, implicit str type is ASCII. But in Python 3.x implicit str type is Unicode.
+        print(type('default string '))  
+        print(type(b'string with b '))  
+        '''  
+        Output in Python 2.x (Bytes is same as str)  
+            <type 'str'>  
+            <type 'str'>  
+        Output in Python 3.x (Bytes and str are different)  
+            <class 'str'>  
+            <class 'bytes'>  
+        '''
+    
+    - xrange
+         xrange(1, 5)
+        'xrange' is not defined, has been replaced by range()
+
+    - Error Handling
+        There is a small change in error handling in both versions. In python 3.x, ‘as’ keyword is required.
+
+        try:  
+            trying_to_check_error  
+        except NameError, err:  
+            print err, 'Error Caused'   # Would not work in Python 3.x  
+
+        try:  
+            trying_to_check_error  
+        except NameError as err:        # 'as' is needed in Python 3.x  
+            print (err, 'Error Caused')  
+
+    

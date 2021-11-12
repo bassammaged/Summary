@@ -1,0 +1,21 @@
+- Getting started
+    - Python is a programming language with a clean syntax that is easy to learn. Python programs can be run under all desktop computers.
+    - It used in many application domains including: Web and Internet Development,Scientific apps,Desktop apps, education and general software applications.
+
+
+- Python interpreter
+    - To run Python programs, you will need the Python interpreter and possibly a graphical editor. A Python interpreter executes Python code (sometimes called programs).
+    Code ------------->  Python interpreter ----------- the proram python runs the code.
+
+    - A program can be one or more Python files. Code files can include other files or modules. To run a program, you need to specify a parameter when executing Python.
+
+- Execute Python scripts
+    - You can start a Python program with the terminal or command line. This works on all platforms (Mac OS, Windows, Linux).
+    - To open a terminal on Windows: press the windows key + r key (run program), type cmd or command and press enter.
+    - On Mac OS use finder to start a terminal. You can hit command+space and type terminal, then hit enter.
+
+- Start prgoram
+    - To start the program, we have to open the command line and type: 
+        python hello.py
+
+

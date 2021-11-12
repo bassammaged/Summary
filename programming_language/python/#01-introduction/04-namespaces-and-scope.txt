@@ -1,0 +1,26 @@
+- What is namespace?
+    - A namespace is a system to have a unique name for each and every object in Python. An object might be a variable or a method. 
+    - Python interpreter understands what exact method or variable one is trying to point to in the code, depending upon the namespace. So, the 
+      division of the word itself gives little more information. Its Name (which means name, an unique identifier) + Space(which talks something related to scope). 
+
+    Types of namespaces:
+        When Python interpreter runs solely without and user-defined modules, methods, classes, etc. Some functions like print(), id() are always present, 
+        these are built in namespaces. When a user creates a module, a global namespace gets created, later creation of local functions creates the local namespace. 
+        The built-in namespace encompasses global namespace and global namespace encompasses local namespace.
+        shows as the following './img/types_namespace.png'
+
+
+    example:
+        # var1 is in the global namespace  
+        var1 = 5
+        def some_func(): 
+        
+            # var2 is in the local namespace  
+            var2 = 6
+            def some_inner_func(): 
+        
+                # var3 is in the nested local  
+                # namespace 
+                var3 = 7
+
+        the description: "./img/types_namespace.png"

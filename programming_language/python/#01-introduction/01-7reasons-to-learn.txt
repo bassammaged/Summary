@@ -1,0 +1,19 @@
+- Why Learn Python?
+    1- Data Science & Machine Learning
+        Data is the base in this subject, doesn’t matter what field you want to be in, it’s going to be there. Python is one of the commonly 
+        used programming languages for Data Science and Machine Learning. 
+    2- Main applications & more.
+        Data Science — including machine learning, data analysis, and data visualization —, Web Development and Scripting are the three main applications of Python.
+    3- Extensive Libraries & Framework.
+        Python provides libraries that include the areas like string operations, Internet, web service tools, 
+        operating system interfaces and protocols. Python Package Index includes more than 85,000 modules and scripts to be used.
+    4- Open Source.
+        For more than 20 years, Python has been cross-platform and open source. You can code on Linux, Windows and Mac OS.
+    5- Can work with other programming languages.
+        CPython to work with C programming language, Jython for Python integrated with Java, IronPython is the compatibility with .NET 
+        and C#, PyObjc is Python written with ObjectiveC toolkits and RubyPython the version combined with Ruby.
+    6- Improving productivity.
+        Python lets you build more functions with less code, for example you can build a rudimentary game in two days.
+    7- Jobs & Careers.
+        Your career as a programmer can grow along with Python every day. First, Python is getting to be the major programming language, so it’s a benefit know to 
+        work with it.
