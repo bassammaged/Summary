@@ -1,0 +1,64 @@
+# ------------------------------ start Overview ------------------------------ #
+    XPath uses path expressions to select nodes or node-sets in an XML document. The node is selected by following a path or steps.
+# ------------------------------   end Overview ------------------------------ #
+
+# ------------------------------ start Nodes ------------------------------ #
+    # Example
+    <?xml version="1.0" encoding="UTF-8"?>
+    <bookstore>
+        <book>
+            <title lang="en">Harry Potter</title>
+            <price>29.99</price>
+        </book>
+        <book>
+            <title lang="en">Learning XML</title>
+            <price>39.95</price>
+        </book>
+    </bookstore>
+
+    # Selecting Nodes
+    -----------------------------------------------------------------------------
+    |        expressions        |                   Description                 |
+    -----------------------------------------------------------------------------
+    |         nodename          | Selects all nodes with the name "nodename"    |
+    -----------------------------------------------------------------------------
+    |           /               | Selects from the root node                    |
+    -----------------------------------------------------------------------------
+    |           //	            | Selects nodes in the document from the current|
+    |                           | node that match the selection no matter       |
+    |                           | where they are .                              |
+    -----------------------------------------------------------------------------
+    |           .	            | Selects the current node                      |
+    -----------------------------------------------------------------------------
+    |           ..	            | Selects the parent of the current node        |
+    -----------------------------------------------------------------------------
+    |           @	            | Selects attributes                            |
+    -----------------------------------------------------------------------------
+
+    # Example
+        - bookstore
+        - /bookstore
+        - //book
+        - /bookstore/book
+        - //@lang                               # Selects all attributes that are named lang.
+
+    # example, Predicates
+    # Predicates are used to find a specific node or a node that contains a specific value.
+        - //book[@lang='en']                    # Selects all the title elements that have a "lang" attribute with a value of "en".
+        - /bookstore/book[last()]               # Selects the last book element that is the child of the bookstore element.
+        - /bookstore/book[position()<3]         # Selects the first two book elements that are children of the bookstore element
+        - /bookstore/book[price>35.00]/title    # Selects all the title elements of the book elements of the bookstore element that have a 
+                                                price element with a value greater than 35.00
+
+    # Example, Selecting Unknown Nodes
+        - *                                     # Matches any element node
+            - /bookstore/*
+            - //*	
+        - @*                                    # Matches any attribute node
+            - //title[@*]	
+        - node()                                # Matches any node of any kind
+            - child::node()
+
+    # Example, Selecting Several Paths
+        - //book/title | //book/price           # Selects all the title AND price elements of all book elements
+# ------------------------------   end Nodes ------------------------------ #

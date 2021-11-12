@@ -1,0 +1,35 @@
+# ------------------------------ start Overview ------------------------------ #
+    What is XPath?
+    XPath is a major element in the XSLT standard.
+
+    XPath can be used to navigate through elements and attributes in an XML document.
+# ------------------------------   end Overview ------------------------------ #
+
+# ------------------------------ start Nodes ------------------------------ #
+    # Example
+    <?xml version="1.0" encoding="UTF-8"?>
+    <bookstore>
+        <book>
+            <title lang="en">Harry Potter</title>
+            <author>J K. Rowling</author>
+            <year>2005</year>
+            <price>29.99</price>
+        </book>
+    </bookstore>
+
+    # Children
+        - Element nodes may have zero, one or more children.
+        - title, author, year, price elements are childern of the book.
+
+    # Siblings
+        - Nodes that have the same parent.
+        - title, author, year, price elements are siblings.
+
+    # Ancestors
+        - A node's parent, parent's parent, etc.
+        - such as book and bookstore.
+
+    # Descendants
+        - A node's children, children's children, etc.
+        - descendants of the bookstore element are the book, title, author, year, and price elements
+# ------------------------------   end Nodes ------------------------------ #

@@ -1,0 +1,17 @@
+# --------------------- start introduction --------------------- # 
+    # ----- Why they build up the powershell?
+        - In the dark ages of administration, microsoft decided to build up thier production as the following:
+            1. Firstly they build the windows/server product functionality.
+            2. Then microsoft builds up a powerfull GUI for administrative propose.
+            3. last, they pay attention for some other ways for administrative as:
+                1. WMI.
+                2. COM.
+                3. Command-line
+
+        - the main concern here, the other way for administrative and that help to automate the boring and repititve tasks, they can't do anything.
+        If we compared them with the GUI, they less powerfull.
+
+        - Even you are going to build up your own script depending on those ways, your script will be limited by thier limitation too.
+
+        - that's why powershell comes up! to solve this kind of administrative tasks and microsoft trying to compete linux's bash.
+# ---------------------   end introduction --------------------- # 

@@ -1,0 +1,22 @@
+# ------------------------------ start Overview ------------------------------ #
+    XPath uses path expressions to select nodes or node-sets in an XML document. The node is selected by following a path or steps.
+# ------------------------------   end Overview ------------------------------ #
+
+# ------------------------------ start Nodes ------------------------------ #
+    
+    # Example	                Result
+    node()                                  function return node value.
+    text()                                  function return text value of specific node.
+    name(node_expression)                   function return the string name of the last expression (node set).
+    position()                              function return the position of an element in the set (list) of elements in a given context.
+    substring(string, number, number)       XPath substring() function return a selected string character from a full string.
+    string-length(string)                   XPath string-length function return the length of string.
+    last()                                  function return size of total context in given context. name of this function last so it's means function not return last node value.
+    count(node_expression)                  function count number of element in a specified node.
+    comment()                               function matches comment node and return that specific comment node.
+    
+    local-name(node_expression)             function return the local string name of the last expression.
+    id(dtd_id)                              function return nodes base on passed DTD unique ID.
+    sum(node_expression)                    function return the sum of element value in a specified node.
+# ------------------------------   end Nodes ------------------------------ #
+
