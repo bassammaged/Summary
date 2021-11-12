@@ -1,0 +1,13 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view:  for some of these critical web services the only form of protection is being hidden from the general public, 
+    exchanging critical information without or very few protection. WSDL Disclosure attacks aim at discovering non-public web services 
+    by retrieving their WSDL file.
+
+
+
+    ==> Methods:
+        - Google Dork.
+        - Spidering.
+        - appending ?wsdl at the end of URL.
+        - directory/files Bruteforce.
+# ------------------------------- start overview ------------------------------- # 

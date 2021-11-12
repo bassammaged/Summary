@@ -1,0 +1,15 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view:  Each web service request contains some sort of operation that is later executed by the application logic. This operation can be found 
+    in the first child element of the SOAP Body. However, if HTTP is used to transport the SOAP message the SOAP standard allows the use of an 
+    additional HTTP header element called SOAPAction.
+
+
+    ==> sub attacks:
+        - SOAPAction Spoofing - MITM Attack
+            - Assume that an attacker is able to modify a SOAP message in transit send between web service client and web service receiver. 
+            If the receiving web service is vulnerable to the SOAPAction Spoofing attack, the attacker can insert a operation in the SOAPAction attribut that gets executed by 
+            the web service receiver. As a result, a operation that was not intended by the sender got executed in his name.
+
+        - SOAPAction Spoofing - Bypass Attack
+            - Certain web services are protected by separate gateways that check only the operation of the SOAP body against a whitelist.
+# ------------------------------- start overview ------------------------------- # 

@@ -1,0 +1,151 @@
+# ------------------------------- start overview ------------------------------- # 
+    ==> Quick view: In a Web service a Web technology such as HTTP—originally designed for human-to-machine 
+    communication[citation needed]—is used for transferring machine-readable file formats such as XML and JSON.
+    
+    The term "Web service" describes a standardized way of integrating Web-based applications using the XML, SOAP, WSDL and UDDI open 
+    standards over an Internet Protocol backbone. XML is the data format used to contain the data and provide metadata around it, SOAP is 
+    used to transfer the data, WSDL is used for describing the services available and UDDI lists what services are available.
+
+    ==> common web services:
+        - XML-RPC
+            - Remote procedure call protocol that uses XML (over HTTP) to invoke functionalities.
+        - JSON-RPC
+            - Remote procedure call protocol that uses JSON.
+        - SOAP.
+            - Messaging protocol that uses XML and provide more functionalities of XML-RPC.
+        - RESTful.
+            - Set or principles to build a web service.
+
+    ==> topics:
+        - XML-RPC
+        - JSON-RPC
+        - SOAP
+            - WSDL
+            - Interaction between client and web service
+            - soapAction
+        - RESTful
+# ------------------------------- start overview ------------------------------- # 
+
+
+
+# ------------------------------- start XML-RPC ------------------------------- #
+    ==> Quick View: first web serivce protocol. it works by sending HTTP requests that call 
+    a single method implemented on the remote system.
+
+    ==> Example: HTTP request
+    # header request
+    POST /xml_rpc/web_services.php HTTP/1.1
+    User-Agent: Zend_XmlRpc_Client
+    Host:wp.site
+    Content-Type:text/xml
+    Content-length:179
+    # body request
+    <?xml version="1.0"?>
+    <methodCall>
+        <methodName>My.Method</methodName>
+        <params>
+            <param>
+                <value>www.google.com</value>
+            </param>
+        </params>
+    </methodCall>
+# -------------------------------   end XML-RPC ------------------------------- # 
+
+# ------------------------------- start JSON-RPC ------------------------------- #
+    ==> Quick View: is very similar to XML-RPC. it provides more human-readable messages and takes
+    less space to send the same message XML-RPC sends.
+
+    the message sent to invoke a method is request with a single object serialized using JSON. it has
+    3 properties:
+        - method name.
+        - params.
+        - id: used to match the responses/requests.
+
+    ==> Example: HTTP request
+    # header request
+    POST /json_rpc/web_services.php HTTP/1.1
+    User-Agent: my_user_agent
+    Host: wp.site
+    Content-TypeL application/json-rpc
+    Content-length:57
+
+    # body request
+    {"method": "MyMethod","params":["www.google.com"],"id":1}
+# -------------------------------   end JSON-RPC ------------------------------- # 
+
+# ------------------------------- start SOAP ------------------------------- #
+    ==> Quick View: SOAP (Simple object access protocol), XML-RPC with more functionalities such as
+    encryption, digital signature and routing of SOAP messages.
+
+    SOAP also provide web services definition language (WSDL) declaration that how they may
+    be used. 
+
+    ==> Example: HTTP request
+    # header request
+    POST /soap_rpc/web_services.php HTTP/1.1
+    User-Agent: PHP-SOAP
+    HOST: wp.site
+    Content-Type:text/soap+xml
+    Content-length:179
+    # body request
+    <xml version="1.0"?>
+    <soap:Envelope
+    xmlns:soap="httpL//www.w3.org/2003/05/soap-envelope" soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
+    <soap:Body xmlns:m="http://ws.site/soap_ws/ws">
+        <m:MyMethod>
+            <m:Host>www.google.com</m:Host>
+        </m:MyMethod>
+    </soap:Body>
+
+    ==> What is WSDL: XML-based interface description language. contain different objects depending on the WSDL version.
+    object describe the messages, the services, how they can be requested, how they can be transported.
+
+    WSDL version:
+        - v1.1
+        - v2.0
+
+    WSDL definitions:
+        - Abstract: describes what the service does (operation, input, output, fault messages used by each operation).
+        - Concrete: adds information about how the web service communicates and where the functionality is offered.
+
+
+    WSDL objects:
+        - Binding: how to access service, contain operation object. 
+        - portType: contains request function and response function and operation object.
+        - type: contains params for requested operation.
+        - message (v1.1): describe requested and its response function for every operation. 
+
+        ==> Note: portType WSDL v2.0 uses interface element which define a set of operations representing an interaction
+        between the client and the service. Unlike the old portType, interface elements do not point to message anymore instead
+        they point to the schema elements contained within the types elements.
+
+
+    ==> soapAction: The SOAPAction HTTP request header field can be used to indicate the intent of the SOAP HTTP request. 
+    The value is a URI identifying the intent. SOAP places no restrictions on the format or specificity of the URI or that it is resolvable. 
+    An HTTP client MUST use this header field when issuing a SOAP HTTP Request.
+
+    examples on soapAction header: 
+    SOAPAction: "http://electrocommerce.org/deleteUser"
+    SOAPAction: "deleteUser"
+    SOAPAction: ""
+    SOAPAction:
+
+
+    ==> Interaction between client and web service:
+        1st: client request wsdl file.
+        2nd: wsdl response with its content.
+        3rd: client requests the service. 
+# -------------------------------   end SOAP ------------------------------- # 
+
+# ------------------------------- start RESTful ------------------------------- #
+    ==> Quick View: Representational State Transfer, is not a protocol, but rather a set of principles
+    to build web services that focus on system's resources.
+
+    REST web services generally user JSON or XML and any other format is possible.
+
+    RESTful APIs are generally based on HTTP verbs to deremine the action:
+        - GET: retrieve a resource on the server.
+        - PUT: change the state of the resource, replace or create.
+        - POST: create a new resource or record.
+        - DELETE: delete a resource or record.
+# -------------------------------   end RESTful ------------------------------- # 
