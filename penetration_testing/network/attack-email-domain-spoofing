@@ -1,0 +1,121 @@
+# ------------------ start overview ------------------ #
+    # ----- What is domain email spoofed?
+        - Is a technique used in sending phishing attacks to trick users into thinking a message came from a person or entitiy they know or can trust.
+        the sender forges email headers even the misconfiguration for records like SPF,DKIM and DMARC allows the attacker to spoof the domain itself.
+
+    # ----- Impact:
+        - Information discolsure.
+        - Hooked the end-user.
+        - Deliver mailicous content as attachement.
+        - etc..
+
+    # ----- Mitigation:
+        - Apply SPF record.
+        - Set DKIM record.
+        - Implement DMARC bannar.
+    
+        # ----- How SPF works:
+            # ----- What the role of SPF?
+                - An SPF TXT record is a DNS record that helps prevent spoofing and phishing by verifying the domain name from which email messages are sent. 
+                SPF validates the origin of email messages by verifying the IP address of the sender against the alleged owner of the sending domain.
+                - SPF record contains information identifies authorized outbound email servers. Destination email systems verify that messages originate from 
+                authorized outbound email servers.
+
+            # ----- SPF record contains:
+                - record: v=spf1 [<ip4>|<ip6>:<IP address>] [include:<domain name>] <enforcement rule>
+                    - v=<verison>:          version of SPF record.
+                    - <ip address>:         Allowed IP that trusted to send an email on behalf of you.
+                    - <domain name>:        Allowed domain that trusted to send an email on behalf of you.
+                    - <enforcement rule>:   Could be hard fail, soft fail, neutral.
+                        - hard fail: Mark the message with 'hard fail' in the message envelope and then follow the receiving server's configured 
+                        spam policy for this type of message.
+                        - Soft fail: Mark the message with 'soft fail' in the message envelope. Typically, email servers are configured to deliver 
+                        these messages anyway. Most end users do not see this mark.
+                        - Neutral: Do nothing, that is, do not mark the message envelope. This is usually reserved for testing purposes and is rarely used.
+
+            # ----- How it works?
+                1. Domain administrators publish SPF information in TXT records in DNS.
+                2. v=spf1 <IP address #1> <IP address #2> <IP address #3> <enforcement rule>
+                    example: v=spf1 124.251.124.17 include:secranix.net include:secranix.org -all
+                3. Configure SPF record on your mail server, for example: Microsoft 365 mail server.
+
+            # ----- V.I Note:
+                - Although SPF is designed to help prevent spoofing, but there are spoofing techniques that SPF cannot protect against. In order to 
+                protect against these, once you have set up SPF, you should also configure DKIM and DMARC
+
+            - Source: https://docs.microsoft.com/en-us/microsoft-365/security/office-365-security/how-office-365-uses-spf-to-prevent-spoofing?view=o365-worldwide
+
+        # ----- How DKIM works:
+            - DKIM stand for Domain Keys Identified Mail, is an email authentication technique that allows the receiver to check that an email was 
+            indeed sent and authorized by the owner of that domain. This is done by giving the email a digital signature. This DKIM signature is 
+            a header that is added to the message and is secured with encryption.
+
+            # ----- What to consider before creating the DKIM record?
+                1. Determine which domains are allowed to send outbound mail on its behalf.
+                2. Create the DKIM public/private keys and the policy record. The ‘public’ key will be used in your public-facing DNS TXT record 
+                along with what’s called a policy record.
+                    - The ‘private’ key will be used on your sending MTA. When an outbound message is sent from the sending MTA, it will add the 
+                    private key to the message header for identification and validation by the receiving domain by way of the public key. This uses 
+                    a new domain name identifier to digitally sign the message.
+                3. Create TXT records using the DKIM information created from these wizards. Be sure to include DKIM records for all of your applicable
+                    example: v=DKIM1;k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDeIhtCv3vUinyhKiKtZ8efjHGGo8gE1T+o7gLrvo6yRtdz9ICe6Fz5sgz0WYFW5nCV4DmaTcS25TfgWKsLggGSBdDxzShyvgdKJkG3b4+73rT/5opnRceqQf1qndnMZfkb/0/YciMKNQmigj9IGwKypj6CoIr1s46jRGy4Ws7LQIDAQAB
+                sending domains. These records will be included in your public facing DNS record for each sending domain.
+                4. Be sure that your existing sending MTA’s support DKIM. 
+                        
+            # ----- DKIM how it works?
+                - Create A DKIM-Signature:
+                    1. Boil off the "trivial bits" of an email.
+                    2. Create two hashes, hash for email body and hash for headers.
+                    3. Sender has access to private key.
+                    4. Sender craetes crypto signature.
+                    5. DKIM-Signature added to email.
+                    6. DKIM-Sig has all things needed to verify.
+                    7. Email sent on its way.
+
+                - verify A DKIM-Signature:
+                    1. Boil off the "trivial bits" of an email.
+                    2. Create two hashes, hash for email body and hash for headers.
+                    3. Retrieve public key from the DNS record.
+                    4. Crypto-sign in DKIM-signature is verified.
+
+            - source: https://www.sonicwall.com/support/knowledge-base/what-is-dkim-record-and-how-to-create-it/170504710515852/
+
+        # ----- How DMARC works:
+            - DMARC stands for Domain-based Message Authentication, Reporting, and Conformance. It is an email authentication standard that secures 
+            email senders and receivers from email-based attacks like spamming, email domain spoofing, and phishing. 
+            - It is a technical standard that allows an organization to authenticate their emails and set policies by aligning SPF 
+            (Sender Policy Framework) and DKIM (Domain Key Identified Mail) standards. Along with SPF and DKIM, it allows an organization to set 
+            email authentication rules to reject or quarantine emails from unauthorized resources. 
+
+            # ----- What is DMARC record:
+                - record: v=DMARC1; p=reject; rua=mailto:F4EXVjm@rua.kdmarc.com; ruf=mailto:F4EXVjm@ruf.kdmarc.com; fo=1;
+                    - v=<version>       : indicates the DMARC version
+                    - p=<policy>        : indicated the applied DMARC policy
+                        - policy could be:
+                            - reject: The Reject policy is the most recommended policy as it secures all your emails. It ensures that any email that 
+                            fails the DMARC check is not delivered to the receiver at all. 
+                            - quarantie: unauthorized emails are sent to the spam folder. It allows email receivers to send DMARC failed emails in 
+                            quarantine i.e. to the junk folder. 
+                            - approve/none: This policy monitors your email traffic and does not take any specific action for emails that fail DMARC check. 
+                            You can use this policy to gather DMARC reports and analyze data in those reports.
+                    - rua	            : A list of URIs for ISPs to send XML feedback to.
+                    - ruf               : A list of URIs for ISPs to send forensic reports to.
+                    - rf                : The reporting format for forensic reports.
+            - source: 
+                - https://kdmarc.com/blog/what-is-dmarc-and-how-does-dmarc-work/
+                - https://www.dmarcanalyzer.com/dmarc/create-dmarc-record/
+# ------------------   end overview ------------------ #
+
+# ------------------ start attack overview ------------------ #
+    # ----- Tools:
+        - https://www.dmarcanalyzer.com/
+        - Custom tool with mail server works.
+
+    # ----- Attack secnario:
+        1. Evaluate the mail servers (MTA).
+        2. Check SPF record, DKIM record, DMARC record.
+            a. check the existance of records or they are written in wrong way.
+            b. check the trusted source or domains.
+        3. trying to send domain email spoofed by your MTA (mail server).
+# ------------------   end attack overview ------------------ #
+

@@ -1,0 +1,232 @@
+# ---------------------- start Introduction ---------------------- #
+    # ----- Preliminary:
+        - This topic is not meant to be guide to be followed in order to carry out a successful attack. But to understand the different 
+        authentication mechanisms that implemented by Microsoft in detail the technical details, its limitation. That helps you to understand 
+        how the tools work or even to build your own tool.
+
+    # ----- Content of the file:
+        1. Reminder.
+        2. User password hashed version.
+            i.  LM hash
+            ii. NT hash
+        3. Authentication protocols.
+            i.  Network authentication.
+            ii.  LANMAN/NTLMv1
+            iii. NTLMv2
+            iv.  Kerberos
+
+    # ----- Reminders:
+        1. NT Hash and LM Hash:   are hashed versions of user passwords.
+        2. NT hash: is commonly called wrongly in my opinion NTLM Hash.
+        3. NTLM is therefore the name of the authentication protocol. It also exists in two versions. Then NTLMv1 and NTLMv2 will be the terms 
+        used. Otherwise, the term NTLM will be used to group all versions of the protocol.
+        4. NTLMv1 Hash and NTLMv2 Hash will be the terminology used to refer to the challenge response sent by the client, for versions 1 and 2 
+        of the NTLM protocol.
+        5. Net-NTLMv1 and Net-NTLMv2 are pseudo-neo-terminologies used when the NT hash is called NTLM hash in order to distinguish the NTLM 
+        hash from the protocol. Since we do not use the NTLM hash terminology, these two terminologies will not be used.
+        6. Net-NTLMv1 Hash and Net-NTLMv2 Hash are also terminologies to avoid confusion, but will also not be used in the explanation.
+# ----------------------   end Introduction ---------------------- #
+
+# ---------------------- start user's password hashed version ---------------------- #
+    # ----- LM hash:
+        - LM Hashing is a legacy Microsoft password storage mechanism used to ensure backward compatibility while storing passwords 
+        with the following restrictions.
+        - Enabled by default in Windows NT, 2000, XP, and Server 2003,
+
+        # -- how it works:
+            1. Converting the user’s passwords into uppercsase, and then NULL-padded to up to 14 bytes. For example “napier” becomes 
+            “NAPIER00000000” where 0 represents a NULL character (zero value in ASCII).
+            2. The 14-byte password is then split into two 7-byte halves.
+            3. They 7-byte values are used to create two 64-bit DES keys (with the addition of a parity bit for every seven bits.
+                a. The first half will be 8 bytes by adding NULL-padded: NAPIER00
+                b. The second half will be 8 bytes by adding additional NULL-padded: 00000000
+            4. Each key uses DES (using ECB) to encrypt the string “KGS!+#$%”, which gives two 8-byte cipher values.
+            5. The resulting two values are then concatenated to give a 16-byte value, and gives the LM hash.
+            Note: as the following: './network/images/lm.png'
+
+            ==> I.V Note: if the password is less than or equal to 7 character the last 8 bytes of LM hash will be the 
+            same: 2f85252cc731bb25
+
+    # ----- NT hash:
+        - Exclusively on by default in Windows Vista, 7, and Server 2008.
+
+        # -- how it works:
+            1. the user's password is converted to UNICODE.
+            2. MD4 is then used to get a 16-bytes long hash.
+# ----------------------   end user's password hashed version ---------------------- #
+
+# ---------------------- start Authentication protocols ---------------------- #
+    - Authentication protocols are used for authenticate the users over the network.
+    # ----- LANMAN/NTLMv1:
+        - LANMAN challenge/response and NTLMv1 are the same protocol except for one key difference: LANMAN challenge/response utilises the 
+        locally stored “LM Hash” whilst NTLMv1 uses the locally stored “NT Hash”. the protocols (for all intensive purposes) operate 
+        exactly the same way.
+
+        # -- How it works:
+            1. Client sends an authentication request to the Server.
+            2. A protocol negotiation occurs between the Client and Server.
+            3. The Server sends the Client a (pseudo-random) 8-byte challenge.
+            4. The Client sends a 24-byte response (Encrypted challenge).
+                a. split the locally stored 16-byte hash (LM Hash for LANMAN challenge/response or NT Hash for NTLMv1) into three 7-byte portions.
+                "./network/images/ntlmv1-step1.jpg", "./network/images/ntlmv1-step2.jpg"
+                b. 21 bytes string is split in 3 blocks, 7bytes lon each + 1 parity byte, then size will be 24 bytes. 
+                c. Using the DES encryption algorithm, encrypt the Server’s challenge three separate times using each of the keys derived in Step 1.
+                d. Concatenate the response of all three outputs. "./network/images/ntlmv1-step3.jpg"
+            5. The Server authenticates the Client.
+            Note: as the following: "./network/images/ntlmv1-overview.jpg"
+
+        # -- Attack methods:
+            - Force the client (target) to start a connection to us (fake server).
+            - Man in the middle techiques in order to sniff the client response.
+
+    # ----- NTLMv2:
+        - Replaced LANMAN/NTLMv1.
+
+        # -- How it works?
+            1. HMAC-MD5[NTLM HASH, username and domain], lets say the result of the step one will be x1x
+            2. HMAC-MD5[x1x, Server challenge and BLOB], the result of step two will be equal to 16 bytes value.
+            3. Adding the 16-Bytes value along with BLOB, and send it as the challenge response.
+
+            # -- BLOB contains:
+                - BLOB signature (4 bytes).
+                - Reserved (4 bytes).
+                - Timestamp (8 Bytes).
+                - Client nonce (Random 8 Bytes).
+                - Unkown (4 Bytes).
+                - Target information (Variable  length).
+                - Unkown (4 Bytes).
+
+        # -- security prespective:
+            - Due to timestamp and the client response, the response changes every time.
+            - No rainbow table for NTLMv2 due to timestamp.
+            - Ditionary does not make sense as the key is a hash.
+            - the only way possible attack is by brute-forcing the HMAC key.
+            - NTLM2 hash is bound to a particular server and particular username so its not reusable.
+
+    # ----- Kerberos:
+        # -- wwhat is Kerberos?
+            - Kerberos is used in Active Directory. 
+            - Kerberos is an authentication protocol, not authorization. 
+            - it allows to identify each user, who provides a secret password. 
+            - it does not validates to which resources or services can this user access.
+            - Kerberos provides information about the privileges of each user.
+            - Kerberos is responsability of each service to determine if the user has access to its resources.
+        
+        # -- Kerberos items: 
+            - Transport layer
+                - Kerberos uses either UDP or TCP as transport protocol.
+                - which sends data in cleartext. Due to this Kerberos is responsible for providing encryption.
+                - Ports used by Kerberos are UDP/88 and TCP/88, which should be listen in KDC.
+            - Agents
+                - Several agents work together to provide authentication in Kerberos.
+                    - Client or user who wants to access to the service.
+                    - AP (Application Server) which offers the service required by the user.
+                    - KDC (Key Distribution Center), the main service of Kerberos,
+                        - responsible of issuing the tickets, installed on the DC (Domain Controller). 
+                        - It is supported by the AS (Authentication Service), which issues the TGTs.
+            - Encryption keys
+                - There are several structures handled by Kerberos, as tickets. 
+                - Many of those structures are encrypted or signed in order to prevent being tampered by third parties. 
+                    - KDC or krbtgt key which is derivate from krbtgt account NTLM hash.
+                    - User key which is derivate from user NTLM hash.
+                    - Service key which is derivate from the NTLM hash of service owner, which can be an user or computer account.
+                    - Session key which is negotiated between the user and KDC.
+                    - Service session key to be use between user and service.
+            - Tickets
+                - The TGS (Ticket Granting Service) is the ticket which user can use to authenticate against a service. It is encrypted with the service key.
+                - The TGT (Ticket Granting Ticket) is the ticket presented to the KDC to request for TGSs. It is encrypted with the KDC key.
+            - PAC
+                - PAC (Privilege Attribute Certificate) is an structure included in almost every ticket. 
+                - This structure contains the privileges of the user and it is signed with the KDC key.
+                - the PAC verification consists of checking only its signature, without inspecting if privileges inside of PAC are correct. 
+                - a client can avoid the inclusion of the PAC inside the ticket by specifying it in KERB-PA-PAC-REQUEST field of ticket request.
+            - Messages
+                - KRB_AS_REQ: Used to request the TGT to KDC.
+                - KRB_AS_REP: Used to deliver the TGT by KDC.
+                - KRB_TGS_REQ: Used to request the TGS to KDC, using the TGT.
+                - KRB_TGS_REP: Used to deliver the TGS by KDC.
+                - KRB_AP_REQ: Used to authenticate a user against a service, using the TGS.
+                - KRB_AP_REP: (Optional) Used by service to identify itself against the user.
+                - KRB_ERROR: Message to comunicate error conditions.
+                - even if it is not part of Kerberos, but NRPC, the AP optionally could use the KERB_VERIFY_PAC_REQUEST message to send to KDC the signature of PAC, and verify if it is correct.
+        
+        # -- message sequency to perform authentication
+            - https://www.tarlogic.com/wp-content/uploads/2019/01/kerberos_message_summary.png
+         
+        # -- Authentication process?
+            1. KRB_AS_REQ
+                - https://www.tarlogic.com/wp-content/uploads/2019/03/KRB_AS_REQ.png 
+                - user must get a TGT from KDC. To achieve this, a KRB_AS_REQ must be sent:
+                - KRB_AS_REQ has, among others, the following fields:
+                    - A encrypted timestamp with client key, to authenticate user and prevent replay attacks
+                    - Username of authenticated user
+                    - The service SPN asociated with krbtgt account
+                    - A Nonce generated by the user
+            2. KRB_AS_REP
+                - https://www.tarlogic.com/wp-content/uploads/2019/02/KRB_AS_REP.png 
+                - after receiving the request, the KDC verifies the user identity by decrypting the timestamp. 
+                - If the message is correct, then it must respond with a KRB_AS_REP:
+                - KRB_AS_REP includes the next information:
+                    - Username
+                    - TGT, which includes: 
+                        - Username
+                        - Session key
+                        - Expiration date of TGT
+                        - PAC with user privileges, signed by KDC
+                    - Some encrypted data with user key, which includes: 
+                        - Session key
+                        - Expiration date of TGT
+                        - User nonce, to prevent replay attacks
+            3. KRB_TGS_REQ
+                - https://www.tarlogic.com/wp-content/uploads/2019/02/KRB_TGS_REQ-1.png 
+                - In order to request a TGS, a KRB_TGS_REQ message must be sent to KDC:
+                - KRB_TGS_REQ includes:
+                    - Encrypted data with session key: 
+                        - Username
+                        - Timestamp
+                    - TGT
+                    - SPN of requested service
+                    - Nonce generated by user 
+            4. KRB_TGS_REP
+                - https://www.tarlogic.com/wp-content/uploads/2019/02/KRB_TGS_REP.png 
+                - After receiving the KRB_TGS_REQ message, the KDC returns a TGS inside of KRB_TGS_REP:
+                - KRB_TGS_REP includes:
+                    - Username
+                    - TGS, which contains: 
+                        - Service session key
+                        - Username
+                        - Expiration date of TGS
+                        - PAC with user privileges, signed by KDC
+                    - Encrypted data with session key: 
+                        - Service session key
+                        - Expiration date of TGS
+                        - User nonce, to prevent replay attacks
+            5. KRB_AP_REQ
+                - https://www.tarlogic.com/wp-content/uploads/2019/02/KRB_AP_REQ.png 
+                - To finish, if everything went well, the user already has a valid TGS to interact with service. In order to use it, user must send to the AP a KRB_AP_REQ message:
+                - KRB_AP_REQ includes:
+                    - TGS
+                    - Encrypted data with service session key: 
+                        - Username
+                        - Timestamp, to avoid replay attacks
+
+        # -- note 
+            - After that, if user privileges are rigth, this can access to service. 
+            - If is the case, which not usually happens, the AP will verify the PAC against the KDC. And also, 
+            - if mutual authentication is needed it will respond to user with a KRB_AP_REP message.
+        
+        # -- Attacks
+            - Overpass The Hash/Pass The Key (PTK)
+            - Pass The Ticket (PTT)
+            - Golden Ticket and Silver Ticket
+            - Kerberoasting
+            - ASREPRoast 
+
+
+        
+# ----------------------   end Authentication protocols ---------------------- #
+
+
+
+http://www.defenceindepth.net/2011/04/attacking-lmntlmv1-challengeresponse_21.html
+https://www.tarlogic.com/blog/how-kerberos-works/ 
