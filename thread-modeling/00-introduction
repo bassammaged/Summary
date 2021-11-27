@@ -1,0 +1,81 @@
+# --------------------------  start Thread Modeling Overview -------------------------- #
+    # ----- What is thread modeling?
+        - TM is an approach for analyzing the security of anything, it is considered as a place where your design is under security microscope.
+        - Thread Modeling is used to analyze design and mitigate the vulnerabilities.
+        - qoute: "Thread modeling is like brushing your teeth, Do it early and often."
+
+
+    # ----- Security feedback loop?
+        1. Identify threats.
+        2. Change the Design.
+        3. Evaluate the mitigation.
+
+
+    # ----- What is the value of threat modeling?
+        1. Less security bugs to fix up and after the release.
+        2. Reduces possible avenues of attack.
+        3. Drives focus of security testing.
+
+
+    # ----- Everyone threat modeling!
+        - An example, you are going to your work and you have to pass by the school to bring your kid to there, once you open a door!
+        you see the cars, dog on the right side and sun is there (hot day).
+        you start to think you have to hold your kid hand to protect him/her from the cars, these time we will take left instead of right and Thanks god!
+        my kid already used sun blocker.
+
+        based on the example above, everyone can do threat modeling! by our human nature, we do it daily biases. 
+
+    
+    # ----- Instilling the habit of Threat Modeling
+        1. Scope.
+            - Firstly, look closer to each function/feature/module individually.
+            - after that, move forward to evaluate the subsystem.
+            - Entire prodcut comes in the last stage.
+            => Note: by these you can focus more without any distraction. 
+            a. Attack service identification:
+                - Based on the scope you can identify the attack surface, is it network protocol? web interface, CLI, System daemon....!
+        2. Draw.
+            - Drawing DFD for each module/function.
+            - The sequence diagram with data that will be send over the function/module.
+            - at the final stage, as a combine between DFD and sequence diagram you can come up with the following DFD with the following shapes:
+                - Data flow arrow.
+                - Process.
+                - Entity.
+                - Data store.
+                - Trust boundary 
+        3. Analyze.
+            - There are many of techniques to analyze the threat:
+                - STRIDE technique:
+                    - it is provided by microsoft and it slag for Spoofing, Tampering, Repudiation, Information Disclosure, Denial of service and Elvation of privillege.
+                        a. Spoofing: Threat action aimed at accessing and use of another user’s credentials, such as username and password. (Security Control: Authentication)
+                        b. Tampering: Threat action intending to maliciously change or modify persistent data, such as records in a database, and the alteration of data 
+                        in transit between two computers over an open network, such as the Internet. (Security Control: Integrity)
+                        c. Repudation: Threat action aimed at performing prohibited operations in a system that lacks the ability to trace the 
+                        operations. (Security Control: Non-Repudiation or Accountability)
+                        d. Information Disclosure: Threat action intending to read a file that one was not granted access to, or to read data in 
+                        transit. (Security Control: Confidentiality)
+                        e. Denial of service: Threat action attempting to deny access to valid users, such as by making a web server temporarily 
+                        unavailable or unusable. (Security Control: Availability)
+                        f. Elevation of privillege: Threat action intending to gain privileged access to resources in order to gain unauthorized access to information 
+                        or to compromise a system. (Authorization)
+        4. Mitigate.
+        5. Document.  
+
+
+    # ----- The 4 questions approach:
+        1. What are we building?
+        2. What can go wrong?
+        3. What are we going to do about it?
+        4. Did we do a good enough job?
+
+    # ----- Tools
+        - OWASP Threat Dragon
+        - Microsoft Threat Modelling Tool
+        - IriusRisk
+        - securiCAD Professional
+        - ThreatModeler
+        
+    # ----- Resources: 
+        - Chris Romeo - https://www.youtube.com/watch?v=Fmp9UFjPiJs&t=1002s
+        - OWASP - https://owasp.org/www-community/Threat_Modeling
+# --------------------------    end Thread Modeling Overview -------------------------- #
