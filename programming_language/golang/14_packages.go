@@ -38,7 +38,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/bassammaged/learn-go/string_util"
+	"github.com/bassammaged/Summary/programming_language/golang/string_util"
 )
 
 func Packages() {
