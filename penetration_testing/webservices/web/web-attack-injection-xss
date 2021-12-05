@@ -52,6 +52,39 @@
         - Burp
         - Live HTTP header (Firefox extension)
         - Cookie Editor (Firefox extension)
+
+    ==> DOM XSS attack scenario:
+        1st: Analysis the JavaScript files and using console debugger to identify the sources and sinks points.
+        2nd: During analysis trying to use invador burpsuite extension for auto analysis for sources and sinks.
+        3rd: Analysis the source and sink in javascript
+            document.write()
+            document.writeln()
+            document.domain
+            element.innerHTML
+            element.outerHTML
+            element.insertAdjacentHTML
+            element.onevent
+            # -- Jquery
+            add()
+            after()
+            append()
+            animate()
+            insertAfter()
+            insertBefore()
+            before()
+            html()
+            prepend()
+            replaceAll()
+            replaceWith()
+            wrap()
+            wrapInner()
+            wrapAll()
+            has()
+            constructor()
+            init()
+            index()
+            jQuery.parseHTML()
+            $.parseHTML()
 # -------------------------------   end XSS attack ------------------------------- # 
 
 # ------------------------------- start Obfuscating ------------------------------- # 
