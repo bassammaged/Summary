@@ -1,0 +1,13 @@
+# ------------- start Commits ------------- #
+    # ----- what is commits?
+        - The git commit command captures a snapshot of the project's currently staged changes. Committed snapshots can be thought of as “safe” versions of a
+        project—Git will never change them unless you explicitly ask it to. Prior to the execution of git commit.
+
+        # -- stages:
+            1. Modified:
+                - The files have been changes, but not commited.
+            2. Staging:
+                - The changes has been added to staging phase to be ready for commit.
+            3. Commited:
+                - Its like the save point in the game, you could go back to one of them or even forward.
+# -------------   end Commits ------------- #

@@ -1,0 +1,10 @@
+# ------------- start Notificaiton ------------- #
+    # ----- Notificaitons:
+        1. Watching:
+            - Allowing you to recieve notification when (Issues, Comments, pull requests) changes.
+        2. Notification Setting
+            - help which communication channel will be used for norify.
+    
+    # ----- star:
+        - features help to add the repository to favorite list and easily to find but without get notification.
+# -------------   end Notificaiton ------------- #

@@ -1,0 +1,28 @@
+# ------------- start commands ------------- #
+    # ----- Repositories:
+        # -- Create local repository
+        git init
+    
+    # ----- Commit
+        # -- Stage the modified file
+            git add *
+            git add file_name 
+        # -- Remove from stage area
+            git rm --cache *
+
+    # ----- Undoing things
+        # -- checkout to return back to specific point (branch, commit) without remove or delete the rest of commits
+            checkout commit
+        # -- 
+            revert commit
+        # -- goback to speicfic commit and delete any commit after it.
+            reset commit
+
+    # ----- Show status of repository
+        # -- show modified files, committed files
+            git status
+        # -- Show the commit history log 
+            git log
+
+
+# -------------   end commands ------------- #
