@@ -1,0 +1,24 @@
+# ------------- start Repository ------------- #
+    # ----- What is repository?
+        - A software repository, or “repo” for short, is a storage location for software packages. Often a table of contents is also stored, along with metadata. 
+        A software repository is typically managed by source control or repository managers.
+
+        # -- respository contains:
+            - Project code.
+            - Project documentations.
+            - Other necessary files for the projects.
+            - .git: is a directory that helps the git to track changes that happen on the repository.
+            - README.md, Github works show the content of "README.md" in the landing page of the project.
+            - CONTRIBUTING.md: The CONTRIBUTING.md is used to describe the process for contributing to the repository. A 
+            link to the CONTRIBUTING.md file is shown anytime someone creates a new issue or pull request.
+            - ISSUE_TEMPLATE.md: The ISSUE_TEMPLATE.md is another file you can use to pre-populate the body of an issue. For example, if you always need the 
+            same types of information for bug reports, include it in the issue template, and every new issue will be opened with your recommended starter text.
+        
+        # -- respository has addtional features like:
+            1. Issues:
+                - Its to track the issues and features requests and it has to be assigned to be specific team member.
+            2. Pull request:
+                - its represent a change (Adding, Modifying or removing).
+
+
+# -------------   end Repository ------------- #

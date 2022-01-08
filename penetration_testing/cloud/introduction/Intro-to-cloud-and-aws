@@ -1,0 +1,20 @@
+# ---------------- Start the introduction for cloud ---------------- # 
+    # ----- What is cloud?
+        - "The cloud" refers to servers that are accessed over the Internet, and the software and databases that run on those servers. Cloud servers are located in 
+        data centers all over the world. By using cloud computing, users and companies do not have to manage physical servers themselves or run software 
+        applications on their own machines.
+    
+    # ----- How does cloud computing work?
+        - Cloud computing is possible because of a technology called virtualization. Virtualization allows for the creation of a simulated, digital-only "virtual" 
+        computer that behaves as if it were a physical computer with its own hardware. The technical term for such a computer is virtual machine.
+
+        - Isolation: When properly implemented, virtual machines on the same host machine are sandboxed from one another, so they do not interact with each other 
+        at all, and the files and applications from one virtual machine are not visible to the other virtual machines even though they are on the same 
+        physical machine.
+
+        - AWS: uses hyper-v
+
+    # ----- What are the main service models of cloud computing?
+        - as shown in the picture: "./img/saas-paas-iaas-diagram.svg".
+        - 
+# ----------------   end the introduction for cloud ---------------- #

@@ -1,0 +1,13 @@
+# ------------- start issues ------------- #
+    # ----- What is an issue?
+        - Issues let you track your work on GitHub, where development happens. When you mention an issue in another issue or pull request, the issue's timeline 
+        reflects the cross-reference so that you can keep track of related work. To indicate that work is in progress, you can link an issue to a pull request. 
+        When the pull request merges, the linked issue automatically closes.
+
+        # -- Which features are provided by Issues?
+            1. Assign specific memeber to the issue.
+            2. Collebration.
+            3. Labels the issues for easily manage.
+            4. Allowing you to cross-link to other issues and pull requests.
+            4. Search filters.
+# -------------   end issues ------------- #
