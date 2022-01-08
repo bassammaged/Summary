@@ -2,7 +2,7 @@
     # ----- Repositories:
         # -- Create local repository
         git init
-    
+
     # ----- Commit
         # -- Stage the modified file
             git add *
@@ -11,12 +11,33 @@
             git rm --cache *
 
     # ----- Undoing things
-        # -- checkout to return back to specific point (branch, commit) without remove or delete the rest of commits
-            checkout commit
-        # -- 
-            revert commit
+        # -- checkout to return back to specific point (branch, commit) without remove or delete the rest of commits.
+            - When you have found a commit reference to the point in history you want to visit, you can utilize the git checkout command to visit that commit. 
+            Git checkout is an easy way to “load” any of these saved snapshots onto your development machine. During the normal course of development, the HEAD 
+            usually points to main or some other local branch, but when you check out a previous commit, HEAD no longer points to a branch—it points directly 
+            to a commit. This is called a “detached HEAD” state.
+            - Viewing an old revision, It just view change (No edit)
+            
+            checkout commit <branch_name or commit_hash>
+            git checkout -b <branch_name> # make new branch with the commit that you are display
+        # -- Remove the changes that occurred in specific commits, the rest of changes happened before or after still the same.
+            git revert <commit_hash_or_hashes>
         # -- goback to speicfic commit and delete any commit after it.
-            reset commit
+            - --hard flag can be used to enforce the change and remove the changes of deleted commits.
+            git reset <commit_hash>
+
+    # ----- Branches
+        # -- Create branch
+            git branch <branch_name>
+        
+        # -- switch the active branch
+            git checkout <branch_name>
+
+        # -- Create and switch the branch
+            git checkout -b <branch_name>
+
+        # -- Delete branch
+            git branch -d <branch_name>
 
     # ----- Show status of repository
         # -- show modified files, committed files

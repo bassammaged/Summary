@@ -2,6 +2,7 @@
     # ----- what is commits?
         - The git commit command captures a snapshot of the project's currently staged changes. Committed snapshots can be thought of as “safe” versions of a
         project—Git will never change them unless you explicitly ask it to. Prior to the execution of git commit.
+        - Each commit has a unique SHA-1 identifying hash.
 
         # -- stages:
             1. Modified:
