@@ -52,6 +52,9 @@
         # -- Push updates
             git push <remote_repo_link> [remote_branch_name]
 
+        # -- Pull updates
+            git pull <remote_repo_to_pull_from>
+
     # ----- Alias
         # -- Set Remote repo link alias
             git remote add <alias_name> <value>
