@@ -38,12 +38,26 @@
 
         # -- Delete branch
             git branch -d <branch_name>
+            git branch -D <remote_branch_name>
 
     # ----- Show status of repository
         # -- show modified files, committed files
             git status
         # -- Show the commit history log 
             git log
+        # -- Show the difference
+            git diff
 
+    # ----- Update repository
+        # -- Push updates
+            git push <remote_repo_link> [remote_branch_name]
+
+    # ----- Alias
+        # -- Set Remote repo link alias
+            git remote add <alias_name> <value>
+            ex: git remote add origin https://github.com/bassammaged/seven-chakras
+
+        # -- Display alias value for remote
+            git remote -v
 
 # -------------   end commands ------------- #
