@@ -17,3 +17,8 @@ So, I decided to summarize all things that I learnt and require an surplus effor
   - network
   - webservices
   - wireless (upcoming)
+- ssdlc
+  - version-control
+  - jenkins (working on it)
+  - SonarQube (upcoming)
+  - threat-modeling
