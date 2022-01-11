@@ -1,0 +1,74 @@
+# ------------------------- Start introduction ------------------------- #
+    # ----- contents:
+        1. What is jenkins.
+        2. Install jenkins.
+        4. Run the jenkins services & Initial configuration.
+
+    # ----- What is jenkins?
+        - Continuous Integration is the most important part of DevOps that is used to integrate various DevOps stages. Jenkins is the most famous 
+        Continuous Integration tool. 
+        - Jenkins is an open-source automation tool written in Java with plugins built for Continuous Integration purposes. Jenkins is used to build and test 
+        your software projects continuously making it easier for developers to integrate changes to the project, and making it easier for users to obtain a 
+        fresh build. It also allows you to continuously deliver your software by integrating with a large number of testing and deployment technologies.
+        - Jenkins achieves Continuous Integration with the help of plugins. Plugins allow the integration of Various DevOps stages. If you want to integrate a 
+        particular tool, you need to install the plugins for that tool. For example Git, Maven 2 project, Amazon EC2, HTML publisher etc.
+
+        # -- Advantages of Jenkins
+            1. It is an open-source tool with great community support.
+            2. It is easy to install.
+            3. It has 1000+ plugins to ease your work. If a plugin does not exist, you can code it and share it with the community.
+            4. It is free of cost.
+            5. It is built with Java and hence, it is portable to all the major platforms.
+
+        # -- Jenkins & CI
+            - What is CI?
+                - Continuous integration (CI) is the practice of automating the integration of code changes from multiple contributors into a single software 
+                project. It's a primary DevOps best practice, allowing developers to frequently merge code changes into a central repository where builds 
+                and tests then run. Automated tools are used to assert the new code’s correctness before integration.
+            
+            - How the jenkins integrate with CI
+                Based on the following diagram "./images/jenkins-ci-diagram.png", Git repository will trigger the jenkins job according to the configurations, the jobs can be build and source code
+                review, can be establish whole test server with the new codebase for testing.
+                Jenkins allows you the using plugins and write your own script to be intergarted within the CI.
+
+
+
+    # ----- Install jenkins:
+        # -- Linux (LTS version)
+            1. Get the jenkins key.
+                curl -fsSL https://pkg.jenkins.io/debian/jenkins.io.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+            2. Add the necessary repository with the command
+                sudo sh -c 'echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+            3. update the package manager repository
+                sudo apt-get update
+            4. Using package manager to install jenkins
+                sudo apt-get install jenkins
+
+    # ----- Run the jenkins services & Initial configuration:
+        # -- control jenkins service
+            1. Start the service
+                /etc/init.d/jenkins start
+            2. stop the service
+                /etc/init.d/jenkins stop
+        
+        # -- First time to run jenkins:
+            1. /var/lib/jenkins/secrets/initialAdminPassword, where the initial password lie on
+            2. By default, jenkins works on port 8080.
+            3. You can access jenkins from: http://127.0.0.1:8080 
+            4. Install the suggested plugins contains: git, ldap, gradle, pipeline, github branch source and more.
+
+        # -- Change the initial configuration
+            1. configuration file path: etc/default/jenkins, scrap about what you can change
+                --httpListenAddress=$HTTP_HOST      # httpListenAddress=127.0.0.1
+                --httpsListenAddress=$HTTPS_HOST    # httpsListenAddress=127.0.0.1
+                --httpsPort=$HTTPS_PORT             # --httpsPort=443
+                --httpPort=$HTTP_PORT               # --httpsPort=8080
+                --prefix=$PREFIX                    # Runs Jenkins to include the $PREFIX at the end of the URL. For example, set --prefix=/jenkins to make Jenkins accessible at http://myServer:8080/jenkins
+
+
+
+
+
+# -------------------------   end introduction ------------------------- #
+
+A3BEpd5pQGTwcnLQ
