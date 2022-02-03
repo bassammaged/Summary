@@ -1,0 +1,24 @@
+# ------------------------------- start cloudtrail overview ------------------------------- # 
+    # ----- What is cloudtrail?
+        - AWS CloudTrail is described as an AWS service that helps you enable governance, compliance, and operational and risk auditing of your AWS account.
+        - AWS is basically advertised as the central logging source for API activity in an AWS account.
+        - Cloudtrail stores the logs in s3 bucket, you can use create s3 bucket while creating cloudtrail.
+
+        # -- Type of events can be logged
+            1- Management event
+                - Actions that can be taken through AWS API
+            2- Data event
+                - Events like file access on S3 bucket as S3:GetObject
+
+        # -- Audit through AWS CLI
+            - Retrieve the CloudTrail that are installed within the organizations.
+                aws cloudtrail describe-trails --include-shadow-trails 
+
+            - Retrieve configuration of cloudtrail itself
+                aws cloudtrail get-event-selectors --trail-name <cloudtrail_name> --region <region_name>
+
+            - Get status of cloudtrail
+                aws cloudtrail get-trail-status --name <cloudtrail_name> --region <region_name>
+
+        
+# -------------------------------   end cloudtrail overview ------------------------------- # 

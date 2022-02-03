@@ -1,0 +1,9 @@
+# ---------------------- Start check ---------------------- #
+    # ----- Security Checks:
+        - Anonymous login
+
+    # ----- Anonymous login
+        ftp <target>
+        anonymous
+
+# ----------------------   end check ---------------------- #

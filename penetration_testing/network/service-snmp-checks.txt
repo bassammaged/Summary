@@ -1,0 +1,9 @@
+# ---------------------- Start check ---------------------- #
+    # ----- Security Checks:
+        - Enumration
+
+    # ----- Enumration
+        # -- SNMPv1, SNMPv2
+            
+
+# ----------------------   end check ---------------------- #

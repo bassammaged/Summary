@@ -1,0 +1,30 @@
+# ------------------- Start Scan the target ------------------- #
+    # ----- Content:
+        - Methodolgy
+        - Most important flags
+
+    # ----- Methodolgy:
+        1. Scan the open ports
+            nmap -sS <target> -p- -O
+        2. Perform banner grabbing on the open ports
+            sudo nmap -sS <target> -p <open_ports> -sV
+        3. Conduct VA scan.
+            sudi=o nmap -sS <target> -p <open_ports> --script vuln
+
+    # ----- Most important flags
+        # -- Scan type
+            -sS: Stealth scan types are those where packet flags cause the target system to respond without having a fully established connection.
+        
+        # -- OS and Service detection
+            -O: OS detections
+                --osscan-guess: Guess OS more aggressively
+            -sV: Detect the services (Banner grabbing).
+            -A: Enable OS detection, version detection, script scanning, and traceroute
+
+        # -- Ports
+            -p: specify scanned ports, -p-: all, -p 80,90 and -p 100-200
+
+        # -- VA scan
+            --script vuln
+        
+# -------------------   end Scan the target ------------------- #

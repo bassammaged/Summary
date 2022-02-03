@@ -1,0 +1,47 @@
+# ---------------------- start check ---------------------- #
+    # ----- Security Checks:
+        - [Test] HTTP Smuggling
+        - [Test] Forward headers
+        - [Test] CloudFront Hijacking
+        - [Test] Missing default root object configured
+        - [Both] Enforce encryption in transit
+        - [Audit] No origin access identity enabled
+        - [Audit] Check if origin failover is configured
+        - [Audit] Logging is enabled
+        - [Audit] AWS WAF is enabled
+
+    # ----- CloudFront Hijacking
+        # -- .
+    
+        # -- Test case:
+            1. Enumerate all end-points (domains and subdomains) that pointed to IPs or CNAMEs for CloudFront.
+            2. Analyze all subdomains that having CNAMEs to those end-points.
+            3. Trying to access the subdomians and the analyze the CloudFront response.    
+
+    # ----- Missing default root object configured
+        # -- This control checks whether an Amazon CloudFront distribution is configured to return a specific object that is the default root object. The control 
+        fails if the CloudFront distribution does not have a default root object configured. [Covered by Security Hub]
+    
+        # -- Test case:
+            1. Enumerate all end-points are behind the CloudFront.
+            2. Try to access them without direct without any specifiy directory/file. 
+                - https://kemet.com ==> 11111.cloudfront.com then try to access https://kemet.com without any directory or file specified.
+
+    # ----- No origin access identity enabled
+        # -- This control checks whether an Amazon CloudFront distribution with Amazon S3 Origin type has Origin Access Identity (OAI) 
+        configured. [Covered by Security Hub]
+
+    # ----- Enforce encryption in transit
+        # -- This control checks whether an Amazon CloudFront distribution requires viewers to use HTTPS directly or whether it uses redirection. 
+        The control fails if ViewerProtocolPolicy is set to allow-all for defaultCacheBehavior or for cacheBehaviors. [Covered by Security Hub]
+
+    # ----- Check if origin failover is configured
+        # -- This control checks whether an Amazon CloudFront distribution is configured with an origin group that has two or more origins. [Covered by Security Hub]
+
+    # ----- Logging is enabled
+        # -- This control checks whether server access logging is enabled on CloudFront distributions. The control fails if access logging is not enabled 
+        for a distribution. [Covered by Security Hub]
+    # ----- AWS WAF is enabled
+        # -- This control checks whether CloudFront distributions are associated with either AWS WAF or AWS WAFv2 web ACLs. The control fails if 
+        the distribution is not associated with a web ACL. [Covered by Security Hub]
+# ----------------------   end check ---------------------- #

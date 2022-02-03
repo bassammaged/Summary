@@ -1,0 +1,14 @@
+# ------------------------------- start GuardDuty overview ------------------------------- # 
+    # ----- What is GuardDuty?
+        - Amazon Web Services (AWS) offers a variety of security services, but the main security monitoring service is known as GuardDuty.
+        - GuardDuty is a continuous monitoring service offered by AWS that identifies and alerts about suspicious or unwanted behavior within an account.
+
+        # -- Events are supported by GuardDuty:
+            1. VPC Flow Logs.
+            2. DNS logs, GuardDuty supports logs that comes from Route53 DNS resolver only.
+            3. CloudTrail, Even if CloudTrail is disabled, the GuardDuty works on CloudTrail.
+
+        # -- Alerting via GuardDuty:
+            1. Intergrate GuardDuty with CloudWatch to send notifications via SNS and etc...
+            2. Set up Lambda function to react with the alerts comes from GuardDuty, the intergration can be done through CloudWatch.
+# -------------------------------   end GuardDuty overview ------------------------------- # 

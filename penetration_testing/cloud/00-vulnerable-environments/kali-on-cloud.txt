@@ -1,0 +1,91 @@
+# -------------------- start install kali -------------------- #
+    # ----- Install Kali EC2
+        - Install latest version of kali AMI at AWS marketplace.
+        - Configure the EC2 specificaiton (t2.medium)
+        - Using same VPC and subnet for environment that going to be tested.
+    
+    # ----- Security Group for Kali
+        - Allow connection for SSH (22)
+        - Allow connection for RDP (55555)
+
+    # ----- Configure SSH access
+        AWS already sets a default form of SSH access for their Kali AMI with an ec2-user account using a public key, Enable also access by user account.
+        - Set new user.
+            useradd -m <username> 
+            usermod <username> -aG sudo
+            passwd <username>
+        - Set password for root.
+            sudo su
+            passwd
+        - Allow user account access
+            sudo nano /etc/ssh/sshd_config
+            set PasswordAuthentication to yes
+            sudo service ssh restart
+    
+    # ----- Setting up Guacamole for remote access
+        Apache Guacamole is a clientless remote access solution that will allow you to access the Kali Linux instance remotely using a browser.
+        # -- Hardening
+            sudo apt-get install ufw fail2ban
+            sudo ufw allow 22
+            sudo ufw allow 55555
+
+        # -- Installing dependencies
+            sudo apt-get install build-essential htop libcairo2-dev libjpeg-dev \
+            libpng-dev libossp-uuid-dev tomcat8 freerdp2-dev libpango1.0-dev \
+            libssh2-1-dev libtelnet-dev libvncserver-dev libpulse-dev libssldev libvorbis-dev
+
+        # -- Configure Guacamole
+            sudo nano /etc/tomcat8/server.xml
+            [Within this file, the Connector port needs to be changed from 8080 to 55555]
+
+            sudo apt install xrdp
+            sudo nano /etc/X11/Xwrapper.config
+            [Within this file, edit the value of allowed_users to anybody]
+
+            [Set autostart to xrdp]
+            sudo update-rc.d xrdp enable
+            sudo systemctl enable xrdp-sesman.service
+            sudo service xrdp start
+            sudo service xrdp-sesman start
+
+            [Download source code of Guacamole: https://guacamole.apche.org/releases/ via wget]
+            [Keep in mind that you need to download the latest guacamoleserver.tar.gz and guacamole.war files]
+
+            tar xvf guacamole-server.tar.gz
+            cd guacamole-server
+            CFLAGS="-Wno-error" ./configure --with-init-dir=/etc/init.d
+            make -j4
+            sudo make install
+            sudo ldconfig
+            sudo update-rc.d guacd defaults
+
+            sudo nano /etc/guacamole/guacamole.properties 
+            # Hostname and port of guacamole proxy
+            guacd-hostname: localhost
+            guacd-port: 4822
+
+            [In addition to this, we also need another file called user-mapping.xml in the same directory, containing a list of usernames and passwords that 
+            Guacamole will authenticate with]
+            <user-mapping> <authorize username="USERNAME" password="PASSWORD">
+            <connection name="RDP Connection"> <protocol>rdp</protocol> <param
+            name="hostname">localhost</param> <param name="port">3389</param>
+            </connection>
+            <connection name="SSH Connection"> <protocol>ssh</protocol> <param
+            name="hostname">localhost</param> <param name="port">22</param>
+            </connection> </authorize>
+            </user-mapping>
+
+            [Once completed, it is time to deploy the war file that we downloaded earlier. We need to move it into the tomcat8/webapps folder so that it 
+            gets auto-deployed]
+            mv guacamole-0.9.14.war /var/lib/tomcat8/webapps/guacamole.war
+
+            [Now, we just have to restart both the guacd and tomcat8 services to get Apache Guacamole up and running]
+            sudo service guacd restart
+            sudo service tomcat8 restart
+
+            [copying the authentication information into the Guacamole client directory]
+            mkdir /usr/share/tomcat8/.guacamole
+            ln -s /etc/guacamole/guacamole.properties
+            /usr/share/tomcat8/.guacamole
+
+# --------------------   end install kali -------------------- #

@@ -1,0 +1,17 @@
+# ------------------------------- start CloudFront overview ------------------------------- # 
+    # ----- What is CloudFront?
+        - Amazon CloudFront is a web service that speeds up distribution of your static and dynamic web content, such as .html, .css, .js, and image files, to 
+        your users. CloudFront delivers your content through a worldwide network of data centers called edge locations. 
+        - CloudFront, the request is routed to the edge location that provides the lowest latency (time delay), so that content is delivered with the 
+        best possible performance.
+
+    # ----- How you set up CloudFront to deliver content?
+        1. You specify origin servers, like an Amazon S3 bucket or your own HTTP server, from which CloudFront gets your files which will then be 
+        distributed from CloudFront edge locations all over the world.
+        2. You upload your files to your origin servers. Your files, also known as objects, typically include web pages, images, and media files, 
+        but can be anything that can be served over HTTP.
+        3. You create a CloudFront distribution, which tells CloudFront which origin servers to get your files from when users request the files through 
+        your web site or application.
+        4. you specify details such as whether you want CloudFront to log all requests and whether you want the distribution to be enabled as soon as it's created.
+        5. CloudFront assigns a domain name to your new distribution that you can see in the CloudFront console.
+# -------------------------------   end CloudFront overview ------------------------------- # 

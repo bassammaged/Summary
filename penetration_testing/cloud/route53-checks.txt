@@ -1,0 +1,12 @@
+# ---------------------- Start check ---------------------- #
+    # ----- Security Checks:
+        - [Audit] Route 53 service accessibility
+        - [Audit] Zone level of accessibility
+
+    # ----- Route 53 service accessibility
+        # -- The service has to be accessible by specific users.
+    
+
+    # ----- Zone level of accessibility
+        # -- Check if the zone is public accessible or its assigned as private property.
+# ----------------------   end check ---------------------- #

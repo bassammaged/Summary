@@ -1,0 +1,44 @@
+# ---------------------- start check ---------------------- #
+    # ----- Security Checks:
+        - [Audit] Which zones' logs logged by Cloudtrail
+        - [Audit] Check logging event types
+        - [Audit] Enable logs encryption on s3 by using AWS-KMS
+        - [Audit] Enable file validation 
+        - [Audit] Check status of cloudtrail
+        - [Audit] AWS APIs that not supported by Cloudtrail
+
+    # ----- Which zones' logs logged by Cloudtrail
+        # -- Identify the zones are covered by cloudtrails.
+
+    # ----- Check logging event types
+        # -- Cloudtrail can logging management events and data events.
+        # -- Check the configuration on the level of cloudtrail itself.
+    
+    # ----- Enable logs encryption on s3 by using AWS-KMS
+        # -- Encrypt the storing logs while they are stored in S3 the keys managed by AWS Key Management
+
+    # ----- Enable file validation
+        # -- Cloudtrail will store digest files to the s3 bucket alongside the logs, incase of tampering of logs file will can be detected by digest files.
+
+    # ----- AWS APIs that not supported by Cloudtrail
+        # -- The reasons why a service does not support CloudTrail logging can vary. For example, a service that is still in preview, or not yet 
+        released for general availability (GA), is not considered supported for CloudTrail logging.
+            https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-unsupported-aws-services.html
+# ----------------------   end check ---------------------- #
+
+# ---------------------- start review logs ---------------------- #
+    # ----- Cloudtrails on the level of organization:
+        1. IsMultiRegionalTrail is for across region support.
+        2. IncludeGlobalServiceEvents, if it has true value that mean cloudtrail logs non-region-specific logs such as IAM.
+        3. LogFileValidationEnabled, for digest files feature.
+        4. KmsKeyId, if it the value of KmsKeyId exist that mean the encryption has been applied.
+        5. HasCustomEventSelectors, true value indicators to cloudtrail is logging data events.
+    # ----- On the level of CloudTrail:
+        1. ReadWriteType is set to All, which means we are recording both read and write events, and not just one of them.
+        2. IncludeManagementEvents is set to true, which means the trail is logging management events.
+        3. DataResources has value of data events id that will be recorded, for example:S3 object logging is enabled for the bucket with the 
+        ARN arn:aws:s3:::bucket-for-lambda-pentesting/
+    # ----- Status of CloudTrail:
+        1. IsLogging key is set to true. If it is set to false, then that means the trail is disabled.
+        2. LatestDeliveryAttemptTime and LatestDeliveryAttemptSucceeded keys to ensure that logs are being delivered correctly.
+# ----------------------   end review logs ---------------------- #

@@ -1,0 +1,11 @@
+# ---------------------- Start check ---------------------- #
+    # ----- Security Checks:
+        - Missing authentication 
+
+    # ----- Missing authentication
+        # -- Establish connection
+            smbclient -L <host_ip>
+        # -- Access the path
+            smbclient \\\\<host_ip>\<path>
+
+# ----------------------   end check ---------------------- #

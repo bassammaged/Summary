@@ -1,0 +1,34 @@
+# ------------------------------- start route 53 overview ------------------------------- # 
+    # ----- What is route 53?
+        - Amazon Route 53 is a highly available and scalable cloud Domain Name System (DNS) web service. It is designed to give developers and businesses an 
+        extremely reliable and cost effective way to route end users to Internet applications by translating names like www.example.com into the numeric IP 
+        addresses like 192.0.2.1 that computers use to connect to each other. Amazon Route 53 is fully compliant with IPv6 as well.
+
+        - Amazon Route 53 effectively connects user requests to infrastructure running in AWS – such as Amazon EC2 instances, Elastic Load Balancing load 
+        balancers, or Amazon S3 buckets – and can also be used to route users to infrastructure outside of AWS. 
+
+        # -- Example on AWS route 53
+            - AWS CLI command (we can leave the --region argument out for Route 53):
+                The output should look something like this:
+                    {
+                        "HostedZones": [
+                            {
+                                "Id": "/hostedzone/A22EWJRXPPQ21T",
+                                "Name": "test.com.",
+                                "CallerReference": "1Y89122F-2364-8G1E-P925-2B8OO1338Z31",
+                                "Config": {
+                                    "Comment": "An example Hosted Zone",
+                                    "PrivateZone": false
+                                    },
+                                "ResourceRecordSetCount": 5
+                            }
+                        ]
+                    }
+
+                - "PrivateZone" is set to false ==> public hosted zone
+                -  "ResourceRecordSetCount" is 5 ==> Five records
+
+        # -- AWS CLI Commands:
+            - Retrieve el records:
+                aws route53 list-resource-record-sets --hosted-zone-id A22EWJRXPPQ21T
+# -------------------------------   end route 53 overview ------------------------------- # 

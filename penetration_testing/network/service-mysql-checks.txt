@@ -1,0 +1,9 @@
+# ---------------------- Start check ---------------------- #
+    # ----- Security Checks:
+        - Default Credentials
+
+    # ----- Default Credentials
+        # -- Establish connection with no password
+            mysql -h <host> -u root
+
+# ----------------------   end check ---------------------- #

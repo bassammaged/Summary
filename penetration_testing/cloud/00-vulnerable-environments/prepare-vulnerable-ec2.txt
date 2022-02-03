@@ -1,0 +1,61 @@
+# -------------------- Start Prepare vulnerable linux instance -------------------- #
+    # ----- Install EC2
+        1. Using Ubuntu 16.04 LTS/Ubuntu 20.04 LTS (Avaliable at AWS marketplace).
+        2. All configurations remain the same except (Region, VPC, Subnet)
+            - Choose the closest regoin for you.
+            - Make sure the VPC and subnet that you are going to choose are the same for next installations.
+
+    # ----- prepare the vulnerable software
+        # -- Establish ssh connection
+            ssh -i <pem file> <IP address of the instance>
+        # -- Update the OS.
+            sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade
+        # -- Install vulnerable software vsftpd 2.3.4
+            git clone https://github.com/nikdubois/vsftpd-2.3.4-infected.git
+            sudo apt-get install build-essential
+            cd vsftpd
+            nano Makefile
+            add -lcrypt value to link flag
+            [save the changes]
+            make
+            [we should see a vsftpd binary in the same folder]
+
+            [we need to set up some prerequisites before installing vsftpd. Namely, we need to add a user called nobody and a folder called empty]
+            useradd nobody
+            mkdir /usr/share/empty
+            
+            [Once done, we can run the installation by executing the following commands]
+            sudo cp vsftpd /usr/local/sbin/vsftpd
+            sudo cp vsftpd.8 /usr/local/man/man8
+            sudo cp vsftpd.conf.5 /usr/local/man/man5
+            sudo cp vsftpd.conf /etc
+# --------------------   end Prepare vulnerable linux instance -------------------- #
+
+# -------------------- Start Prepare vulnerable Windows instance -------------------- #
+    # ---- Install EC2
+        - Using Windows server 2003
+        - Using same VPC and subnet ID of linux EC2.
+        - Access via RDP (Remote Desktop Protocol)
+            1. Remote Desktop Protocol (RDP) doesn't support certificate-based authentication, we need to provide the private key to decrypt and get the 
+            password using which we can log in. 
+                - This is done by simply right-clicking on the instance and selecting Get Windows Password.
+                - On the following screen, we are required to upload the private key that was downloaded earlier.
+                - Once done, simply clicking on Decrypt Password will provide us with the password that we can use to RDP into our Windows server instance
+                - Configure security group to allow RDP connections.
+
+    # ----- Installing vulnerable software (SQL injection Demo)
+        - Install XAMPP: https://www.apachefriends.org/download.html
+        - Clone https://github.com/FrancescoBorzi/sql-injection-demo
+        - Connect to t http://127.0.0.1/phpmyadmin
+        - Create new database: sqli
+        - Importing file: database.sql
+        - Copy sql-injection-demo to htdocs of XAMPP
+# --------------------   end Prepare vulnerable Windows instance -------------------- #
+
+# -------------------- start Security group configuration -------------------- #
+    # ----- Configure Security group
+        1. All Instances are located in the same VPC and subnet which allow to communicate with the private IPs.
+        2. Allow connection between Kali and Ubuntu on FTP server.
+        3. Allow connection between Kali and windows on port 80.
+        4. Open connectio between Ubuntu and windows (all ports)
+# --------------------   end Security group configuration -------------------- #
