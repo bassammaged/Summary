@@ -3,7 +3,7 @@
         - [Test] HTTP Smuggling
         - [Test] Forward headers
         - [Test] CloudFront Hijacking
-        - [Test] Missing default root object configured
+        - [Both] Missing default root object configured
         - [Both] Enforce encryption in transit
         - [Audit] No origin access identity enabled
         - [Audit] Check if origin failover is configured
@@ -11,7 +11,10 @@
         - [Audit] AWS WAF is enabled
 
     # ----- CloudFront Hijacking
-        # -- .
+        # -- When a CloudFront endpoint receives a request, it does NOT automatically serve content from the corresponding distribution. Instead, CloudFront uses 
+        the HOST header of the request to determine which distribution to use. This means two things:
+            1. If the HOST header does not match a domain in the "Alternate Domain Names (CNAMEs)" field of the intended distribution, the request will fail.
+            2. Any other CloudFront distribution that contains the specific domain in the HOST header will receive the request and respond to it normally.
     
         # -- Test case:
             1. Enumerate all end-points (domains and subdomains) that pointed to IPs or CNAMEs for CloudFront.
