@@ -29,6 +29,19 @@
             sudo cp vsftpd.8 /usr/local/man/man8
             sudo cp vsftpd.conf.5 /usr/local/man/man5
             sudo cp vsftpd.conf /etc
+
+            [Run vsftpd in background]
+            sudo /usr/local/sbin/vsftpd &
+            [Check the FTP]
+            ftp localhost
+
+            [Enable anonymous access]
+            sudo mkdir /var/ftp/
+            sudo useradd -d /var/ftp ftp
+            sudo chown root:root /var/ftp
+            sudo chmod og-w /var/ftp
+            [Edit local login in /etc/vsftpd.conf]
+            uncomment local_enable=YES
 # --------------------   end Prepare vulnerable linux instance -------------------- #
 
 # -------------------- Start Prepare vulnerable Windows instance -------------------- #
