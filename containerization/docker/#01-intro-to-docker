@@ -1,0 +1,66 @@
+# ----------------- start intro to docker ----------------- #
+    # ----- What is docker?
+        - Docker is currently the most popular container platform. 
+
+    # ----- Tbe tree concepts:
+        1. Container:
+            - A container is an abstraction at the application layer that packages code and dependencies together. Instead of virtualizing the entire physical 
+            machine, containers virtualize the host operating system only.
+            - The container runtime, that is Docker, sits between the containers and the host operating system instead of a hypervisor. The containers then 
+            communicate with the container runtime which then communicates with the host operating system to get necessary resources from the 
+            physical infrastructure.
+
+            # -- Look at the output of the following code:
+                uname -a
+                # Linux alpha-centauri 5.8.0-22-generic #23-Ubuntu SMP Fri Oct 9 00:34:40 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+                docker run alpine uname -a
+#               # Linux f08dbbe9199b 5.8.0-22-generic #23-Ubuntu SMP Fri Oct 9 00:34:40 UTC 2020 x86_64 Linux
+        2. Image:
+            - The images are multi-layered read-only files carrying your application in a desired state inside them.
+            - In the past, different container engines had different image formats. But later on, the Open Container Initiative (OCI) defined a standard 
+            specification for container images which is complied by the major containerization engines out there. This means that an image built with Docker can be 
+            used with another runtime like Podman without any additional hassle.
+        3. Registry:
+            - An image registry is a centralized place where you can upload your images and can also download images created by others. 
+            - Docker Hub is the default public registry for Docker. Another very popular image registry is Quay by Red Hat.
+
+    # ----- Docker Architecture Overview:
+        - it's time for you to understand how Docker as a software was designed.
+            # -- The engine consists of three major components:
+                1. Docker Daemon:
+                    - The daemon (dockerd) is a process that keeps running in the background and waits for commands from the client. The daemon is 
+                    capable of managing various Docker objects.
+                2. Docker Client: 
+                    - The client (docker) is a command-line interface program mostly responsible for transporting commands issued by users.
+                3. REST API: 
+                    - The REST API acts as a bridge between the daemon and the client. Any command issued using the client passes through the API 
+                    to finally reach the daemon.
+
+            # -- The Full Picture
+                - What really happens when you run the docker run hello-world command, let me show you a little diagram I've made?
+                    - Check the following diagram: "./img/docker-run-hello-world.svg"
+                        1. You execute docker run hello-world command where hello-world is the name of an image.
+                        2. Docker client reaches out to the daemon, tells it to get the hello-world image and run a container from that.
+                        3. Docker daemon looks for the image within your local repository and realizes that it's not there, resulting in the 
+                        Unable to find image 'hello-world:latest' locally that's printed on your terminal.
+                        4. The daemon then reaches out to the default public registry which is Docker Hub and pulls in the latest copy of the hello-world 
+                        image, indicated by the latest Pulling from library/hello-world line in your terminal.
+                        5. Docker daemon then creates a new container from the freshly pulled image.
+                        6. Finally Docker daemon runs the container created using the hello-world image outputting the wall of text on your terminal.
+
+                        Note: It's the default behavior of Docker daemon to look for images in the hub that are not present locally. But once an image 
+                        has been fetched, it'll stay in the local cache. 
+        # -- Docker engine:
+            - The runtime that allows you to build and run containers.
+            - s an open source containerization technology for building and containerizing your applications. Docker Engine acts as a client-server 
+            application with:-
+                1. A server with a long-running daemon process dockerd.
+                2. APIs which specify interfaces that programs can use to talk to and instruct the Docker daemon.
+                3. A command line interface (CLI) client docker.
+
+        # -- Docker file:
+            - The Docker File defines everything needed to run the image including the OS network specifications, and file locations. Now that you have a Docker file, 
+            you can build a Docker Image which is the portable, static component that gets run on the Docker Engine. And if you don’t want to start from scratch 
+            Docker even has a service called Docker Hub, where you can store and share images. 
+
+# -----------------   end intro to docker ----------------- #

@@ -1,0 +1,32 @@
+# --------------- start Intro to containerization --------------- #
+    # ----- Diff between containeization and virtualization:
+            As you see "./img/containers_portable_scalable.png"
+
+            # -- Quick look on virtualization:
+                - Virtualization enables you to run multiple operating systems on the hardware of a single physical server, while containerization 
+                enables you to deploy multiple applications using the same operating system on a single virtual machine or server.
+                - Virtualization is not possible without the hypervisor. A hypervisor, or virtual machine monitor, is the software or firmware layer that 
+                enables multiple operating systems to run side-by-side, all with access to the same physical server resources. The hypervisor orchestrates and 
+                separates the available resources (computing power, memory, storage, etc.), aligning a portion to each virtual machine as needed.
+                # -- advantages of virtualization:
+                    - Virtual machines are great for supporting applications that require an operating system’s full functionality when you want to deploy 
+                    multiple applications on a server, or when you have a wide variety of operating systems to manage. 
+                # -- disadvantage of virtualization:
+                    - Since each VM includes an OS and a virtual copy of all the hardware the OS requires, VMs require significant RAM and CPU resources.
+                    - Due to the increase in virtual copies and required resources, the software development life cycle is more complex with VMs.
+                    - Moving VMs between public clouds, private clouds and traditional data centers can be challenging.
+
+            # -- Quick look on containerization:
+                - The container shares the kernel of the host OS with other containers, and the shared part of the OS is read-only. 
+                # -- advantages of containerization:
+                    - Containers are a better choice when your biggest priority is to minimize the number of servers you’re using for multiple applications.
+                    - The containers are lightweight, because it shares part of OS as read-only.
+                    - You only have one OS to maintain.
+                # -- disadvantage of containerization:
+                    - All containers on a particular host machine must be designed to run on the same kind of OS. Containers based on a different OS will 
+                    require a different host.
+                    - Because the OS is shared, a security vulnerability in the OS kernel is a threat to all containers on the host machine.  
+                    - Containerization is still a new solution with wide variances in implementation plans and skilled resources, making adoption a 
+                    challenging process for some.
+
+# ---------------   end Intro to containerization --------------- #

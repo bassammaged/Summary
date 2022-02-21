@@ -1,0 +1,87 @@
+# ----------------- start docker installation ----------------- #
+    - Container manipulation is one of the most common task you'll be performing every single day, so having a proper understanding of the 
+    various commands is crucial.
+
+    # ----- How to Run a Container
+        docker run <image_name> # Prior to version 1.13, Docker had only the previously mentioned command syntax. 
+
+        # -- Restructured to have the following syntax:
+            - Prior to version 1.13, Docker had only the previously mentioned command syntax.
+            docker <object> <command> <options>
+                - <object> can be:
+                    1. container
+                    2. image
+                    3. network
+                    4. volume
+                - <command> is:
+                    - Indicates the task to be carried out by the daemon, that is the run command.
+                - <options>:
+                    - Can be any valid parameter that can override the default behavior of the command, like the --publish option for port mapping.
+
+            # -- try to execute the new command:
+                - fhsinchy/hello-dock image. This image contains a simple Vue.js application that runs on port 80 inside the container.
+                docker container run fhsinchy/hello-dock --publish 8080:80
+            # -- Runs docker in the background
+                docker container run --detach <image_name>
+
+    # ----- Kill the container
+        # -- Kill container by sending SIGTERM 
+            docker container stop <container_identifier>
+        # -- Enforce kill by sending SIGKILL
+            docker container kill <container_identifier>
+
+
+    # ----- How to List Containers
+        # -- List the running containers
+            docker container ls
+        # -- List the containers are running and old containers 
+            docker container ls --all
+
+    # ----- restart container
+        # -- restart stopped container
+            docker container start <container_identifier>
+        # -- restart running container
+            docker container restart <container_identifier>
+
+    # ----- Rename the container
+        - By default, every container has two identifiers. They are as follows:
+            1. CONTAINER ID: a random 64 character-long string.
+            2. NAME: Combination of two random words, joined with an underscore.
+
+        # -- Change the name of docker:
+             --name <container_name>
+             docker container run --detach --name new-container-hello --publish 8080:80 fhsinchy/hello-dock
+        # -- Rename the container
+            docker container rename <container_identifier> <new_name>
+
+
+    # ----- Start the container without run command
+        - the following command "docker container start" execute to commands "create" & "start".
+        - you have an ability the execute them manually.
+
+        docker container create --detach --publish 10000:80 --name <container_name> <image_name>
+        docker container start <container_identifier>
+
+    # ----- Interactive mode
+        - So far you've only run containers created from either the hello-world image or the fhsinchy/hello-dock image. These images are made for 
+        executing simple programs that are not interactive.
+        - Popular distributions such as Ubuntu, Fedora, and Debian all have official Docker images available in the hub. Programming languages 
+        such as python, php, go or run-times like node and deno all have their official images. These images do not just run some pre-configured program. 
+        These are instead configured to run a shell by default. In case of the operating system images it can be something like sh or bash and in case of 
+        the programming languages or run-times, it is usually their default language shell.
+
+        # -- Land directly on bash
+            -it: is an option run the container in interactive shell
+            docker container run --rm -it ubuntu    # OR
+            docker container run -it ubuntu
+
+        # -- Passing a command to a container that is not running
+            docker container run <image name> <command>
+
+    # ----- Mount volume
+        # -- blind mount:
+            -v <local_file_system_directory_absolute_path>:<container_file_system_directory_absolute_path>:<read_write_access>
+            # -- exmaple: 
+                docker container run --rm -v $(pwd):/zone fhsinchy/rmbyext pdf
+
+# -----------------   end docker installation ----------------- #
