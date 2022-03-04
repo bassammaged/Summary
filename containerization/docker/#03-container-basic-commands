@@ -78,10 +78,8 @@
         # -- Passing a command to a container that is not running
             docker container run <image name> <command>
 
-    # ----- Mount volume
-        # -- blind mount:
-            -v <local_file_system_directory_absolute_path>:<container_file_system_directory_absolute_path>:<read_write_access>
-            # -- exmaple: 
-                docker container run --rm -v $(pwd):/zone fhsinchy/rmbyext pdf
+        # -- Execute command in running container
+            docker container exec <container identifier> <command>
+
 
 # -----------------   end docker installation ----------------- #

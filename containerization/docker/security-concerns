@@ -1,4 +1,7 @@
 # ----------------- start docker security concerns ----------------- #
-    # ----- Unsecure password storage:
+    # ----- Insecure credential storage:
         - Docker commandline provide login mechanism which allow to store the auth-token unencrypted at /root/.docker/config.json
+    # ----- Docker default user
+        - By default the docker run the commands with root privilege.
+        - Using USER command to create new user and run commands with new user privilege instead of root.
 # -----------------   end docker security concerns ----------------- #

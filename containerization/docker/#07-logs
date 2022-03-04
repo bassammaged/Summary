@@ -1,0 +1,5 @@
+# ----------------- start docker logs ----------------- #
+    - The docker logs command batch-retrieves logs present at the time of execution.
+    # -- Access docker logs
+        docker container logs <container_identifier>
+# -----------------   end docker logs ----------------- #
