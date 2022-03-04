@@ -1,7 +1,0 @@
-FROM ubuntu:latest
-
-EXPOSE 80
-
-RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get install nginx -y
-    
-CMD ["nginx", "-g", "daemon off;"]

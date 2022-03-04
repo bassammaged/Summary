@@ -1,0 +1,12 @@
+# ----------------- start docker installation ----------------- #
+    - Docker Hub is the world's largest. library and community for container images. Browse over 100,000 container images from software vendors, 
+    open-source projects, and the community
+
+    # ----- Push the image to the your repo.
+        1. Login to docker.
+        2. Create the image
+            docker image build --tag <username>/<repo_name>:<tag_name> --file <docker_file_path> .
+        3. Push the image to the repo
+            docker image push <username>/<repo_name>:<tag_name>
+    
+# -----------------   end docker installation ----------------- #

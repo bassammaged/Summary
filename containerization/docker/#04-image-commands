@@ -1,0 +1,29 @@
+# ----------------- start docker installation ----------------- #
+    - A Docker image is a read-only template that contains a set of instructions for creating a container that can run on the Docker platform. It provides 
+    a convenient way to package up applications and preconfigured server environments, which you can use for your own private use or share publicly with 
+    other Docker users.
+
+    # ----- How to create docker image?
+        1. create 'DockerFile' file which contains docker image specifications.
+        2. run the following command to create the image
+            docker image build . -t <custom_image_name>
+    
+    # ----- Download image
+        docker image pull <image_identifier>
+    
+    
+    # ----- operate the image
+        # -- List the running containers
+            docker image ls
+        # -- List the containers are running and old containers 
+            docker image ls --all
+
+        # -- Remove image
+            docker image rm <image_identifier>
+            # -- Force remove
+                docker image rm <image_identifier> --force
+
+        # -- check the layer of images
+        docker image history <image_identifier>
+    
+# -----------------   end docker installation ----------------- #
