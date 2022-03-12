@@ -1,0 +1,18 @@
+# --------------- Start AWS storage --------------- # 
+    # ----- What storage options are provided by AWS?
+        1. EC2 storages:
+            a. Elastic Block Storage (EBS): High-speed storage volumes offered by AWS. These are typical storage volumes that are available in either HDD or SSD 
+            technology. These are raw and unformatted, and can be attached to any EC2 instance, like mounting a hard disk drive in real life. The volumes need to be 
+            formatted before use. Once they are set up, they can be attached, mounted, or unmounted to any EC2 instance. These volumes are fast, and are best suited to
+            high-speed and frequent data writes and reads. These volumes can be set to persist once the EC2 instance has been destroyed. Alternatively, you can create 
+            a snapshot of an EBS volume and recover data from a snapshot.
+
+            b. Amazon EC Instance Store: Instance store storage volumes are physically attached to the host computer where the EC2 instance is hosted and are used for storing data temporarily. In other words, once the EC2 instance it is attached to has been terminated, the instance store volume is lost as well.
+
+            c. Amazon EFS Filesystem: Elastic FileSystem (EFS) can only be used with a Linux-based EC2 instance for scalable file storage. Scalable storage implies that the filesystem can be scaled up or shrunk massively based on the use case. Applications running on multiple instances can use an EFS as their common data source, which means the EFS can be used simultaneously by multiple EC2 instances.
+
+        2. Amazon S3:
+            - Amazon S3 is one of the flagship services for AWS that is used for storing data on the cloud. It is highly scalable and enables us to store and retrieve any amount of data, at any time. Amazon EC2 uses Amazon S3 to store EBS snapshots and instance store-backed AMIs
+            - S3 deals with the files as object.
+
+# ---------------   end AWS storage --------------- # 
