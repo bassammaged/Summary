@@ -1,0 +1,20 @@
+# --------------- Start the quantifiers --------------- # 
+    # ----- quantifiers
+        - The quantifiers are used in the regular expression for specifying the number of occurrences of a character.
+        - ?
+            - This character specifies an expression to its left for 0 (Zero) or 1 (one)times.	
+            - s?
+        - +
+            - This character specifies an expression to its left for one or more times.	
+            - s+
+        - *
+            - This character specifies an expression to its left for 0 or more times	
+            - s*
+        - {}
+            - It specifies an expression to its left for only x times.
+                - a{5}
+            - It specifies an expression to its left for x or more times.	
+                - a{5,}
+            - It specifies an expression to its left, at least x times but less than y times.	
+                - a{5,10}
+# ---------------   end the quantifiers --------------- # 
