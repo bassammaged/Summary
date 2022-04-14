@@ -1,0 +1,33 @@
+# ---------------------- start vpc ---------------------- #
+    # ----- What is VPC?
+        - Amazon Virtual Private Cloud (Amazon VPC) enables you to launch AWS resources into a virtual network that you've defined. This virtual network closely resembles a 
+        traditional network that you'd operate in your own data center, with the benefits of using the scalable infrastructure of AWS.
+
+        - A virtual private cloud (VPC) is a virtual network dedicated to your AWS account. It is logically isolated from other virtual networks in the AWS Cloud. 
+        You can launch your AWS resources, such as Amazon EC2 instances, into your VPC. You can specify an IP address range for the VPC, add subnets, 
+        associate security groups, and configure route tables.
+
+        - VPC by default support IPV4 CIDR and could be support IPV6 CIDR.
+
+        # -- Regions
+            - Each Amazon EC2 Region is designed to be isolated from the other Amazon EC2 Regions. This achieves the greatest possible fault tolerance and stability.
+            - When you view your resources, you see only the resources that are tied to the Region that you specified. This is because Regions are isolated from each other, 
+            and we don't automatically replicate resources across Regions.
+
+            - Example on regions 
+                Code	        Name	                Opt-in Status
+                us-east-2	US East (Ohio)	            Not required
+                us-east-1	US East (N. Virginia)	    Not required
+                us-west-1	US West (N. California)	    Not required
+
+        # -- Availability zones:
+            - Each Region has multiple, isolated locations known as Availability Zones. The code for Availability Zone is its Region code followed by a letter identifier. For example, us-east-1a
+    
+    
+        # -- What is subnet?
+            - A subnet is a range of IP addresses in your VPC. You can launch AWS resources into a specified subnet. Use a public subnet for resources that must 
+            be connected to the internet, and a private subnet for resources that won't be connected to the internet. 
+
+        # -- Security group
+            - Security group like a virtual firewall. It has inbound and outbound security rules in which all inbound traffic is blocked by default in private on AWS EC2.
+# ----------------------   end vpc ---------------------- #
