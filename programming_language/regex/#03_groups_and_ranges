@@ -1,0 +1,10 @@
+# --------------- Start the groups and ranges --------------- # 
+    # ----- Groups
+        - ()
+            - It is used to match everything which is in the simple bracket.
+            - A(xy)
+        - []
+            - It is used to match any character from a range of characters defined in the square bracket.	
+            - Ax[ap]z
+        
+# ---------------   End the groups and ranges --------------- # 

@@ -1,0 +1,23 @@
+# --------------- Start the metacharacters --------------- # 
+    # ----- metacharacters 
+        - ^   
+            - This character is used to match an expression to its right at the start of a string.
+            - ^a
+        - $
+            - The $sign is used to match an expression to its left at the end of a string.	
+            - t$
+        - .
+            - This character is used to match any single character in a string except the line terminator, i.e. /n.	
+            - b.x
+        - |
+            - It is used to match a particular character or a group of characters on either side. If the character on the left side is matched, then 
+            the right side's character is ignored.	
+            - A|a
+        - \
+            - It is used to escape a special character after this sign in a string.	
+            - \'
+
+    # ----- Examples
+        - First to match any word start with a and end with d and contain A or C in the middle and has unknown character after A or C
+            ^a[A|C].$d
+# --------------- end the metacharacters --------------- # 
