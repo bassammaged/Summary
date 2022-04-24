@@ -28,6 +28,14 @@
             - A subnet is a range of IP addresses in your VPC. You can launch AWS resources into a specified subnet. Use a public subnet for resources that must 
             be connected to the internet, and a private subnet for resources that won't be connected to the internet. 
 
+            # -- Reserved IPs:
+                - Let's suppose the subnet CIDR is 10.0.0.1/24. So, the following IPs will be reserved by AWS.
+                    10.0.0.1/24 for the router/gateway.
+                    10.0.0.2/24 for AWS DNS
+                    10.0.0.3/24 for future use
+                    
         # -- Security group
             - Security group like a virtual firewall. It has inbound and outbound security rules in which all inbound traffic is blocked by default in private on AWS EC2.
+
+    
 # ----------------------   end vpc ---------------------- #
