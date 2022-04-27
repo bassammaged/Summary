@@ -1,0 +1,47 @@
+# ------------------- Start Pivot ------------------- # 
+    # ----- Techniques:
+        1. SSH Tunneling
+            - Local port forward
+            - Remote port forward
+            - Dynamic port forward
+        2. MSF console: Meterpreter 
+
+    # ----- SSH tunneling
+        - SSH tunneling or SSH port forwarding is a method of creating an encrypted SSH connection between a client and a server machine through which services ports can
+        be relayed. SSH forwarding is useful for transporting network data of services that use an unencrypted protocol, such as VNC or FTP , accessing geo-restricted 
+        content, or bypassing intermediate firewalls. Basically, you can forward any TCP port and tunnel the traffic over a secure SSH connection.
+        
+        # -- Local port forward
+            - Local port forwarding allows you to forward a port on the local (ssh client) machine to a port on the remote (ssh server) machine, which is then 
+            forwarded to a port on the destination machine.
+            - In this forwarding type, the SSH client listens on a given port and tunnels any connection to that port to the specified port on the remote SSH server, 
+            which then connects to a port on the destination machine. The destination machine can be the remote SSH server or any other machine.
+
+            # -- Usage:
+                - Local port forwarding is mostly used to connect to a remote service on an internal network such as a database or VNC server.
+                ssh -L [LOCAL_IP:]LOCAL_PORT:DESTINATION:DESTINATION_PORT [USER@]SSH_SERVER]
+
+        # -- Remote port forward
+            - Remote port forwarding is the opposite of local port forwarding. It allows you to forward a port on the remote (ssh server) machine to a port on the 
+            local (ssh client) machine, which is then forwarded to a port on the destination machine.
+
+            # -- Usage:
+                - Remote port forwarding is mostly used to give access to an internal service to someone from the outside.
+                ssh -R [REMOTE:]REMOTE_PORT:DESTINATION:DESTINATION_PORT -N -f [USER@]SSH_SERVER
+
+        # -- Dynamic port forward
+            - Dynamic port forwarding allows you to create a socket on the local (ssh client) machine, which acts as a SOCKS proxy server. When a client connects to this 
+            port, the connection is forwarded to the remote (ssh server) machine, which is then forwarded to a dynamic port on the destination machine.
+
+            # -- Usage
+                ssh -D [LOCAL_IP:]LOCAL_PORT -N -f [USER@]SSH_SERVER
+                - Once the tunneling is established, you can configure your application to use it. 
+                This article: https://linuxize.com/post/how-to-setup-ssh-socks-tunnel-for-private-browsing/ explains how to configure Firefox and Google Chrome browser
+                to use the SOCKS proxy. The port forwarding has to be separately configured for each application that you want to tunnel the traffic thought it.
+
+    # ----- MSF console: Meterpreter 
+            1. Start by backgrounding your meterpreter shell:
+                command: background
+            2. Add the route of the target and session IDs:
+                command: route add <<target ip>> <<subnet mask>> <<meterpreter session>>
+# -------------------   end Pivot ------------------- # 
