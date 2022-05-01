@@ -1,0 +1,31 @@
+# ---------------------- Start check ---------------------- #
+    # ----- Security Checks:
+        - [Test] Listing the s3 root directory
+        - [Test] Check public read per object
+        - [Test] Check ACLs via s3scanner
+        - [Test] Unclaimed s3
+
+    # ----- Listing the s3 root directory
+        - Check if the the listing is allowed to the S3, by listing the root directory to the bucket through using List the S3 content
+            aws ls s3://<bucket_name>
+
+    # ----- Check public read per object
+            - By visit defined objects already stored within the S3, the tester could define if there's direct access to specific objects.
+            
+        # -- Feature move:
+            - Perform bruteforce on directories and files to find critical files.
+        
+    # ----- Check ACLs via s3scanner
+        # -- s3scanner allows to check the permission
+
+    # ----- Unclaimed s3
+        - S3 buckets can sometimes be left unclaimed. That is, there may be applications and/or scripts that make requests to S3 buckets that do not exist.
+        - (http://s3bucket.example.com.s3-website.ap-south-1.amazonaws.com) This URL may be bound to a subdomain (for example, https://data.example.net) belonging to the organization to obfuscate the AWS S3 URL.  This is done by adding an alternate domain name (CNAMEs).
+
+        # -- How you can find it:
+            - Resolve DNS gathered domains/subdomains.
+            Note: Might be the organization call s3 link directly, in this case there's no need to have subdomain/domain pointed to this s3.
+        # -- What you can do?
+            1. Once such an unclaimed bucket has been found, create an S3 bucket with the same name and in the same region which had the URL.
+            2. Deploy malicious content on the newly created S3 bucket.
+# ----------------------   end check ---------------------- #

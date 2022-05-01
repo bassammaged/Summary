@@ -1,0 +1,59 @@
+# --------------- Start S3 storage --------------- # 
+    # ----- What is S3?
+        - s3 stands for Simple Storage solution, store files in form of Object in directory structure.
+        - Provide many of advantages:
+            1. Cheap reiable way to stire objects.
+            2. Low latency, High throuput access.
+            3. Can easily be used to host static websites.
+            4. Can intergare with SNS, SQS, Lambda for powerful event driven application.
+             
+        # -- S3 settings:
+            - Object ownership:
+                - By default S3 object is owned by the AWS account that uploaded the object! that's why AWS introduced a new feature.
+                - AWS S3 object ownership is a new S3 feature that enables bucket owners to automatically assume ownership of objects that are uploaded to their
+                bukets by other AWS accounts.
+
+            - Setting options:
+                1. ACLs disabled (Recommended):
+                    - All objects in this bucket are owned by this account. Access to this bucket and its objects is specified using only policies.
+                
+                2. ACLs enabled:
+                    - Objects in this bucket can be owned by other AWS accounts. Access to this bucket and its objects can be specified using ACLs.
+                    - ACLs enabled has two sub-options
+                        a. Bucket owner preferred: Bucket and object ACLs are accepted and honored. New objects that are uploaded with 
+                        the bucket-owner-full-control canned ACL are automatically owned by the bucket owner rather than the object writer. Objects 
+                        uploaded without this canned ACL are owned by the object writer. All other ACL behaviors remain in place. This setting does not 
+                        affect ownership of existing objects. To require all Amazon S3 PUT operations to include the bucket-owner-full-control canned ACL, 
+                        add a bucket policy  that only allows object uploads using this ACL.
+
+                        b. Object writer: Objects are owned by the AWS account that uploads them, even if the object writer is in a different account than 
+                        the bucket owner. You, as the bucket owner, can't use bucket policies to grant access to objects owned by other AWS accounts. The 
+                        object writer or you, when you receive appropriate permission from the object writer via object ACL, manage access permissions for 
+                        these objects in object ACLs.
+
+                3. Public access setting:
+                    - Block all public access: 
+                        Public access is granted to buckets and objects through access control lists (ACLs), bucket policies, access point policies, or all. In 
+                        order to ensure that public access to this bucket and its objects is blocked, turn on Block all public access.
+                    
+                        Note: AWS recommends that you turn on Block all public access, but before applying any of these settings, ensure that your 
+                        applications will work correctly without public access.
+
+                        # -- Avalilable options:
+                            1. Block public access to buckets and objects granted through new access control lists (ACLs)
+                                - S3 will block public access permissions applied to newly added buckets or objects, and prevent the creation of new public 
+                                access ACLs for existing buckets and objects. This setting doesn’t change any existing permissions that allow public access 
+                                to S3 resources using ACLs.
+
+                            2. Block public access to buckets and objects granted through any access control lists (ACLs)
+                                - S3 will ignore all ACLs that grant public access to buckets and objects.
+                            
+                            3. Block public access to buckets and objects granted through new public bucket or access point policies
+                                - S3 will block new bucket and access point policies that grant public access to buckets and objects. This setting doesn't 
+                                change any existing policies that allow public access to S3 resources
+
+                            4. Block public and cross-account access to buckets and objects through any public bucket or access point policies
+                                - S3 will ignore public and cross-account access for buckets or access points with policies that grant public access to 
+                                buckets and objects.
+
+# ---------------   End S3 storage --------------- # 

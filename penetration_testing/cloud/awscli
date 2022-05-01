@@ -1,0 +1,10 @@
+# ------------- start awscli basic configuration ------------- #
+    Credentials and Configuration stoorage:
+        - Crednetials and configurations are stored in clear text within ~/.aws directory.
+        
+    # ----- Configure
+        # -- configure profile
+            aws configure --profile <profile_name>
+        # -- list configuration
+            aws configure list
+# -------------   end awscli basic configuration ------------- #

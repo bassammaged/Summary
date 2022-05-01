@@ -1,0 +1,6 @@
+# ---------------------- start check ---------------------- #
+    # ----- Security Checks:
+        - [Both] Insecure AWS cli credentials storage (On local machines) 
+
+    # ----- Insecure AWS cli credentials storage
+        # -- Users are using awscli configure the access by insecure way and awscli store the credential by default in ~/.aws un-encrypted.

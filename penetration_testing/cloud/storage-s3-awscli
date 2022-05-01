@@ -1,0 +1,17 @@
+# -------------- Start awscli commands -------------- #
+    # ----- Objects
+        # -- List the S3 content
+            aws s3 ls s3://<bucket_name>
+        
+        # -- Upload file
+            aws s3 cp <file_path> s3://<bucket_name>/<file_path> --acl public-read
+            
+            --acl <acl_value>: flag can be used with upload command to add acl to the uploaded object
+
+        # -- Remove file
+            aws s3 rm s3://<bucket_name><file_path>
+
+    # ----- ACLs
+        # -- Read the ACLs
+            aws s3api get-bucket-acl --bucket <bucket_name>
+# --------------   End awscli commands -------------- #

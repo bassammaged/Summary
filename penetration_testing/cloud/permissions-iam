@@ -1,0 +1,56 @@
+# ----------------- Start IAM ----------------- #
+    # ----- What is IAM?
+        - permission system that regulates access to AWS resources and set allowed actions.
+        - Allows you to assign permissions to groups of users.
+        - IAM could be intergated with other Identity tech like Microsoft ActiveDirectory.
+
+    # ----- How IAM works?
+        IAM contains 4 key concepts that needed to be understood
+            1. Uesrs:
+                - Speicifc individuals can receive personal logins, they could use username:password to login or aws sercret keys instead.
+            2. Groups:
+                - Collection of users, set of users would have same allowed permissions.
+            3. Ploicy/Permission:
+                - Low level permission to resources (Allow or Deny)
+                example:
+                    {
+                        "Version": "2012-10-17",
+                        "Statement": [
+                            {
+                                "Effect": "Allow",
+                                "Action": ["iam:*AccessKey*", "iam:GetUser"],
+                                "Resource": ["*"]
+                            },
+                            {
+                                "Effect": "Allow",
+                                "Action": [
+                                    "ec2:DeleteVolume",
+                                    "ec2:DescribeAccountAttributes",
+                                    "ec2:DescribeAvailabilityZones",
+                                    "ec2:TerminateInstances"
+                                ],
+                                "Resource": [
+                                    "*"
+                                ]
+                            }
+                        ]
+                    }
+            4. Roles:
+                -An IAM role is an IAM identity that you can create in your account that has specific permissions. An IAM role is similar to an IAM user, in 
+                that it is an AWS identity with permission policies that determine what the identity can and cannot do in AWS. However, instead of being 
+                uniquely associated with one person, a role is intended to be assumable by anyone who needs it. Also, a role does not have standard long-term 
+                credentials such as a password or access keys associated with it. Instead, when you assume a role, it provides you with temporary security 
+                credentials for your role session.
+
+                - You can use roles to delegate access to users, applications, or services that don't normally have access to your AWS resources. For example, 
+                you might want to grant users in your AWS account access to resources they don't usually have, or grant users in one AWS account access to 
+                resources in another account. Or you might want to allow a mobile app to use AWS resources, but not want to embed AWS keys within the app (
+                    where they can be difficult to rotate and where users can potentially extract them). Sometimes you want to give AWS access to users who 
+                    already have identities defined outside of AWS, such as in your corporate directory. Or, you might want to grant access to your account 
+                    to third parties so that they can perform an audit on your resources.
+
+            # -- Simple Diagram as an example
+                    Group                   Members             Roles
+                Development-Team          kemet,marta       Full-Access
+                N/A                       YellowCopper      Reader(Its a policy with 3 read permission)    
+# -----------------   end IAM ----------------- #
