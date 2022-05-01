@@ -21,7 +21,12 @@
     # ----- Unclaimed s3
         - S3 buckets can sometimes be left unclaimed. That is, there may be applications and/or scripts that make requests to S3 buckets that do not exist.
         - (http://s3bucket.example.com.s3-website.ap-south-1.amazonaws.com) This URL may be bound to a subdomain (for example, https://data.example.net) belonging to the organization to obfuscate the AWS S3 URL.  This is done by adding an alternate domain name (CNAMEs).
-
+        OR
+            1. resolve domain with dig
+                dig <domain>
+            2. Reverse DNS record with nslookup
+                nslookup <ip_address>
+                - if the result comes with s3-website-us-west-2.amazonaws.com as an example which means the domain is hosted as S3 bucket
         # -- How you can find it:
             - Resolve DNS gathered domains/subdomains.
             Note: Might be the organization call s3 link directly, in this case there's no need to have subdomain/domain pointed to this s3.

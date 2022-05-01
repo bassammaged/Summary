@@ -7,4 +7,14 @@
             aws configure --profile <profile_name>
         # -- list configuration
             aws configure list
+
+    # ----- Account information
+        # -- Show account ID
+            aws --profile <profile_name> sts get-caller-identity
+
+    # ----- Storage
+        # -- Retrieve EC2 backups
+            aws --profile <profile_name> ec2 describe-snapshots --owner-id <account_id>
+        # -- Mount storage to another account
+            aws --profile <profile_name_of_your_account> ec2 create-volume --availability-zone <region_name> --region <region_name> --snapshot-id <snapshot_id>
 # -------------   end awscli basic configuration ------------- #
