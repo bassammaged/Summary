@@ -4,6 +4,7 @@
         - [Test] Check public read per object
         - [Test] Check ACLs via s3scanner
         - [Test] Unclaimed s3
+        - [Test] x-amz-meta-s3cmd-attrs misconfiguration (https://hackerone.com/reports/262649 - https://hackerone.com/reports/374907)
 
     # ----- Listing the s3 root directory
         - Check if the the listing is allowed to the S3, by listing the root directory to the bucket through using List the S3 content
